@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 // tag::PriceService[]
 @Service
 public class PriceService implements TarifPortType {
-// end::serviceTag[]
+// end::PriceService[]
 
     // tag::portType[]
     @Resource
@@ -31,26 +31,20 @@ public class PriceService implements TarifPortType {
     // end::portType[]
 
     // tag::implementPortTypeMethod[]
-   /* @Override
-    public UebermittleAntragResponse uebermittleAntrag(UebermittleAntragRequest uebermittleAntragRequest) throws UebermittleAntragBusinessFaultMessage, UebermittleAntragSystemFaultMessage {
-        return (UebermittleAntragResponse) antragPortType.uebermittleAntrag(uebermittleAntragRequest);
-    }
-*/
     @Override
     public BerechneBesterPreisResponse berechneBesterPreis(BerechneBesterPreisRequest parameters) throws BerechneMarkenPreiseBusinessFaultMessage, BerechneMarkenPreiseSystemFaultMessage {
-        return null;
+        return tarifPortType.berechneBesterPreis(parameters);
     }
 
     @Override
     public BerechnePraemieResponse berechnePraemie(BerechnePraemieRequest parameters) throws BerechnePraemieBusinessFaultMessage, BerechnePraemieSystemFaultMessage {
-        return null;
+        return tarifPortType.berechnePraemie(parameters);
     }
 
     @Override
     public FiltereProdukteResponse filtereProdukte(FiltereProdukteRequest parameters) throws FiltereProdukteBusinessFaultMessage, FiltereProdukteSystemFaultMessage {
-        return null;
+        return tarifPortType.filtereProdukte(parameters);
     }
     // end::implementPortTypeMethod[]
 
 }
-// end::PriceService[]
