@@ -41,6 +41,7 @@
         <maven-site-plugin.version>3.4</maven-site-plugin.version>
         <!-- SOAP und XML Mapping -->
         <jaxws-maven-plugin.version>2.4.1</jaxws-maven-plugin.version>
+        <json-path-assert.version>2.1.0</json-path-assert.version>
     </properties>
 
 
@@ -97,6 +98,13 @@
         <dependency>
             <groupId>org.springframework.restdocs</groupId>
             <artifactId>spring-restdocs-mockmvc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Tests -->
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path-assert</artifactId>
+            <version>${json-path-assert.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
