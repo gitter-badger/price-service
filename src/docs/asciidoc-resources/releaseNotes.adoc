@@ -1,0 +1,60 @@
+=== Version 0.11
+====  Task
+http://msswlmp01.ads.hel.kko.ch:8080/browse/FSL-34[FSL-34] - spring-config-server - spring-config-client
+
+
+=== Version 0.10
+====  Bug
+http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-19[ANB19] - Session ID wird nicht geloggt wenn Antrag nicht übermittelt werden kann
+
+=== Version 0.6
+====  Task
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-18[ANB18] - update fsl-common version 0.7 - Removed i18n message mechanismin RestExceptionProcessor
+
+=== Version 0.5
+====  Task
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-17[ANB17] - Datakatalog v2.2 Anpassung
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/CBB-1827[CCB-1827] - Monitoring EasySales und FSL Komponenten
+
+=== Version 0.4
+==== Task
+- Add SPF Endpoint
+- Update version of logging-store-client
+- Update version of spring-boot-parent
+
+=== Version 0.3
+====  Task
+- Set sane logging levels
+- Update version of spring-boot-parent
+
+=== Version 0.2
+====  Task
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/LOG-43[LOG-43] - Correlation ID wird durchgehend gesetzt
+
+=== Version 0.1.4
+====  Task
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-15[ANB-15] - Logging Store Client einbauen
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-16[ANB-16] - WSDL anpassung Datenkatalog v2.1
+
+=== Version 0.1.3
+====  Bug
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-12[ANB-12] - HAL Browser doesn't work
+====  Task
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-2[ANB-2] - Refactor Rest Error Handling
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-11[ANB-11] - Adjust failsafe plugin config
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-14[ANB-14] - WSDL anpassung Datenkatalog v2
+
+=== Version 0.1.2.1
+====  Bug
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-10[ANB-10] - Consumer Bug Fix EndPoint Naming
+
+=== Version 0.1.2
+====  Task
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-6[ANB-6] - WSDL anpassung Datenkatalog v1
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-8[ANB-8] -  move Junit / Integration  properties files in test/resources
+
+=== Version 0.1.1
+====  Task
+- http://msswlmp01.ads.hel.kko.ch:8080/browse/ANB-5[ANB-5] - Rolled back WSDL version of 12.1.2016
+
+

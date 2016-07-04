@@ -1,0 +1,34 @@
+#.gitignore
+#####################
+
+# IDEA
+/.idea/
+*.iml
+
+# Eclipse
+/.classpath
+/.project
+/.settings/
+
+# Maven
+/log/
+/target/
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# JavaScript stuff
+node
+/node_modules/
+/src/main/resources/static/bower_components/
+.bowerrc
+
+#OS meta files
+.DS_Store
+
+# Misc
+/tmp/
+/bin/
+/data/
+/global-groovy.log
+rebel.xml

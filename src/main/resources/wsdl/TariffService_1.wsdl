@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1 (UNKNOWN_BRANCH-false; 2015-01-15T16:53:43+0100) JAXWS-RI/2.2.10 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown.--><!--Version:Tarif2.0--><definitions name="Tarif" targetNamespace="http://services.sbi.ch/system/productengine/tarif/v2" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:bbpfaults="http://services.sbi.ch/system/productengine/tarif/v2/berechneBesterPreisFaults" xmlns:bbprequest="http://services.sbi.ch/system/productengine/tarif/v2/berechneBesterPreisRequest" xmlns:bbpresponse="http://services.sbi.ch/system/productengine/tarif/v2/berechneBesterPreisResponse" xmlns:bpfaults="http://services.sbi.ch/system/productengine/tarif/v2/berechnePraemieFaults" xmlns:bprequest="http://services.sbi.ch/system/productengine/tarif/v2/berechnePraemieRequest" xmlns:bpresponse="http://services.sbi.ch/system/productengine/tarif/v2/berechnePraemieResponse" xmlns:pfaults="http://services.sbi.ch/system/productengine/tarif/v2/filtereProdukteFaults" xmlns:prequest="http://services.sbi.ch/system/productengine/tarif/v2/filtereProdukteRequest" xmlns:presponse="http://services.sbi.ch/system/productengine/tarif/v2/filtereProdukteResponse" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.sbi.ch/system/productengine/tarif/v2">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://services.sbi.ch/system/productengine/tarif/v2/berechneBesterPreisFaults" schemaLocation="TariffService.xsd"/>
+      <xsd:import namespace="http://services.sbi.ch/system/productengine/tarif/v2/berechneBesterPreisRequest" schemaLocation="TariffService_1_2.xsd"/>
+      <xsd:import namespace="http://services.sbi.ch/system/productengine/tarif/v2/berechneBesterPreisResponse" schemaLocation="TariffService_1_2_3.xsd"/>
+      <xsd:import namespace="http://services.sbi.ch/system/productengine/tarif/v2/berechnePraemieFaults" schemaLocation="TariffService_1_2_3_4.xsd"/>
+      <xsd:import namespace="http://services.sbi.ch/system/productengine/tarif/v2/berechnePraemieRequest" schemaLocation="TariffService_1_2_3_4_5.xsd"/>
+      <xsd:import namespace="http://services.sbi.ch/system/productengine/tarif/v2/berechnePraemieResponse" schemaLocation="TariffService_1_2_3_4_5_6.xsd"/>
+      <xsd:import namespace="http://services.sbi.ch/system/productengine/tarif/v2/filtereProdukteFaults" schemaLocation="TariffService_1_2_3_4_5_6_7.xsd"/>
+      <xsd:import namespace="http://services.sbi.ch/system/productengine/tarif/v2/filtereProdukteRequest" schemaLocation="TariffService_1_2_3_4_5_6_7_8.xsd"/>
+      <xsd:import namespace="http://services.sbi.ch/system/productengine/tarif/v2/filtereProdukteResponse" schemaLocation="TariffService_1_2_3_4_5_6_7_8_9.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="berechneBesterPreisRequestMessage">
+    <part element="bbprequest:berechneBesterPreisRequest" name="parameters"/>
+  </message>
+  <message name="berechneBesterPreisResponseMessage">
+    <part element="bbpresponse:berechneBesterPreisResponse" name="parameters"/>
+  </message>
+  <message name="berechneMarkenPreiseBusinessFaultMessage">
+    <part element="bbpfaults:berechneMarkenPreiseBusinessFault" name="parameters"/>
+  </message>
+  <message name="berechneMarkenPreiseSystemFaultMessage">
+    <part element="bbpfaults:berechneMarkenPreiseSystemFault" name="parameters"/>
+  </message>
+  <message name="berechnePraemieBusinessFaultMessage">
+    <part element="bpfaults:berechnePraemieBusinessFault" name="parameters"/>
+  </message>
+  <message name="berechnePraemieRequestMessage">
+    <part element="bprequest:berechnePraemieRequest" name="parameters"/>
+  </message>
+  <message name="berechnePraemieResponseMessage">
+    <part element="bpresponse:berechnePraemieResponse" name="parameters"/>
+  </message>
+  <message name="berechnePraemieSystemFaultMessage">
+    <part element="bpfaults:berechnePraemieSystemFault" name="parameters"/>
+  </message>
+  <message name="filtereProdukteBusinessFaultMessage">
+    <part element="pfaults:filtereProdukteBusinessFault" name="parameters"/>
+  </message>
+  <message name="filtereProdukteRequestMessage">
+    <part element="prequest:filtereProdukteRequest" name="parameters"/>
+  </message>
+  <message name="filtereProdukteResponseMessage">
+    <part element="presponse:filtereProdukteResponse" name="parameters"/>
+  </message>
+  <message name="filtereProdukteSystemFaultMessage">
+    <part element="pfaults:filtereProdukteSystemFault" name="parameters"/>
+  </message>
+  <portType name="TarifPortType">
+    <operation name="berechneBesterPreis">
+      <input message="tns:berechneBesterPreisRequestMessage" name="berechneBesterPreisRequest"/>
+      <output message="tns:berechneBesterPreisResponseMessage" name="berechneBesterPreisResponse"/>
+      <fault message="tns:berechneMarkenPreiseSystemFaultMessage" name="berechneMarkenPreiseSystemFault"/>
+      <fault message="tns:berechneMarkenPreiseBusinessFaultMessage" name="berechneMarkenPreiseBusinessFault"/>
+    </operation>
+    <operation name="berechnePraemie">
+      <input message="tns:berechnePraemieRequestMessage" name="berechnePraemieRequest"/>
+      <output message="tns:berechnePraemieResponseMessage" name="berechnePraemieResponse"/>
+      <fault message="tns:berechnePraemieSystemFaultMessage" name="berechnePraemieSystemFault"/>
+      <fault message="tns:berechnePraemieBusinessFaultMessage" name="berechnePraemieBusinessFault"/>
+    </operation>
+    <operation name="filtereProdukte">
+      <input message="tns:filtereProdukteRequestMessage" name="filtereProdukteRequest"/>
+      <output message="tns:filtereProdukteResponseMessage" name="filtereProdukteResponse"/>
+      <fault message="tns:filtereProdukteSystemFaultMessage" name="filtereProdukteSystemFault"/>
+      <fault message="tns:filtereProdukteBusinessFaultMessage" name="filtereProdukteBusinessFault"/>
+    </operation>
+  </portType>
+  <binding name="TarifSOAPhttp" type="tns:TarifPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="berechneBesterPreis">
+      <soap:operation soapAction="berechneBesterPreis" style="document"/>
+      <input name="berechneBesterPreisRequest">
+        <soap:body use="literal"/>
+      </input>
+      <output name="berechneBesterPreisResponse">
+        <soap:body use="literal"/>
+      </output>
+      <fault name="berechneMarkenPreiseSystemFault">
+        <soap:fault name="berechneMarkenPreiseSystemFault" use="literal"/>
+      </fault>
+      <fault name="berechneMarkenPreiseBusinessFault">
+        <soap:fault name="berechneMarkenPreiseBusinessFault" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="berechnePraemie">
+      <soap:operation soapAction="berechnePraemie" style="document"/>
+      <input name="berechnePraemieRequest">
+        <soap:body use="literal"/>
+      </input>
+      <output name="berechnePraemieResponse">
+        <soap:body use="literal"/>
+      </output>
+      <fault name="berechnePraemieSystemFault">
+        <soap:fault name="berechnePraemieSystemFault" use="literal"/>
+      </fault>
+      <fault name="berechnePraemieBusinessFault">
+        <soap:fault name="berechnePraemieBusinessFault" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="filtereProdukte">
+      <soap:operation soapAction="filtereProdukte" style="document"/>
+      <input name="filtereProdukteRequest">
+        <soap:body use="literal"/>
+      </input>
+      <output name="filtereProdukteResponse">
+        <soap:body use="literal"/>
+      </output>
+      <fault name="filtereProdukteSystemFault">
+        <soap:fault name="filtereProdukteSystemFault" use="literal"/>
+      </fault>
+      <fault name="filtereProdukteBusinessFault">
+        <soap:fault name="filtereProdukteBusinessFault" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="Tarif">
+    <port binding="tns:TarifSOAPhttp" name="TarifPort">
+      <soap:address location="http://productengine-int03:8080/promos/tariff/v2/TariffService"/>
+    </port>
+  </service>
+</definitions>

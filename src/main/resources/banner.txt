@@ -1,0 +1,11 @@
+${AnsiColor.BRIGHT_BLUE}
+${AnsiColor.BRIGHT_BLUE}
+${AnsiColor.BRIGHT_BLUE}  ${info.build.version} | address:${server.address} | port:${server.port}
+${AnsiColor.BRIGHT_BLUE} _______         _  __  _____                                             _
+${AnsiColor.BRIGHT_BLUE}|__   __|       (_)/ _|/ ____|                                           | |
+${AnsiColor.BRIGHT_BLUE}   | | __ _ _ __ _| |_| |     ___  _ __ ___  _ __   ___  _ __   ___ _ __ | |_
+${AnsiColor.BRIGHT_BLUE}   | |/ _` | '__| |  _| |    / _ \| '_ ` _ \| '_ \ / _ \| '_ \ / _ \ '_ \| __|
+${AnsiColor.BRIGHT_BLUE}   | | (_| | |  | | | | |___| (_) | | | | | | |_) | (_) | | | |  __/ | | | |_
+${AnsiColor.BRIGHT_BLUE}   |_|\__,_|_|  |_|_|  \_____\___/|_| |_| |_| .__/ \___/|_| |_|\___|_| |_|\__|
+${AnsiColor.BRIGHT_BLUE}                                            | |
+${AnsiColor.BRIGHT_BLUE}                                            |_| ${AnsiColor.DEFAULT}

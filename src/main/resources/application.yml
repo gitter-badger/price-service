@@ -1,0 +1,57 @@
+# default profile
+spring:
+  profiles.active: dev
+  application:
+          name: calculate-product
+
+
+# I18N (MessageSourceAutoConfiguration)
+  messages:
+    basename: i18n/messages
+    cache-seconds: -1
+    encoding: UTF-8
+
+# Infos Build
+info.build:
+  artifact: @project.artifactId@
+  name: @project.name@
+  description: @project.description@
+  version: @project.version@
+
+# Management
+management:
+  address: ${server.address}
+  port: ${server.port}
+  context-path: /manage
+
+# Endpoints
+endpoints.health:
+  enabled: true
+  sensitive: false
+
+# SOAP
+soap:
+  server: http://productengine-int03:8080
+  path : promos/tariff/v2/TariffService
+  portname: TarifPort
+  servicename: Tarif
+  namespace.uri: http://services.sbi.ch/system/productengine/tarif/v2
+  wsdl: classpath:wsdl/TariffService_1.wsdl
+  endpoint:
+    url: ${soap.server}/${soap.path}
+    service: ${soap.endpoint.url}/${soap.servicename}
+
+# Logging
+logging:
+  level.: error
+
+# Server
+server:
+  address: 127.0.0.1
+  port: 8080
+
+# Tomcat
+  tomcat:
+    max-http-header-size: 16380
+    compression: on
+    compressableMimeTypes: application/json,application/xml,text/html,text/xml,text/plain
