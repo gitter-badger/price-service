@@ -36,8 +36,8 @@ public class WebServiceJAXWSConfig {
     @Value("${soap.endpoint.url}")
     public String ENDPOINT_URL;
 
-    @Bean(name = "portType", autowire = Autowire.BY_NAME)
-    public JaxWsPortProxyFactoryBean portType() throws IOException {
+    @Bean(name = "tarifPortType", autowire = Autowire.BY_NAME)
+    public JaxWsPortProxyFactoryBean tarifPortType() throws IOException {
         JaxWsPortProxyFactoryBean proxy = new JaxWsPortProxyFactoryBean();
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         Resource resource = context.getResource(WSDL);
