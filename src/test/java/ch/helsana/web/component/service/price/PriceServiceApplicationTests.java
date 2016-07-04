@@ -1,4 +1,4 @@
-package ch.helsana.web.component.tarif;
+package ch.helsana.web.component.service.price;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,9 +11,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 @ActiveProfiles("junit")
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+@SpringApplicationConfiguration(classes = PriceServiceApplication.class)
 @WebAppConfiguration
-public class ApplicationTests {
+public class PriceServiceApplicationTests {
 
 
 	@Autowired

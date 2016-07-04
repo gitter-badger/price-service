@@ -1,0 +1,7 @@
+[[configuration]]
+== Configuration
+=== WebService JAXWS
+[source,java]
+----
+include::{sourcedir}/ch/helsana/web/component/service/price/config/WebServiceJAXWSConfig.java[tags=WebServiceJAXWSConfig,indent=0]
+----

@@ -1,4 +1,4 @@
-package ch.helsana.web.component.tarif.config;
+package ch.helsana.web.component.service.price.config;
 
 import ch.sbi.services.system.productengine.tarif.v2.TarifPortType;
 import org.springframework.beans.factory.annotation.Autowire;
@@ -14,6 +14,7 @@ import java.io.IOException;
 /**
  * Created by panter on 16/12/15.
  */
+// tag::WebServiceJAXWSConfig[]
 @Configuration
 public class WebServiceJAXWSConfig {
 
@@ -52,3 +53,4 @@ public class WebServiceJAXWSConfig {
     }
 
 }
+// end::WebServiceJAXWSConfig[]

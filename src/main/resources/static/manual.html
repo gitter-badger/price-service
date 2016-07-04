@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.3">
 <meta name="author" content="Marcel Widmer">
-<title>Antrag Bridge</title>
+<title>price-service component 0.0.1-SNAPSHOT</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -417,36 +417,382 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
-<body class="book">
+<body class="book toc2 toc-left">
 <div id="header">
-<h1>Antrag Bridge</h1>
+<h1>price-service component 0.0.1-SNAPSHOT</h1>
 <div class="details">
 <span id="author" class="author">Marcel Widmer</span><br>
-<span id="email" class="email"><a href="mailto:marcel.widmer@helsana.ch">marcel.widmer@helsana.ch</a></span><br>
-<span id="revnumber">version 0.11-SNAPSHOT,</span>
-<span id="revdate">2015-06-09</span>
+<span id="email" class="email"><a href="mailto:marzelwidmer@gmail.com">marzelwidmer@gmail.com</a></span><br>
+<span id="revnumber">version 0.0.1-SNAPSHOT,</span>
+<span id="revdate">2016-07-04</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#overview">Overview</a>
+<ul class="sectlevel1">
+<li><a href="#overview-http-verbs">HTTP verbs</a></li>
+<li><a href="#overview-http-status-codes">HTTP status codes</a></li>
+</ul>
+</li>
+<li><a href="#resources">Resources</a>
+<ul class="sectlevel1">
+<li><a href="#resources-product">Product</a>
+<ul class="sectlevel2">
+<li><a href="#resource-get-product">Caclulate product</a>
+<ul class="sectlevel3">
+<li><a href="#_example_request">Example request</a></li>
+<li><a href="#_example_response">Example response</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_architecture">Architecture</a>
+<ul class="sectlevel2">
+<li><a href="#_context">Context</a></li>
+</ul>
+</li>
+<li><a href="#_installation">Installation</a>
+<ul class="sectlevel2">
+<li><a href="#_build_application">Build Application:</a></li>
+<li><a href="#_start_application">Start Application</a>
+<ul class="sectlevel3">
+<li><a href="#_default_profile">Default Profile</a></li>
+<li><a href="#_profiles">Profiles</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#URL">Application URL</a>
+<ul class="sectlevel2">
+<li><a href="#landingpage">Landing Page</a></li>
+<li><a href="#monitoring">Monitoring / Manage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sourceCode">Source Code</a>
+<ul class="sectlevel1">
+<li><a href="#configuration">Configuration</a>
+<ul class="sectlevel2">
+<li><a href="#_webservice_jaxws">WebService JAXWS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#releaseNotes">Release Notes</a>
+<ul class="sectlevel1">
+<li><a href="#_0_0_1">0.0.1</a></li>
+<li><a href="#_attributes">Attributes</a></li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 <div id="content">
+<h1 id="overview" class="sect0"><a class="link" href="#overview">Overview</a></h1>
 <div class="sect1">
-<h2 id="_architecture">Architecture</h2>
+<h2 id="overview-http-verbs"><a class="link" href="#overview-http-verbs">HTTP verbs</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>price-service tries to adhere as closely as possible to standard HTTP and REST conventions in its</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Verb</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>GET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to retrieve a resource</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>POST</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to create a new resource</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PATCH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to update an existing resource, including partial updates</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PUT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to update an existing resource, full updates only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DELETE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to delete an existing resource</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview-http-status-codes"><a class="link" href="#overview-http-status-codes">HTTP status codes</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>price-service tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP status codes.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Status code</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>200 OK</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The request completed successfully</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>201 Created</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A new resource has been created successfully. The resource’s URI is available from the response’s Location header</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>204 No Content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An update to an existing resource has been applied successfully</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>400 Bad Request</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The request was malformed. The response body will include an error providing further information</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>404 Not Found</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The requested resource did not exist</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<h1 id="resources" class="sect0"><a class="link" href="#resources">Resources</a></h1>
+<div class="sect1">
+<h2 id="resources-product"><a class="link" href="#resources-product">Product</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Product resource is used to calculate the product prices.</p>
+</div>
+<div class="sect2">
+<h3 id="resource-get-product"><a class="link" href="#resource-get-product">Caclulate product</a></h3>
+<div class="paragraph">
+<p>A <code>GET</code> request calculate the price of products.
+Unresolved directive in manual.adoc - include::/Users/marcelwidmer/Dev/git/price-service/target/generated-snippets/calculate-product/response-fields.adoc[]</p>
+</div>
+<div class="sect3">
+<h4 id="_example_request"><a class="link" href="#_example_request">Example request</a></h4>
+<div class="paragraph">
+<p>Unresolved directive in manual.adoc - include::/Users/marcelwidmer/Dev/git/price-service/target/generated-snippets/calculate-product/curl-request.adoc[]</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_response"><a class="link" href="#_example_response">Example response</a></h4>
+<div class="paragraph">
+<p>Unresolved directive in manual.adoc - include::/Users/marcelwidmer/Dev/git/price-service/target/generated-snippets/calculate-product/http-response.adoc[]</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_architecture"><a class="link" href="#_architecture">Architecture</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_context">Context</h3>
+<h3 id="_context"><a class="link" href="#_context">Context</a></h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/context-diagram.png" alt="context diagram" width="810" height="98">
+<img src="images/context-diagram.png" alt="context diagram" width="790" height="98">
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation"><a class="link" href="#_installation">Installation</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_build_application"><a class="link" href="#_build_application">Build Application:</a></h3>
+<div class="literalblock">
+<div class="content">
+<pre>$ mvn package</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Copy the file price-service-0.0.1-SNAPSHOT.jar anywhere on the server.
+The JAR already contains the configuration for all available environments.
+For further information please visit the  <a href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/">Spring Boot Reference Guide</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_start_application"><a class="link" href="#_start_application">Start Application</a></h3>
+<div class="sect3">
+<h4 id="_default_profile"><a class="link" href="#_default_profile">Default Profile</a></h4>
+<div class="paragraph">
+<p>Start application on command line. The <em>default</em> profile supports a H2 datbase.
+For more information please visit the <a href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#getting-started-first-application-executable-jar">Spring Boot Reference Guide</a> for further information.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ java -jar price-service.jar</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are additional Spring profiles available.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_profiles"><a class="link" href="#_profiles">Profiles</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Table -Dspring.profiles.active=</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Profile</th>
+<th class="tableblock halign-left valign-top">Environment</th>
+</tr>
+</thead>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="URL"><a class="link" href="#URL">Application URL</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="landingpage"><a class="link" href="#landingpage">Landing Page</a></h3>
+<div class="literalblock">
+<div class="content">
+<pre>/</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="monitoring"><a class="link" href="#monitoring">Monitoring / Manage</a></h3>
+<div class="literalblock">
+<div class="content">
+<pre>/manage/</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h1 id="sourceCode" class="sect0"><a class="link" href="#sourceCode">Source Code</a></h1>
+<div class="sect1">
+<h2 id="configuration"><a class="link" href="#configuration">Configuration</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_webservice_jaxws"><a class="link" href="#_webservice_jaxws">WebService JAXWS</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">@Configuration
+public class WebServiceJAXWSConfig {
+
+    @Value("${soap.portname}")
+    public String PORTNAME;
+
+    @Value("${soap.servicename}")
+    public String SERVICENAME;
+
+    @Value("${soap.namespace.uri}")
+    public String NAMESPACEURI;
+
+    @Value("${soap.wsdl}")
+    public String WSDL;
+
+    @Value("${soap.endpoint.service}")
+    public String ENDPOINT_SERVICE;
+
+    @Value("${soap.endpoint.url}")
+    public String ENDPOINT_URL;
+
+    @Bean(name = "portType", autowire = Autowire.BY_NAME)
+    public JaxWsPortProxyFactoryBean portType() throws IOException {
+        JaxWsPortProxyFactoryBean proxy = new JaxWsPortProxyFactoryBean();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        Resource resource = context.getResource(WSDL);
+        proxy.setWsdlDocumentResource(resource);
+        proxy.setServiceInterface(TarifPortType.class);
+
+        proxy.setServiceName(SERVICENAME);
+        proxy.setPortName(PORTNAME);
+        proxy.setNamespaceUri(NAMESPACEURI);
+        proxy.setEndpointAddress(ENDPOINT_SERVICE);
+
+        return proxy;
+    }
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h1 id="releaseNotes" class="sect0"><a class="link" href="#releaseNotes">Release Notes</a></h1>
+<div class="sect1">
+<h2 id="_0_0_1"><a class="link" href="#_0_0_1">0.0.1</a></h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_attributes"><a class="link" href="#_attributes">Attributes</a></h2>
+<div class="sectionbody">
+<div class="dlist">
+<div class="title">Built-in</div>
+<dl>
+<dt class="hdlist1">asciidoctor-version</dt>
+<dd>
+<p>1.5.3</p>
+</dd>
+<dt class="hdlist1">safe-mode-name</dt>
+<dd>
+<p>unsafe</p>
+</dd>
+<dt class="hdlist1">docdir</dt>
+<dd>
+<p>/Users/marcelwidmer/Dev/git/price-service/src/docs/asciidoc-resources</p>
+</dd>
+<dt class="hdlist1">docfile</dt>
+<dd>
+<p>/Users/marcelwidmer/Dev/git/price-service/src/docs/asciidoc/manual.adoc</p>
+</dd>
+<dt class="hdlist1">imagesdir</dt>
+<dd>
+<p>images</p>
+</dd>
+<dt class="hdlist1">sourcedir</dt>
+<dd>
+<p>../../main/java</p>
+</dd>
+<dt class="hdlist1">testdir</dt>
+<dd>
+<p>../../test/java</p>
+</dd>
+</dl>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.11-SNAPSHOT<br>
-Last updated 2016-07-04 19:44:37 CEST
+Version 0.0.1-SNAPSHOT<br>
+Last updated 2016-07-04 20:43:10 CEST
 </div>
 </div>
 </body>
