@@ -1,8 +1,8 @@
 # default profile
 spring:
-  profiles.active: dev
+  #profiles.active: dev
   application:
-          name: calculate-product
+          name: price-service
 
 
 # I18N (MessageSourceAutoConfiguration)
@@ -54,7 +54,12 @@ soap:
 
 # Logging
 logging:
-  level.: error
+  level.: warn
+  level.org.springframework.boot: WARN
+  level.org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer: INFO
+
+
+
 
 # Server
 server:

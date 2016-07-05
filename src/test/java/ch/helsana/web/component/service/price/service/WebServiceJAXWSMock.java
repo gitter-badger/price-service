@@ -24,7 +24,7 @@ import javax.jws.WebService;
 @WebService(serviceName = "Tarif", portName = "TarifPort", targetNamespace = "http://services.sbi.ch/system/productengine/tarif/v2"
         , endpointInterface = "ch.sbi.services.system.productengine.tarif.v2.TarifPortType")
 @ActiveProfiles("junit")
-@IntegrationTest
+@IntegrationTest({"server.port=0"})
 public class WebServiceJAXWSMock implements TarifPortType {
 
     @WebMethod

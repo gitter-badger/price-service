@@ -10,10 +10,8 @@ import ch.sbi.services.system.productengine.tarif.v2.berechnepraemieresponse.Ber
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -22,11 +20,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 @IntegrationTest
 public class PriceServiceApplicationIntegrationTest {
-
-
-    @Autowired // this is the mock of SPF SOAP required by the application tests to run.
-    @Qualifier("tarifPortType")
-    JaxWsPortProxyFactoryBean tarifPortType;
 
     @Autowired
     PriceService priceService;
