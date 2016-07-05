@@ -33,9 +33,6 @@ public class WebServiceJAXWSConfig {
     @Value("${soap.endpoint.service}")
     public String ENDPOINT_SERVICE;
 
-    @Value("${soap.endpoint.url}")
-    public String ENDPOINT_URL;
-
     @Bean(name = "tarifPortType", autowire = Autowire.BY_NAME)
     public JaxWsPortProxyFactoryBean tarifPortType() throws IOException {
         JaxWsPortProxyFactoryBean proxy = new JaxWsPortProxyFactoryBean();

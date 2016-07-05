@@ -16,6 +16,6 @@ shell:
 
 # SOAP Mock
 app:
-  server: http://localhost
+  server: http://productengine-int03
 soap:
   server: ${app.server}:8080

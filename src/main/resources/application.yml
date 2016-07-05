@@ -32,14 +32,15 @@ endpoints.health:
 # SOAP
 soap:
   server: http://productengine-int03:8080
-  path : promos/tariff/v2/TariffService
-  portname: TarifPort
-  servicename: Tarif
-  namespace.uri: http://services.sbi.ch/system/productengine/tarif/v2
+  path : promos/tariff/v2
   wsdl: classpath:wsdl/TariffService_1.wsdl
+  servicename: Tarif
+  portname: TarifPort
+  namespace.uri: http://services.sbi.ch/system/productengine/tarif/v2
+
   endpoint:
-    url: ${soap.server}/${soap.path}
-    service: ${soap.endpoint.url}/${soap.servicename}
+    service: ${soap.server}/${soap.path}/${soap.servicename}
+
 
 # Logging
 logging:
