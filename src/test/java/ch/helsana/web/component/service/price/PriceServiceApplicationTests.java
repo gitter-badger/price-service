@@ -6,6 +6,7 @@ import ch.sbi.services.system.productengine.tarif.v2.BerechnePraemieSystemFaultM
 import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
 import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.Person;
 import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.PersonListType;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = PriceServiceApplication.class)
 @WebAppConfiguration
+@Ignore
 public class PriceServiceApplicationTests {
 
 
