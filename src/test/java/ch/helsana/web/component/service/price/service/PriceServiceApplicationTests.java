@@ -11,8 +11,10 @@ import ch.sbi.services.system.productengine.tarif.v2.berechnepraemieresponse.Ber
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -25,9 +27,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class PriceServiceApplicationTests {
 
 
-//    @Autowired
-//    @Qualifier("tarifPortTypeTest")
-//    SimpleJaxWsServiceExporter tarifPortTypeTest;
+    @Autowired
+    @Qualifier("tarifPortTypeTest")
+    public SimpleJaxWsServiceExporter webServiceMock;
 
     @Autowired
     PriceService priceService;
