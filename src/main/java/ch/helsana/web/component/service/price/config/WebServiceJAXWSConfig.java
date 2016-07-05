@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean;
-
 import java.io.IOException;
+
 
 /**
  * Created by panter on 16/12/15.
@@ -24,7 +24,7 @@ public class WebServiceJAXWSConfig {
     @Value("${soap.servicename}")
     public String SERVICENAME;
 
-    @Value("${soap.namespace.uri}")
+    @Value("${soap.namespace}")
     public String NAMESPACEURI;
 
     @Value("${soap.wsdl}")
@@ -32,6 +32,9 @@ public class WebServiceJAXWSConfig {
 
     @Value("${soap.endpoint.service}")
     public String ENDPOINT_SERVICE;
+
+    @Value("${soap.endpoint.url}")
+    public String ENDPOINT_URL;
 
     @Bean(name = "tarifPortType", autowire = Autowire.BY_NAME)
     public JaxWsPortProxyFactoryBean tarifPortType() throws IOException {

@@ -14,8 +14,9 @@ shell:
   ssh:
     port: 0
 
-# SOAP Mock
-app:
-  server: http://productengine-int03
 soap:
-  server: ${app.server}:8080
+  endpoint:
+    server: http://localhost:8080
+
+logging:
+  level: debug

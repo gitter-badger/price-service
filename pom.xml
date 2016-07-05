@@ -33,6 +33,9 @@
         <asciidoctorj-diagram.version>1.3.1</asciidoctorj-diagram.version>
         <snippetsDirectory>${project.build.directory}/generated-snippets</snippetsDirectory>
         <asciidoctor-maven-plugin.outputDirectory>${project.basedir}/src/main/resources/static</asciidoctor-maven-plugin.outputDirectory>
+        <!-- Joda -->
+        <joda-time-version>2.8.2</joda-time-version>
+
         <!-- Jackson / Json -->
         <json-path-assert.version>2.1.0</json-path-assert.version>
         <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
@@ -63,6 +66,13 @@
             <groupId>external.atlassian.jgitflow</groupId>
             <artifactId>jgitflow-maven-plugin</artifactId>
             <version>${jgitflow-maven-plugin.version}</version>
+        </dependency>
+        <!-- Joda -->
+        <!-- JodaTime -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda-time-version}</version>
         </dependency>
         <!-- Assertj -->
         <dependency>
@@ -210,7 +220,7 @@
                 <configuration>
                     <skipTests>${unit-tests.skip}</skipTests>
                     <excludes>
-                        <exclude>**/*IT.java</exclude>
+                        <exclude>**/*IntegrationTest.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -226,7 +236,7 @@
                         <configuration>
                             <skipTests>${integration-tests.skip}</skipTests>
                             <includes>
-                                <include>**/*IT.class</include>
+                                <include>**/*IntegrationTest.class</include>
                             </includes>
                         </configuration>
                     </execution>
@@ -292,9 +302,6 @@
                         <wsdlFile>TariffService_1.wsdl</wsdlFile>
                     </wsdlFiles>
                     <bindingDirectory>src/main/resources/wsdl</bindingDirectory>
-                   <!-- <bindingFiles>
-                        <bindingFile>binding.xml</bindingFile>
-                    </bindingFiles>-->
                 </configuration>
             </plugin>
         </plugins>
