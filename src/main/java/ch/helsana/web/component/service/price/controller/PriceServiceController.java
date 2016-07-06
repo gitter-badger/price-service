@@ -1,12 +1,16 @@
 package ch.helsana.web.component.service.price.controller;
 
+import ch.helsana.web.component.service.price.service.PriceService;
 import ch.sbi.services.system.productengine.tarif.v2.berechnebesterpreisrequest.BerechneBesterPreisRequest;
 import ch.sbi.services.system.productengine.tarif.v2.berechnebesterpreisresponse.BerechneBesterPreisResponse;
 import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
 import ch.sbi.services.system.productengine.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
 import ch.sbi.services.system.productengine.tarif.v2.filtereprodukterequest.FiltereProdukteRequest;
 import ch.sbi.services.system.productengine.tarif.v2.filtereprodukteresponse.FiltereProdukteResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +26,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/product")
 public class PriceServiceController {
+
+
+
+    private PriceService priceService;
+
+    @Autowired
+    public void setPriceService(PriceService priceService) {
+        this.priceService = priceService;
+    }
 
 
 
@@ -41,8 +54,11 @@ public class PriceServiceController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public BerechnePraemieResponse berechnePraemie(BerechnePraemieRequest parameters) {
-        return null;
+    public ResponseEntity berechnePraemie(BerechnePraemieRequest parameters) {
+        //return new ResponseEntity(service.uebermittleAntrag(UebermittleAntragRequestConverter.convertToSoap(request)), HttpStatus.CREATED);
+        BerechnePraemieResponse response = priceService.berechnePraemie(parameters);
+        ResponseEntity responseEntity = new ResponseEntity(response.getPreis(), HttpStatus.ACCEPTED);
+        return responseEntity;
     }
 
     @RequestMapping(

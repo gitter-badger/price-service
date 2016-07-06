@@ -15,6 +15,8 @@ import org.joda.time.DateTime;
  */
 public class ServiceRequestHelper {
 
+
+
     public static BerechnePraemieRequest berechnePraemieRequest() {
         BerechnePraemieRequest request = new BerechnePraemieRequest();
 

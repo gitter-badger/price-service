@@ -32,18 +32,43 @@ public class PriceService implements TarifPortType {
 
     // tag::implementPortTypeMethod[]
     @Override
-    public BerechneBesterPreisResponse berechneBesterPreis(BerechneBesterPreisRequest parameters) throws BerechneMarkenPreiseBusinessFaultMessage, BerechneMarkenPreiseSystemFaultMessage {
-        return tarifPortType.berechneBesterPreis(parameters);
+    public BerechneBesterPreisResponse berechneBesterPreis(BerechneBesterPreisRequest parameters) {
+        BerechneBesterPreisResponse response = null;
+        try {
+            response = tarifPortType.berechneBesterPreis(parameters);
+        } catch (BerechneMarkenPreiseSystemFaultMessage berechneMarkenPreiseSystemFaultMessage) {
+            berechneMarkenPreiseSystemFaultMessage.printStackTrace();
+        } catch (BerechneMarkenPreiseBusinessFaultMessage berechneMarkenPreiseBusinessFaultMessage) {
+            berechneMarkenPreiseBusinessFaultMessage.printStackTrace();
+        }
+        return response;
     }
 
     @Override
-    public BerechnePraemieResponse berechnePraemie(BerechnePraemieRequest parameters) throws BerechnePraemieBusinessFaultMessage, BerechnePraemieSystemFaultMessage {
-        return tarifPortType.berechnePraemie(parameters);
+    public BerechnePraemieResponse berechnePraemie(BerechnePraemieRequest parameters) {
+        BerechnePraemieResponse response = null;
+        try {
+            response = tarifPortType.berechnePraemie(parameters);
+        } catch (BerechnePraemieSystemFaultMessage berechnePraemieSystemFaultMessage) {
+            berechnePraemieSystemFaultMessage.printStackTrace();
+        } catch (BerechnePraemieBusinessFaultMessage berechnePraemieBusinessFaultMessage) {
+            berechnePraemieBusinessFaultMessage.printStackTrace();
+        }
+        return response;
     }
 
     @Override
-    public FiltereProdukteResponse filtereProdukte(FiltereProdukteRequest parameters) throws FiltereProdukteBusinessFaultMessage, FiltereProdukteSystemFaultMessage {
-        return tarifPortType.filtereProdukte(parameters);
+    public FiltereProdukteResponse filtereProdukte(FiltereProdukteRequest parameters) {
+        FiltereProdukteResponse response = null;
+        try {
+            response = tarifPortType.filtereProdukte(parameters);
+        } catch (FiltereProdukteBusinessFaultMessage filtereProdukteBusinessFaultMessage) {
+            filtereProdukteBusinessFaultMessage.printStackTrace();
+        } catch (FiltereProdukteSystemFaultMessage filtereProdukteSystemFaultMessage) {
+            filtereProdukteSystemFaultMessage.printStackTrace();
+        }
+        return response;
+
     }
     // end::implementPortTypeMethod[]
 

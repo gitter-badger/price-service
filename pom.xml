@@ -39,10 +39,16 @@
         <!-- Jackson / Json -->
         <json-path-assert.version>2.1.0</json-path-assert.version>
         <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
+
         <!-- SOAP und XML Mapping -->
+        <wsdlRoot>${project.basedir}/src/main/resources/wsdl</wsdlRoot>
         <jaxws-maven-plugin.version>2.4.1</jaxws-maven-plugin.version>
 
         <cxf-codegen-plugin.version>3.1.5</cxf-codegen-plugin.version>
+        <cxf-xjc-boolean.version>3.0.5</cxf-xjc-boolean.version>
+        <cxf-xjc-dv.version>3.0.5</cxf-xjc-dv.version>
+        <cxf-xjc-ts.version>3.0.5</cxf-xjc-ts.version>
+        <jaxb2-fluent-api.version>3.0</jaxb2-fluent-api.version>
         <krasa-jaxb-tools.version>1.4</krasa-jaxb-tools.version>
 
 
@@ -54,6 +60,7 @@
         <assertj.version>1.7.0</assertj.version>
         <mockito.version>1.10.8</mockito.version>
         <rest-assured.version>2.4.0</rest-assured.version>
+
     </properties>
 
 
@@ -97,6 +104,39 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>${jackson-mapper-asl.version}</version>
         </dependency>
+
+
+
+
+        <dependency>
+            <groupId>org.apache.cxf.xjc-utils</groupId>
+            <artifactId>xjc-utils</artifactId>
+            <version>3.0.5</version>
+            <type>pom</type>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.cxf.xjcplugins/cxf-xjc-boolean -->
+        <dependency>
+            <groupId>org.apache.cxf.xjcplugins</groupId>
+            <artifactId>cxf-xjc-boolean</artifactId>
+            <version>${cxf-xjc-boolean.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf.xjcplugins</groupId>
+            <artifactId>cxf-xjc-dv</artifactId>
+            <version>${cxf-xjc-dv.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf.xjcplugins</groupId>
+            <artifactId>cxf-xjc-ts</artifactId>
+            <version>${cxf-xjc-ts.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-fluent-api</artifactId>
+            <version>${jaxb2-fluent-api.version}</version>
+        </dependency>
+
+
 
         <!-- starter-test -->
         <dependency>
@@ -319,7 +359,7 @@
             </plugin>
 
             <!-- Generate Java classes from WSDL during build -->
-            <plugin>
+         <!--   <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-codegen-plugin</artifactId>
                 <executions>
@@ -355,7 +395,84 @@
                         <version>${krasa-jaxb-tools.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>-->
+
+
+
+
+
+
+            <!-- SOAP und XML Mapping -->
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <version>${cxf-codegen-plugin.version}</version>
+                <configuration>
+                    <defaultOptions>
+                        <extraargs>
+                            <extraarg>-xjc-XJsr303Annotations</extraarg>
+                            <extraarg>-xjc-Xts</extraarg>
+                            <extraarg>-xjc-Xfluent-api</extraarg>
+                            <extraarg>-xjc-Xbgi</extraarg>
+                            <extraarg>-xjc-Xdv</extraarg>
+                        </extraargs>
+                        <bindingFiles>
+                            <bindingFile>${project.basedir}/src/main/resources/wsdl/binding.xml</bindingFile>
+                            <bindingFile>${project.basedir}/src/main/resources/wsdl/enum-binding.xml</bindingFile>
+                        </bindingFiles>
+                    </defaultOptions>
+
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>wsdl2java</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>${wsdlRoot}/TariffService_1.wsdl</wsdl>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.krasa</groupId>
+                        <artifactId>krasa-jaxb-tools</artifactId>
+                        <version>${krasa-jaxb-tools.version}</version>
+                    </dependency>
+                    <!-- https://mvnrepository.com/artifact/org.apache.cxf.xjcplugins/cxf-xjc-boolean -->
+                    <dependency>
+                        <groupId>org.apache.cxf.xjcplugins</groupId>
+                        <artifactId>cxf-xjc-boolean</artifactId>
+                        <version>${cxf-xjc-boolean.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.cxf.xjcplugins</groupId>
+                        <artifactId>cxf-xjc-dv</artifactId>
+                        <version>${cxf-xjc-dv.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.cxf.xjcplugins</groupId>
+                        <artifactId>cxf-xjc-ts</artifactId>
+                        <version>${cxf-xjc-ts.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-fluent-api</artifactId>
+                        <version>${jaxb2-fluent-api.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
+
+
+
+
+
 
 
 
