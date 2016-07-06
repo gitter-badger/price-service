@@ -6,7 +6,9 @@ import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.Bere
 import ch.sbi.services.system.productengine.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
 import ch.sbi.services.system.productengine.tarif.v2.filtereprodukterequest.FiltereProdukteRequest;
 import ch.sbi.services.system.productengine.tarif.v2.filtereprodukteresponse.FiltereProdukteResponse;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -18,18 +20,37 @@ import org.springframework.web.bind.annotation.RestController;
  *  nothing or only the mapping has to be changed
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/product")
 public class PriceServiceController {
 
 
+
+    @RequestMapping(
+            value = "/best-price",
+            method = {RequestMethod.GET},
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
     public BerechneBesterPreisResponse berechneBesterPreis(BerechneBesterPreisRequest parameters) {
         return null;
     }
 
+    @RequestMapping(
+            value = "/price",
+            method = {RequestMethod.GET},
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
     public BerechnePraemieResponse berechnePraemie(BerechnePraemieRequest parameters) {
         return null;
     }
 
+    @RequestMapping(
+            value = "/filter",
+            method = {RequestMethod.GET},
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
     public FiltereProdukteResponse filtereProdukte(FiltereProdukteRequest parameters) {
         return null;
     }
