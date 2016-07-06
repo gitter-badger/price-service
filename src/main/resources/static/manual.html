@@ -426,7 +426,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <span id="author" class="author">Marcel Widmer</span><br>
 <span id="email" class="email"><a href="mailto:marzelwidmer@gmail.com">marzelwidmer@gmail.com</a></span><br>
 <span id="revnumber">version 0.0.1-SNAPSHOT,</span>
-<span id="revdate">2016-07-05</span>
+<span id="revdate">2016-07-06</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -714,7 +714,7 @@ public class WebServiceJAXWSConfig {
     @Value("${soap.servicename}")
     public String SERVICENAME;
 
-    @Value("${soap.namespace.uri}")
+    @Value("${soap.namespace}")
     public String NAMESPACEURI;
 
     @Value("${soap.wsdl}")
@@ -722,6 +722,9 @@ public class WebServiceJAXWSConfig {
 
     @Value("${soap.endpoint.service}")
     public String ENDPOINT_SERVICE;
+
+    @Value("${soap.endpoint.url}")
+    public String ENDPOINT_URL;
 
     @Bean(name = "tarifPortType", autowire = Autowire.BY_NAME)
     public JaxWsPortProxyFactoryBean tarifPortType() throws IOException {

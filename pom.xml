@@ -33,17 +33,24 @@
         <asciidoctorj-diagram.version>1.3.1</asciidoctorj-diagram.version>
         <snippetsDirectory>${project.build.directory}/generated-snippets</snippetsDirectory>
         <asciidoctor-maven-plugin.outputDirectory>${project.basedir}/src/main/resources/static</asciidoctor-maven-plugin.outputDirectory>
+
         <!-- Joda -->
         <joda-time-version>2.8.2</joda-time-version>
-
         <!-- Jackson / Json -->
         <json-path-assert.version>2.1.0</json-path-assert.version>
         <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
         <!-- SOAP und XML Mapping -->
         <jaxws-maven-plugin.version>2.4.1</jaxws-maven-plugin.version>
-        <!-- Test  -->
+
+        <cxf-codegen-plugin.version>3.1.5</cxf-codegen-plugin.version>
+        <krasa-jaxb-tools.version>1.4</krasa-jaxb-tools.version>
+
+
+        <!-- Skip JUnit Test  -->
         <unit-tests.skip>false</unit-tests.skip>
+        <!-- Skip Integration Test  -->
         <integration-tests.skip>true</integration-tests.skip>
+
         <assertj.version>1.7.0</assertj.version>
         <mockito.version>1.10.8</mockito.version>
         <rest-assured.version>2.4.0</rest-assured.version>
@@ -168,8 +175,27 @@
                     </dependencies>
                 </plugin>
 
-                <!-- SOAP und XML Mapping -->
+
                 <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>add-source</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>add-source</goal>
+                            </goals>
+                            <configuration>
+                                <sources>
+                                    <source>${project.build.directory}/generated-sources/java/</source>
+                                </sources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- SOAP und XML Mapping -->
+             <!--   <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>jaxws-maven-plugin</artifactId>
                     <version>${jaxws-maven-plugin.version}</version>
@@ -188,13 +214,13 @@
                                 <sourceDestDir>${project.build.directory}/generated-sources</sourceDestDir>
                                 <verbose>true</verbose>
                                 <encoding>${project.build.sourceEncoding}</encoding>
-                                <!--jee 7 : jax-ws 2.2-->
+                                &lt;!&ndash;jee 7 : jax-ws 2.2&ndash;&gt;
                                 <target>2.2</target>
                                 <staleFile>${project.build.directory}/jaxws_stale_wsdl.done</staleFile>
                             </configuration>
                         </execution>
                     </executions>
-                </plugin>
+                </plugin>-->
             </plugins>
         </pluginManagement>
 
@@ -292,8 +318,49 @@
                 </executions>
             </plugin>
 
-            <!-- SOAP und XML Mapping -->
+            <!-- Generate Java classes from WSDL during build -->
             <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>
+                                        src/main/resources/wsdl/TariffService_1.wsdl
+                                    </wsdl>
+                                    <extraargs>
+                                        <extraarg>-xjc-XJsr303Annotations</extraarg>
+                                    </extraargs>
+                                    <bindingFiles>
+                                        <bindingFile>
+                                           src/main/resources/wsdl/binding.xml
+                                        </bindingFile>
+                                    </bindingFiles>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.krasa</groupId>
+                        <artifactId>krasa-jaxb-tools</artifactId>
+                        <version>${krasa-jaxb-tools.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+
+
+            <!-- SOAP und XML Mapping -->
+          <!--  <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
                 <configuration>
@@ -303,7 +370,7 @@
                     </wsdlFiles>
                     <bindingDirectory>src/main/resources/wsdl</bindingDirectory>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>
