@@ -107,8 +107,13 @@
 
 
 
+        <!-- https://mvnrepository.com/artifact/org.apache.cxf.xjc-utils/cxf-xjc-runtime -->
+        <dependency>
+            <groupId>org.apache.cxf.xjc-utils</groupId>
+            <artifactId>cxf-xjc-runtime</artifactId>
+            <version>3.0.5</version>
+        </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.cxf.xjcplugins/cxf-xjc-boolean -->
         <dependency>
             <groupId>org.apache.cxf.xjcplugins</groupId>
             <artifactId>cxf-xjc-boolean</artifactId>
