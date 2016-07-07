@@ -103,37 +103,6 @@
             <version>${jackson-mapper-asl.version}</version>
         </dependency>
 
-
-
-        <!-- https://mvnrepository.com/artifact/org.apache.cxf.xjc-utils/cxf-xjc-runtime -->
-       <!-- <dependency>
-            <groupId>org.apache.cxf.xjc-utils</groupId>
-            <artifactId>cxf-xjc-runtime</artifactId>
-            <version>3.0.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.cxf.xjcplugins</groupId>
-            <artifactId>cxf-xjc-boolean</artifactId>
-            <version>${cxf-xjc-boolean.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf.xjcplugins</groupId>
-            <artifactId>cxf-xjc-dv</artifactId>
-            <version>${cxf-xjc-dv.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf.xjcplugins</groupId>
-            <artifactId>cxf-xjc-ts</artifactId>
-            <version>${cxf-xjc-ts.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jvnet.jaxb2_commons</groupId>
-            <artifactId>jaxb2-fluent-api</artifactId>
-            <version>${cxf-xjc-fluent-api.version}</version>
-        </dependency>
--->
-
         <!-- starter-test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -336,6 +305,9 @@
     <profiles>
         <profile>
             <id>jaxws</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <build>
                 <plugins>
                         <plugin>
