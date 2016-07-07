@@ -65,7 +65,7 @@ public class PriceServiceController {
      */
     @RequestMapping(
             value = "/price",
-            method = {RequestMethod.POST}
+            method = {RequestMethod.POST,RequestMethod.GET}
     )
     public ResponseEntity berechnePraemie(BerechnePraemieRequest parameters) throws RestException {
         BerechnePraemieResponse response = null;

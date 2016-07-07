@@ -64,13 +64,13 @@ public class RestExceptionProcessor {
         return makeErrorInfo(req, ex);
     }
 
-    @ExceptionHandler({SystemException.class})
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "TechnicalException: 001.")
+    @ExceptionHandler({BusinessException.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "BusinessException: 001.")
     public ErrorInfo errorHandling(HttpServletRequest req, SystemException ex) throws IOException {
         return makeErrorInfo(req, ex);
     }
 
-    @ExceptionHandler({Exception.class})
+    @ExceptionHandler({SystemException.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "SystemException: 001.")
     public ErrorInfo errorHandling(HttpServletRequest req, Exception ex) throws IOException {
         return makeErrorInfo(req, ex);
