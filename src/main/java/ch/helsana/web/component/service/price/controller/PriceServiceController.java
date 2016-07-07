@@ -37,6 +37,24 @@ public class PriceServiceController {
     }
 
 
+
+
+
+    @RequestMapping(
+            value = "/best-price",
+            method = {RequestMethod.GET}
+    )
+    public BerechneBesterPreisResponse berechneBesterPreis(BerechneBesterPreisRequest parameters) {
+        // TODO: 07.07.2016 implement me !!
+        return null;
+    }
+
+    /**
+     * // TODO: 07.07.2016  check HTTP Standard if GET  or .... https://tools.ietf.org/html/rfc7231#section-8.1.3
+     * @param parameters
+     * @return
+     * @throws RestException
+     */
     @RequestMapping(
             value = "/price",
             method = {RequestMethod.GET}
@@ -56,28 +74,12 @@ public class PriceServiceController {
     }
 
 
-
-
-
-
-
-
-
-
-    @RequestMapping(
-            value = "/best-price",
-            method = {RequestMethod.GET}
-    )
-    public BerechneBesterPreisResponse berechneBesterPreis(BerechneBesterPreisRequest parameters) {
-        return null;
-    }
-
-
     @RequestMapping(
             value = "/filter",
             method = {RequestMethod.GET}
     )
     public FiltereProdukteResponse filtereProdukte(FiltereProdukteRequest parameters) {
+        // TODO: 07.07.2016 implement me !!
         return null;
     }
 }
