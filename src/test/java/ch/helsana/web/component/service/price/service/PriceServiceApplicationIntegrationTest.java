@@ -3,8 +3,8 @@ package ch.helsana.web.component.service.price.service;
 
 import ch.helsana.web.component.service.price.PriceServiceApplication;
 import ch.helsana.web.component.service.price.config.WebServiceJAXWSConfig;
-import ch.sbi.services.system.productengine.tarif.v2.BerechnePraemieBusinessFaultMessage;
-import ch.sbi.services.system.productengine.tarif.v2.BerechnePraemieSystemFaultMessage;
+import ch.helsana.web.component.service.price.exception.BusinessException;
+import ch.helsana.web.component.service.price.exception.SystemException;
 import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
 import ch.sbi.services.system.productengine.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class PriceServiceApplicationIntegrationTest {
     PriceService priceService;
 
     @Test
-    public void berechnePraemieTest() throws BerechnePraemieBusinessFaultMessage, BerechnePraemieSystemFaultMessage {
+    public void berechnePraemieTest() throws SystemException, BusinessException {
         BerechnePraemieRequest request = ServiceRequestHelper.berechnePraemieRequest();
         BerechnePraemieResponse response = priceService.berechnePraemie(request);
         System.out.println(response.getPreis().getBruttoPreis());
