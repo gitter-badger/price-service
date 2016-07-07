@@ -9,8 +9,6 @@ import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Ber
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemieresponse.Preis;
 import ch.helsana.web.component.service.price.PriceServiceApplication;
-import ch.helsana.web.component.service.price.exception.BusinessException;
-import ch.helsana.web.component.service.price.exception.SystemException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +61,7 @@ public class PriceServiceTest {
 
 
 
-    @Test(expected = SystemException.class)
+    @Test(expected = ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieSystemFaultMessage.class)
     public void priceSystemException() throws Exception {
         // setup
         BerechnePraemieRequest request = ServiceRequestHelper.berechnePraemieRequest();
@@ -80,7 +78,7 @@ public class PriceServiceTest {
         priceService.berechnePraemie(null);
     }
 
-    @Test(expected = BusinessException.class)
+    @Test(expected = ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage.class)
     public void priceBusinessException() throws Exception {
         // setup
         BerechnePraemieRequest request = ServiceRequestHelper.berechnePraemieRequest();
