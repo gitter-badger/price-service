@@ -8,7 +8,9 @@ import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Ber
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
 import ch.helsana.services.spezialfunktionen.tarif.v2.filtereprodukterequest.FiltereProdukteRequest;
 import ch.helsana.services.spezialfunktionen.tarif.v2.filtereprodukteresponse.FiltereProdukteResponse;
+import ch.helsana.web.component.service.price.exception.BusinessException;
 import ch.helsana.web.component.service.price.exception.RestException;
+import ch.helsana.web.component.service.price.exception.SystemException;
 import ch.helsana.web.component.service.price.service.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by hkesq on 05.07.2016.
- *  This Class would be responsible for Mapping from Request to internal Datamodel (and backwards),
- *  for calling Backend-Services and handling Backend-Exceptions
- *  So it decouples the WSDL-generated Classes from the internal Classes - for when the former changes,
- *  nothing or only the mapping has to be changed
+ * This Class would be responsible for Mapping from Request to internal Datamodel (and backwards),
+ * for calling Backend-Services and handling Backend-Exceptions
+ * So it decouples the WSDL-generated Classes from the internal Classes - for when the former changes,
+ * nothing or only the mapping has to be changed
  */
 @RestController
 @RequestMapping("/product")
@@ -31,6 +33,7 @@ public class PriceServiceController {
 
 
     private PriceService priceService;
+
     @Autowired
     public void setPriceService(PriceService priceService) {
         this.priceService = priceService;
@@ -39,7 +42,7 @@ public class PriceServiceController {
 
     /**
      * https://tools.ietf.org/html/rfc7231#section-8.1.3
-     *
+     * <p>
      * POST because a new best price is created.
      *
      * @param parameters
@@ -56,7 +59,7 @@ public class PriceServiceController {
 
     /**
      * https://tools.ietf.org/html/rfc7231#section-8.1.3
-     *
+     * <p>
      * POST because a new price is created.
      *
      * @param parameters
@@ -65,21 +68,26 @@ public class PriceServiceController {
      */
     @RequestMapping(
             value = "/price",
-            method = {RequestMethod.POST,RequestMethod.GET}
+            method = {RequestMethod.POST, RequestMethod.GET}
     )
-    public ResponseEntity berechnePraemie(BerechnePraemieRequest parameters) throws RestException {
+    public ResponseEntity berechnePraemie(BerechnePraemieRequest parameters) throws Exception {
         BerechnePraemieResponse response = null;
-       // try {
+        ResponseEntity responseEntity;
         try {
             response = priceService.berechnePraemie(parameters);
+            responseEntity = new ResponseEntity(response.getPreis(), HttpStatus.ACCEPTED);
+            return responseEntity;
         } catch (BerechnePraemieSystemFaultMessage systemFaultMessage) {
-            throw new RestException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (BerechnePraemieBusinessFaultMessage businessFaultMessage) {
-            throw new RestException("Price business exception : ", HttpStatus.BAD_REQUEST);
+            throw new BusinessException("Price business exception : ", HttpStatus.BAD_REQUEST);
+        } finally {
+           throw new SystemException("System business exception : ", HttpStatus.BAD_REQUEST);
+           // throw new BusinessException("Price business exception.... : ", HttpStatus.BAD_REQUEST);
+
         }
 
-        ResponseEntity responseEntity = new ResponseEntity(response.getPreis(), HttpStatus.ACCEPTED);
-        return responseEntity;
+
     }
 
 

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.ValidationException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class RestExceptionProcessor {
         return makeErrorInfo(req, ex);
     }
 
-    @ExceptionHandler({BusinessException.class})
+    /*@ExceptionHandler({BusinessException.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "BusinessException: 001.")
     public ErrorInfo errorHandling(HttpServletRequest req, SystemException ex) throws IOException {
         return makeErrorInfo(req, ex);
@@ -74,12 +73,12 @@ public class RestExceptionProcessor {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "SystemException: 001.")
     public ErrorInfo errorHandling(HttpServletRequest req, Exception ex) throws IOException {
         return makeErrorInfo(req, ex);
-    }
+    }*/
 
-    @ExceptionHandler({FSLException.class})
-    public ErrorInfo errorHandling(HttpServletRequest req, HttpServletResponse res, FSLException ex) throws IOException {
+   /* @ExceptionHandler({ComponentException.class})
+    public ErrorInfo errorHandling(HttpServletRequest req, HttpServletResponse res, ComponentException ex) throws IOException {
         return makeErrorInfo(req, ex);
-    }
+    }*/
 
     private ErrorInfo makeErrorInfo(HttpServletRequest req, Exception ex) {
         String errorMessage =" Exception Message: \'" + ex.getMessage() + "\'.";

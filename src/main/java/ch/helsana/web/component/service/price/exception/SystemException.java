@@ -1,12 +1,18 @@
 package ch.helsana.web.component.service.price.exception;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * Backend / Umsysteme / Database
- * Created by EX3C2 on 25.01.2016.
+ *  Created by marcelwidmer
  */
-public class SystemException extends FSLException {
+public class SystemException extends RestException {
 
-     public SystemException(String message){
-         super(message);
-     };
+    public SystemException(String message) {
+        super(message);
+    }
+
+    public SystemException(String message, HttpStatus httpStatus) {
+        super(message, httpStatus);
+    }
 }

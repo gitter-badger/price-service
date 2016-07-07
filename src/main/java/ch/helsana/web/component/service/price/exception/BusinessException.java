@@ -1,12 +1,18 @@
 package ch.helsana.web.component.service.price.exception;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * Service internal exception.
- * Created by EX3C2 on 25.01.2016.
+ * Created by marcelwidmer
  */
-public class BusinessException extends FSLException {
+public class BusinessException extends RestException {
 
      public BusinessException(String message){
          super(message);
-     };
+     }
+
+    public BusinessException(String message, HttpStatus httpStatus) {
+        super(message, httpStatus);
+    }
 }
