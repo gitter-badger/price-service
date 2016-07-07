@@ -48,7 +48,7 @@
         <cxf-xjc-boolean.version>3.0.5</cxf-xjc-boolean.version>
         <cxf-xjc-dv.version>3.0.5</cxf-xjc-dv.version>
         <cxf-xjc-ts.version>3.0.5</cxf-xjc-ts.version>
-        <jaxb2-fluent-api.version>3.0</jaxb2-fluent-api.version>
+        <cxf-xjc-fluent-api.version>3.0</cxf-xjc-fluent-api.version>
         <krasa-jaxb-tools.version>1.4</krasa-jaxb-tools.version>
 
 
@@ -108,7 +108,7 @@
 
 
         <!-- https://mvnrepository.com/artifact/org.apache.cxf.xjc-utils/cxf-xjc-runtime -->
-        <dependency>
+       <!-- <dependency>
             <groupId>org.apache.cxf.xjc-utils</groupId>
             <artifactId>cxf-xjc-runtime</artifactId>
             <version>3.0.5</version>
@@ -132,10 +132,9 @@
         <dependency>
             <groupId>org.jvnet.jaxb2_commons</groupId>
             <artifactId>jaxb2-fluent-api</artifactId>
-            <version>${jaxb2-fluent-api.version}</version>
+            <version>${cxf-xjc-fluent-api.version}</version>
         </dependency>
-
-
+-->
 
         <!-- starter-test -->
         <dependency>
@@ -408,7 +407,7 @@
                 <version>${cxf-codegen-plugin.version}</version>
                 <configuration>
                     <defaultOptions>
-                        <extraargs>
+                       <extraargs>
                             <extraarg>-xjc-XJsr303Annotations</extraarg>
                             <extraarg>-xjc-Xts</extraarg>
                             <extraarg>-xjc-Xfluent-api</extraarg>
@@ -420,7 +419,6 @@
                             <bindingFile>${project.basedir}/src/main/resources/wsdl/enum-binding.xml</bindingFile>
                         </bindingFiles>
                     </defaultOptions>
-
                 </configuration>
                 <executions>
                     <execution>
@@ -463,7 +461,7 @@
                     <dependency>
                         <groupId>org.jvnet.jaxb2_commons</groupId>
                         <artifactId>jaxb2-fluent-api</artifactId>
-                        <version>${jaxb2-fluent-api.version}</version>
+                        <version>${cxf-xjc-fluent-api.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
