@@ -1,20 +1,18 @@
 package ch.helsana.web.component.service.price.service;
 
-import ch.helsana.web.component.service.price.exception.BusinessException;
-import ch.helsana.web.component.service.price.exception.SystemException;
-import ch.sbi.services.system.productengine.tarif.v2.BerechneMarkenPreiseBusinessFaultMessage;
-import ch.sbi.services.system.productengine.tarif.v2.BerechneMarkenPreiseSystemFaultMessage;
-import ch.sbi.services.system.productengine.tarif.v2.BerechnePraemieBusinessFaultMessage;
-import ch.sbi.services.system.productengine.tarif.v2.BerechnePraemieSystemFaultMessage;
-import ch.sbi.services.system.productengine.tarif.v2.FiltereProdukteBusinessFaultMessage;
-import ch.sbi.services.system.productengine.tarif.v2.FiltereProdukteSystemFaultMessage;
-import ch.sbi.services.system.productengine.tarif.v2.TarifPortType;
-import ch.sbi.services.system.productengine.tarif.v2.berechnebesterpreisrequest.BerechneBesterPreisRequest;
-import ch.sbi.services.system.productengine.tarif.v2.berechnebesterpreisresponse.BerechneBesterPreisResponse;
-import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
-import ch.sbi.services.system.productengine.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
-import ch.sbi.services.system.productengine.tarif.v2.filtereprodukterequest.FiltereProdukteRequest;
-import ch.sbi.services.system.productengine.tarif.v2.filtereprodukteresponse.FiltereProdukteResponse;
+import ch.helsana.services.spezialfunktionen.tarif.v2.BerechneBesterPreisBusinessFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.BerechneBesterPreisSystemFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieSystemFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.FiltereProdukteBusinessFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.FiltereProdukteSystemFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.TarifPortType;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.BerechneBesterPreisRequest;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.BerechneBesterPreisResponse;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
+import ch.helsana.services.spezialfunktionen.tarif.v2.filtereprodukterequest.FiltereProdukteRequest;
+import ch.helsana.services.spezialfunktionen.tarif.v2.filtereprodukteresponse.FiltereProdukteResponse;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,48 +32,18 @@ public class PriceService implements TarifPortType {
 
     // tag::implementPortTypeMethod[]
     @Override
-    public BerechneBesterPreisResponse berechneBesterPreis(BerechneBesterPreisRequest parameters) throws BusinessException, SystemException {
-        BerechneBesterPreisResponse response = null;
-        try {
-            response = tarifPortType.berechneBesterPreis(parameters);
-        } catch (BerechneMarkenPreiseBusinessFaultMessage e) {
-            throw new BusinessException(e.getMessage());
-        }catch (BerechneMarkenPreiseSystemFaultMessage e2) {
-            throw new SystemException(e2.getMessage());
-        }
-        return response;
+    public BerechneBesterPreisResponse berechneBesterPreis(BerechneBesterPreisRequest parameters) throws BerechneBesterPreisBusinessFaultMessage, BerechneBesterPreisSystemFaultMessage {
+         return  tarifPortType.berechneBesterPreis(parameters);
     }
 
     @Override
-    public BerechnePraemieResponse berechnePraemie(BerechnePraemieRequest parameters) throws BusinessException, SystemException {
-        BerechnePraemieResponse response = null;
-       try {
-            response = tarifPortType.berechnePraemie(parameters);
-        } catch (BerechnePraemieBusinessFaultMessage e) {
-           throw new BusinessException(e.getMessage());
-        } catch (BerechnePraemieSystemFaultMessage e2) {
-           throw new SystemException(e2.getMessage());
-        }
-        return response;
+    public BerechnePraemieResponse berechnePraemie(BerechnePraemieRequest parameters) throws BerechnePraemieSystemFaultMessage, BerechnePraemieBusinessFaultMessage {
+            return tarifPortType.berechnePraemie(parameters);
     }
 
     @Override
-    public FiltereProdukteResponse filtereProdukte(FiltereProdukteRequest parameters) throws BusinessException, SystemException {
-        FiltereProdukteResponse response = null;
-        try {
-            response = tarifPortType.filtereProdukte(parameters);
-        } catch (FiltereProdukteBusinessFaultMessage e) {
-            throw new BusinessException(e.getMessage());
-        } catch (FiltereProdukteSystemFaultMessage e2) {
-            throw new SystemException(e2.getMessage());
-        }
-        return response;
-
+    public FiltereProdukteResponse filtereProdukte(FiltereProdukteRequest parameters) throws FiltereProdukteBusinessFaultMessage, FiltereProdukteSystemFaultMessage {
+        return tarifPortType.filtereProdukte(parameters);
     }
     // end::implementPortTypeMethod[]
-
-    // Used For Mockito
-    void setTarifPortType(TarifPortType tarifPortType) {
-        this.tarifPortType = tarifPortType;
-    }
 }

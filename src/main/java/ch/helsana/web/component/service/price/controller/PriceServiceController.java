@@ -1,15 +1,15 @@
 package ch.helsana.web.component.service.price.controller;
 
-import ch.helsana.web.component.service.price.exception.BusinessException;
+import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieSystemFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.BerechneBesterPreisRequest;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.BerechneBesterPreisResponse;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
+import ch.helsana.services.spezialfunktionen.tarif.v2.filtereprodukterequest.FiltereProdukteRequest;
+import ch.helsana.services.spezialfunktionen.tarif.v2.filtereprodukteresponse.FiltereProdukteResponse;
 import ch.helsana.web.component.service.price.exception.RestException;
-import ch.helsana.web.component.service.price.exception.SystemException;
 import ch.helsana.web.component.service.price.service.PriceService;
-import ch.sbi.services.system.productengine.tarif.v2.berechnebesterpreisrequest.BerechneBesterPreisRequest;
-import ch.sbi.services.system.productengine.tarif.v2.berechnebesterpreisresponse.BerechneBesterPreisResponse;
-import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
-import ch.sbi.services.system.productengine.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
-import ch.sbi.services.system.productengine.tarif.v2.filtereprodukterequest.FiltereProdukteRequest;
-import ch.sbi.services.system.productengine.tarif.v2.filtereprodukteresponse.FiltereProdukteResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,12 +37,17 @@ public class PriceServiceController {
     }
 
 
-
-
-
+    /**
+     * https://tools.ietf.org/html/rfc7231#section-8.1.3
+     *
+     * POST because a new best price is created.
+     *
+     * @param parameters
+     * @return
+     */
     @RequestMapping(
             value = "/best-price",
-            method = {RequestMethod.GET}
+            method = {RequestMethod.POST}
     )
     public BerechneBesterPreisResponse berechneBesterPreis(BerechneBesterPreisRequest parameters) {
         // TODO: 07.07.2016 implement me !!
@@ -50,25 +55,29 @@ public class PriceServiceController {
     }
 
     /**
-     * // TODO: 07.07.2016  check HTTP Standard if GET  or .... https://tools.ietf.org/html/rfc7231#section-8.1.3
+     * https://tools.ietf.org/html/rfc7231#section-8.1.3
+     *
+     * POST because a new price is created.
+     *
      * @param parameters
      * @return
      * @throws RestException
      */
     @RequestMapping(
             value = "/price",
-            method = {RequestMethod.GET}
+            method = {RequestMethod.POST}
     )
     public ResponseEntity berechnePraemie(BerechnePraemieRequest parameters) throws RestException {
         BerechnePraemieResponse response = null;
+       // try {
         try {
             response = priceService.berechnePraemie(parameters);
-        } catch (BusinessException e) {
-            throw new RestException("Price business exception : ", HttpStatus.BAD_REQUEST);
-
-        } catch (SystemException e) {
+        } catch (BerechnePraemieSystemFaultMessage systemFaultMessage) {
             throw new RestException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (BerechnePraemieBusinessFaultMessage businessFaultMessage) {
+            throw new RestException("Price business exception : ", HttpStatus.BAD_REQUEST);
         }
+
         ResponseEntity responseEntity = new ResponseEntity(response.getPreis(), HttpStatus.ACCEPTED);
         return responseEntity;
     }

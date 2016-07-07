@@ -305,9 +305,6 @@
     <profiles>
         <profile>
             <id>jaxws</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <build>
                 <plugins>
                         <plugin>
@@ -334,17 +331,14 @@
 
                                        <wsdlDirectory>src/main/resources/wsdl</wsdlDirectory>
                                        <wsdlFiles>
-                                           <wsdlFile>TariffService_1.wsdl</wsdlFile>
+                                           <wsdlFile>Tarif_v2_0.wsdl</wsdlFile>
                                        </wsdlFiles>
                                        <bindingDirectory>src/main/resources/wsdl</bindingDirectory>
-
                                    </configuration>
                                </execution>
                            </executions>
                        </plugin>
-
                 </plugins>
-
             </build>
         </profile>
 
@@ -352,6 +346,9 @@
         <!-- Apache CXF SOAP / XML Mapping -->
         <profile>
             <id>cxf</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -386,7 +383,7 @@
                                 <configuration>
                                     <wsdlOptions>
                                         <wsdlOption>
-                                            <wsdl>${wsdlRoot}/TariffService_1.wsdl</wsdl>
+                                            <wsdl>${wsdlRoot}/Tarif_v2_0.wsdl</wsdl>
                                         </wsdlOption>
                                     </wsdlOptions>
                                 </configuration>

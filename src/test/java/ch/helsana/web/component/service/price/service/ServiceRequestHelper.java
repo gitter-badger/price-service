@@ -1,13 +1,13 @@
 package ch.helsana.web.component.service.price.service;
 
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Leistungserbringer;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Person;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.PersonListType;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.ProduktListType;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Versicherungsvertrag;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Vertragsbaustein;
 import ch.helsana.web.component.service.price.converter.CalendarConverter;
-import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
-import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.Leistungserbringer;
-import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.Person;
-import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.PersonListType;
-import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.ProduktListType;
-import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.Versicherungsvertrag;
-import ch.sbi.services.system.productengine.tarif.v2.berechnepraemierequest.Vertragsbaustein;
 import org.joda.time.DateTime;
 
 /**

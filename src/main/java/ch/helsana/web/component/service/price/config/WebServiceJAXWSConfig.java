@@ -1,6 +1,6 @@
 package ch.helsana.web.component.service.price.config;
 
-import ch.sbi.services.system.productengine.tarif.v2.TarifPortType;
+import ch.helsana.services.spezialfunktionen.tarif.v2.TarifPortType;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean;
+
 import java.io.IOException;
 
 
@@ -35,6 +36,9 @@ public class WebServiceJAXWSConfig {
 
     @Value("${soap.endpoint.url}")
     public String ENDPOINT_URL;
+
+
+
 
     @Bean(name = "tarifPortType", autowire = Autowire.BY_NAME)
     public JaxWsPortProxyFactoryBean tarifPortType() throws IOException {
