@@ -13,5 +13,11 @@ module.exports = function (gulp, data, util, taskName) {
             .pipe(inject(gulp.src(data.path.PROD + 'app/scripts/vendor/*.js', {read: false}), {relative: true}))
             .pipe(gulp.dest(data.path.PROD));
     });
+    
+    gulp.task(taskName + ':E2e', function () {
+        return gulp.src(data.path.E2E_SOURCE + 'index.html')
+            .pipe(inject(gulp.src(data.path.E2E_SOURCE + 'app/scripts/vendor/*.js', {read: false}), {relative: true}))
+            .pipe(gulp.dest(data.path.E2E_SOURCE));
+    });
 };
 

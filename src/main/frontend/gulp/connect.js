@@ -11,14 +11,14 @@ module.exports = function (gulp, data, util, taskName) {
 
     gulp.task(taskName + ':E2e', function () {
         return connect.server({
-            root: [data.path.ROOT + '.tmp/frontend', 'node_modules'],
+            root: [data.path.E2E_SOURCE, data.path.FRONTEND],
             port: 9001
         });
     });
 
     gulp.task(taskName + ':Styleguide', function () {
         return connect.server({
-            root: [data.path.ROOT + '.styleguide'],
+            root: [data.path.STYLEGUIDE],
             port: 8000
         });
     });

@@ -12,11 +12,12 @@ config(gulp, {
     // data passed into config task.
     data: Object.assign({
             path: {
-                ROOT: '../../../',
-                E2E: '../../test/e2e/',
-                PROD: '../../../src/main/resources/static/',
-                DEV: '../../../src/main/frontend/.dev/',
-                FRONTEND: '../../../src/main/frontend/'
+                E2E_TESTS: '../../test/e2e/',
+                PROD: '../resources/static/',
+                DEV: '.dev/',
+                E2E_SOURCE: '.e2e/',
+                FRONTEND: './',
+                STYLEGUIDE: '.styleguide/'
             },
             anyValue: 1,
             anyParams: []
@@ -48,7 +49,6 @@ gulp.task('serveStyleGuide', function (callback) {
     runSequence(
         ['clean:Styleguide'],
         ['sass:Styleguide'],
-        ['concat:Styleguide'],
         ['styleguide'],
         ['copy:Styleguide', 'connect:Styleguide'],
         callback
@@ -56,11 +56,10 @@ gulp.task('serveStyleGuide', function (callback) {
 });
 
 gulp.task('e2e', function (callback) {
-
     runSequence(
-        'clean:E2e',
-        ['transpiling', 'sass:E2e'],
-        ['copy:E2eApp', 'copy:E2eScripts'],
+        ['clean:E2e', 'transpiling'],
+        ['sass:E2e', 'copy:E2eApp', 'copy:E2eScripts'],
+        'inject:E2e',
         'connect:E2e',
         'angularProtractor',
         callback

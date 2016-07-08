@@ -51,4 +51,4 @@ typings
 !gulp/*
 
 #Test
-.tmp
+.e2e

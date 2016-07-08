@@ -17,12 +17,12 @@ module.exports = function (gulp, data, util, taskName) {
     gulp.task(taskName + ':E2e', function () {
         return gulp.src('./app/**/*.scss')
             .pipe(sass().on('error', sass.logError))
-            .pipe(gulp.dest(data.path.ROOT + '.tmp/frontend/app'));
+            .pipe(gulp.dest(data.path.E2E_SOURCE + 'app'));
     });
 
     gulp.task(taskName + ':Styleguide', function () {
-        return gulp.src('./**/all.scss')
+        return gulp.src('./app/styles/all.scss')
             .pipe(sass().on('error', sass.logError))
-            .pipe(gulp.dest(data.path.ROOT + '.styleguide/styles'));
+            .pipe(gulp.dest(data.path.STYLEGUIDE + 'app'));
     });
 };

@@ -3,7 +3,7 @@ module.exports = function (gulp, data, util, taskName) {
     var postcss = require('gulp-postcss');
 
     gulp.task(taskName, function () {
-        return gulp.src(data.path.ROOT + '.styleguide/styles/all.css').pipe( // any files have to existing
+        return gulp.src(data.path.STYLEGUIDE + 'app/all.css').pipe( // any files have to existing
             postcss([
                 require('mdcss')({
                     theme: require('mdcss-theme-engage')({
@@ -12,11 +12,11 @@ module.exports = function (gulp, data, util, taskName) {
                             css: ['./all.css']
                         }
                     }),
-                    destination: data.path.ROOT + '.styleguide' // to create mdcss
+                    destination: data.path.STYLEGUIDE // to create mdcss
                 })
             ])
         ).pipe(
-            gulp.dest(data.path.ROOT + '.styleguide') // dest des styles
+            gulp.dest(data.path.STYLEGUIDE) // dest des styles
         );
     });
 };

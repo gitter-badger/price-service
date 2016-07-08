@@ -21,12 +21,12 @@ module.exports = function (gulp, data, util, taskName) {
     });
 
     gulp.task(taskName + ':E2e', function () {
-        return gulp.src(data.path.ROOT + '.tmp', {read: false})
+        return gulp.src(data.path.E2E_SOURCE, {read: false})
             .pipe(clean({force: true}));
     });
 
     gulp.task(taskName + ':Styleguide', function () {
-        return gulp.src(data.path.ROOT + '.styleguide', {read: false})
+        return gulp.src(data.path.STYLEGUIDE, {read: false})
             .pipe(clean({force: true}));
     });
 };

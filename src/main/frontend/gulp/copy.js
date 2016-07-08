@@ -6,7 +6,7 @@ module.exports = function (gulp, data, util, taskName) {
             'app/images/icon.png',
             'app/fonts/**'
         ], {base: './'})
-            .pipe(gulp.dest(data.path.ROOT + '.styleguide'));
+            .pipe(gulp.dest(data.path.STYLEGUIDE));
     });
 
     gulp.task(taskName + ':AppProd', function () {
@@ -33,15 +33,13 @@ module.exports = function (gulp, data, util, taskName) {
 
     gulp.task(taskName + ':E2eApp', function () {
         return gulp.src([
-            './app/components/**',
             '!./**/*.ts',
             '!./**/*.scss',
-            './app/images/**',
-            './app/scripts/**',
-            './app/fonts/**',
+            '!./app/styles/**',
+            './app/**',
             './index.html'
         ], {base: './'})
-            .pipe(gulp.dest(data.path.ROOT + '.tmp/frontend'));
+            .pipe(gulp.dest(data.path.E2E_SOURCE));
     });
 
     gulp.task(taskName + ':ScriptsProd', function () {
@@ -52,7 +50,7 @@ module.exports = function (gulp, data, util, taskName) {
         ])
             .pipe(gulp.dest(data.path.PROD + 'app/scripts/vendor'));
     });
-    
+
     gulp.task(taskName + ':ScriptsDev', function () {
         return gulp.src([
             'node_modules/core-js/client/shim.min.js',
@@ -68,6 +66,6 @@ module.exports = function (gulp, data, util, taskName) {
             'node_modules/systemjs/dist/system.src.js',
             'node_modules/zone.js/dist/zone.js'
         ])
-            .pipe(gulp.dest(data.path.ROOT + '.tmp/frontend/app/scripts/vendor'));
+            .pipe(gulp.dest(data.path.E2E_SOURCE + 'app/scripts/vendor'));
     });
 };
