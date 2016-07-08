@@ -1,0 +1,10 @@
+{
+  "bruttoPreis": 288.1,
+  "gesetzlichePreiskomponente": {
+    "kvg106Betrag": null,
+    "umweltabgabeBetrag": -5.2
+  },
+  "nettoPreis": 288.1,
+  "preisalternativeList": null,
+  "rabatt": null
+}
