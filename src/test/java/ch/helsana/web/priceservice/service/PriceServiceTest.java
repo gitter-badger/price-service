@@ -17,6 +17,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
 
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -71,6 +72,7 @@ public class PriceServiceTest {
 
         // run
         priceService.berechnePraemie(null);
+        fail();
     }
 
     @Test(expected = ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage.class)
@@ -88,7 +90,7 @@ public class PriceServiceTest {
 
         // run
         BerechnePraemieResponse berechnePraemieResponse = priceService.berechnePraemie(null);
-        System.out.println(berechnePraemieResponse);
+        fail();
 
     }
 
