@@ -1,0 +1,43 @@
+/*---
+title:   Buttons
+section: Elements
+---
+
+Button styles can be applied to any element. Typically you'll want to use
+ an `<button>` element:
+
+```example:html
+<div style="padding-left: 20px;  background-color: darkgray;">
+  <button class="btn btn--form">Click</button>
+</div>
+```
+```example:html
+<div style="padding-right: 20px;  background-color: darkgray;">
+  <button class="btn btn--form btn--clear-left">Click</button>
+  <label>Text</label>
+</div>
+```
+*/
+
+.btn {
+  cursor: pointer;
+  color: $snow;
+  width: 87px;
+  background: transparent;
+  border: 1px solid;
+  line-height: 2rem;
+  border-radius: 3px;
+  margin: 7px 0 7px 0;
+
+  &--clear-left {
+    float: right;
+    margin-left: 100%;
+  }
+
+  &--form {
+    &:hover {
+      background: $snow;
+      color: $helsana;
+    }
+  }
+}
