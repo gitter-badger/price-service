@@ -464,5 +464,63 @@
                 </plugins>
             </build>
         </profile>
+
+
+
+
+
+        <!--  release-dry-run-->
+        <profile>
+            <id>release-dry-run</id>
+            <!--Deploy artifacts to nexus PRE-PROD-->
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>snapshots</id>
+                    <name>Helsana Snapshots auf Alma Entw.</name>
+                    <url>http://alma-artifact-entw.hel.kko.ch/nexus/content/repositories/snapshots/</url>
+                </snapshotRepository>
+
+                <repository>
+                    <id>releases</id>
+                    <name>Helsana Releases auf Alma Entw.</name>
+                    <url>http://alma-artifact-entw.hel.kko.ch/nexus/content/repositories/releases/</url>
+                </repository>
+            </distributionManagement>
+
+            <!--Perform release without tagging origin/master-->
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>external.atlassian.jgitflow</groupId>
+                        <artifactId>jgitflow-maven-plugin</artifactId>
+                        <version>${jgitflow-maven-plugin.version}</version>
+                        <configuration>
+                            <!--do not push release branch -->
+                            <pushReleases>false</pushReleases>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- release -->
+        <profile>
+            <id>release</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <!-- Distribution -->
+            <distributionManagement>
+                <repository>
+                    <id>releases</id>
+                    <url>dav:http://alma-artifact/nexus/content/repositories/releases/</url>
+                </repository>
+                <snapshotRepository>
+                    <uniqueVersion>false</uniqueVersion>
+                    <id>snapshots</id>
+                    <url>dav:http://alma-artifact/nexus/content/repositories/snapshots/</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
     </profiles>
 </project>
