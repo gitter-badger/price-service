@@ -21,7 +21,7 @@
 
 
     <properties>
-        <start-class>ch.helsana.web.priceservice.service.PriceServiceApplication</start-class>
+        <start-class>ch.helsana.web.priceservice.PriceServiceApplication</start-class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <!-- Package / Release -->
@@ -247,9 +247,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
-
             <!-- Asciidoctor Plugin-->
             <plugin>
                 <groupId>org.asciidoctor</groupId>
@@ -388,7 +385,7 @@
             </build>
         </profile>
 
-
+        <!-- Jacoco -->
         <profile>
             <id>jacoco</id>
             <build>
