@@ -594,18 +594,18 @@ use of HTTP status codes.</p>
 <h3 id="resource-get-product"><a class="link" href="#resource-get-product">Caclulate product</a></h3>
 <div class="paragraph">
 <p>A <code>GET</code> request calculate the price of products.
-Unresolved directive in manual.adoc - include::C:\Users\Public\App\IdeaProjects\price-service\target/generated-snippets/calculate-product/response-fields.adoc[]</p>
+Unresolved directive in manual.adoc - include::C:\Users\Public\App\dev\git\price-service\target/generated-snippets/calculate-product/response-fields.adoc[]</p>
 </div>
 <div class="sect3">
 <h4 id="_example_request"><a class="link" href="#_example_request">Example request</a></h4>
 <div class="paragraph">
-<p>Unresolved directive in manual.adoc - include::C:\Users\Public\App\IdeaProjects\price-service\target/generated-snippets/calculate-product/curl-request.adoc[]</p>
+<p>Unresolved directive in manual.adoc - include::C:\Users\Public\App\dev\git\price-service\target/generated-snippets/calculate-product/curl-request.adoc[]</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_example_response"><a class="link" href="#_example_response">Example response</a></h4>
 <div class="paragraph">
-<p>Unresolved directive in manual.adoc - include::C:\Users\Public\App\IdeaProjects\price-service\target/generated-snippets/calculate-product/http-response.adoc[]</p>
+<p>Unresolved directive in manual.adoc - include::C:\Users\Public\App\dev\git\price-service\target/generated-snippets/calculate-product/http-response.adoc[]</p>
 </div>
 </div>
 </div>
@@ -705,44 +705,7 @@ For more information please visit the <a href="http://docs.spring.io/spring-boot
 <h3 id="_webservice_jaxws"><a class="link" href="#_webservice_jaxws">WebService JAXWS</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Configuration
-public class WebServiceJAXWSConfig {
-
-    @Value("${soap.portname}")
-    public String PORTNAME;
-
-    @Value("${soap.servicename}")
-    public String SERVICENAME;
-
-    @Value("${soap.namespace}")
-    public String NAMESPACEURI;
-
-    @Value("${soap.wsdl}")
-    public String WSDL;
-
-    @Value("${soap.endpoint.service}")
-    public String ENDPOINT_SERVICE;
-
-    @Value("${soap.endpoint.url}")
-    public String ENDPOINT_URL;
-
-    @Bean(name = "tarifPortType", autowire = Autowire.BY_NAME)
-    public JaxWsPortProxyFactoryBean tarifPortType() throws IOException {
-        JaxWsPortProxyFactoryBean proxy = new JaxWsPortProxyFactoryBean();
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        Resource resource = context.getResource(WSDL);
-        proxy.setWsdlDocumentResource(resource);
-        proxy.setServiceInterface(TarifPortType.class);
-
-        proxy.setServiceName(SERVICENAME);
-        proxy.setPortName(PORTNAME);
-        proxy.setNamespaceUri(NAMESPACEURI);
-        proxy.setEndpointAddress(ENDPOINT_SERVICE);
-
-        return proxy;
-    }
-
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">Unresolved directive in sourceCode.adoc - include::../../main/java/ch/helsana/web/component/service/price/config/WebServiceJAXWSConfig.java[tags=WebServiceJAXWSConfig,indent=0]</code></pre>
 </div>
 </div>
 </div>
@@ -758,8 +721,7 @@ public class WebServiceJAXWSConfig {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Service
-public class PriceService implements TarifPortType {</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">Unresolved directive in sourceCode.adoc - include::../../main/java/ch/helsana/web/component/service/price/service/PriceService.java[tags=PriceService,indent=0]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -767,8 +729,7 @@ public class PriceService implements TarifPortType {</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Resource
-TarifPortType tarifPortType;</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">Unresolved directive in sourceCode.adoc - include::../../main/java/ch/helsana/web/component/service/price/service/PriceService.java[tags=portType,indent=0]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -776,45 +737,7 @@ TarifPortType tarifPortType;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">@Override
-public BerechneBesterPreisResponse berechneBesterPreis(BerechneBesterPreisRequest parameters) {
-    BerechneBesterPreisResponse response = null;
-    try {
-        response = tarifPortType.berechneBesterPreis(parameters);
-    } catch (BerechneMarkenPreiseSystemFaultMessage berechneMarkenPreiseSystemFaultMessage) {
-        berechneMarkenPreiseSystemFaultMessage.printStackTrace();
-    } catch (BerechneMarkenPreiseBusinessFaultMessage berechneMarkenPreiseBusinessFaultMessage) {
-        berechneMarkenPreiseBusinessFaultMessage.printStackTrace();
-    }
-    return response;
-}
-
-@Override
-public BerechnePraemieResponse berechnePraemie(BerechnePraemieRequest parameters) {
-    BerechnePraemieResponse response = null;
-    try {
-        response = tarifPortType.berechnePraemie(parameters);
-    } catch (BerechnePraemieSystemFaultMessage berechnePraemieSystemFaultMessage) {
-        berechnePraemieSystemFaultMessage.printStackTrace();
-    } catch (BerechnePraemieBusinessFaultMessage berechnePraemieBusinessFaultMessage) {
-        berechnePraemieBusinessFaultMessage.printStackTrace();
-    }
-    return response;
-}
-
-@Override
-public FiltereProdukteResponse filtereProdukte(FiltereProdukteRequest parameters) {
-    FiltereProdukteResponse response = null;
-    try {
-        response = tarifPortType.filtereProdukte(parameters);
-    } catch (FiltereProdukteBusinessFaultMessage filtereProdukteBusinessFaultMessage) {
-        filtereProdukteBusinessFaultMessage.printStackTrace();
-    } catch (FiltereProdukteSystemFaultMessage filtereProdukteSystemFaultMessage) {
-        filtereProdukteSystemFaultMessage.printStackTrace();
-    }
-    return response;
-
-}</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">Unresolved directive in sourceCode.adoc - include::../../main/java/ch/helsana/web/component/service/price/service/PriceService.java[tags=implementPortTypeMethod,indent=0]</code></pre>
 </div>
 </div>
 </div>
@@ -843,11 +766,11 @@ public FiltereProdukteResponse filtereProdukte(FiltereProdukteRequest parameters
 </dd>
 <dt class="hdlist1">docdir</dt>
 <dd>
-<p>C:/Users/Public/App/IdeaProjects/price-service/src/docs/asciidoc-resources</p>
+<p>C:/Users/Public/App/dev/git/price-service/src/docs/asciidoc-resources</p>
 </dd>
 <dt class="hdlist1">docfile</dt>
 <dd>
-<p>C:/Users/Public/App/IdeaProjects/price-service/src/docs/asciidoc/manual.adoc</p>
+<p>C:/Users/Public/App/dev/git/price-service/src/docs/asciidoc/manual.adoc</p>
 </dd>
 <dt class="hdlist1">imagesdir</dt>
 <dd>
@@ -869,7 +792,7 @@ public FiltereProdukteResponse filtereProdukte(FiltereProdukteRequest parameters
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2016-07-04 21:01:50 CEST
+Last updated 2016-07-04 09:12:01 CEST
 </div>
 </div>
 </body>
