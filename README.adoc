@@ -11,7 +11,7 @@ price-service
 == Build and Code Quality
 
 image:https://img.shields.io/travis/marzelwidmer/price-service.svg?style=flat-square["TravisCI", link="https://travis-ci.org/marzelwidmer/price-service"]
-mage:https://circleci.com/gh/marzelwidmer/price-service.svg?style=shield&circle-token=:circle-token["CircleCI", link="https://circleci.com/gh/marzelwidmer/price-service"]
+image:https://circleci.com/gh/marzelwidmer/price-service.svg?style=shield&circle-token=:circle-token["CircleCI", link="https://circleci.com/gh/marzelwidmer/price-service"]
 image:https://api.codacy.com/project/badge/Grade/34093789c75a4b72891743de8715cc65["Codacy code quality", link="https://www.codacy.com/app/marzelwidmer/price-service?utm_source=github.com&utm_medium=referral&utm_content=marzelwidmer/price-service&utm_campaign=Badge_Grade"]
 
 
