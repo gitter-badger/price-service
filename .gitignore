@@ -34,6 +34,7 @@ rebel.xml
 
 #Deployment
 src/main/resources/static/
+.dev
 
 #TypeScript
 src/main/frontend/app/**/*.js

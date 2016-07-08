@@ -4,23 +4,13 @@ module.exports = function (gulp, data, util, taskName) {
         tsProject = ts.createProject("tsconfig.json"),
         sourcemaps = require('gulp-sourcemaps');
 
-    gulp.task(taskName + ':Dist', function () {
+    gulp.task(taskName, function () {
         var tsResult = tsProject.src()
             .pipe(sourcemaps.init())
             .pipe(ts(tsProject));
 
         return tsResult.js
             .pipe(sourcemaps.write())
-            .pipe(gulp.dest(data.path.dist + 'app'));
-    });
-
-    gulp.task(taskName + ':E2e', function () {
-        var tsResult = tsProject.src()
-            .pipe(sourcemaps.init())
-            .pipe(ts(tsProject));
-
-        return tsResult.js
-            .pipe(sourcemaps.write())
-            .pipe(gulp.dest(data.path.root + '.tmp/frontend/app'));
+            .pipe(gulp.dest('app'));
     });
 };

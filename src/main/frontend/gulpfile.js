@@ -12,10 +12,11 @@ config(gulp, {
     // data passed into config task.
     data: Object.assign({
             path: {
-                root: '../../../',
-                e2e: '../../test/e2e/',
-                dist: '../../../src/main/resources/static/',
-                frontend: '../../../src/main/frontend/'
+                ROOT: '../../../',
+                E2E: '../../test/e2e/',
+                PROD: '../../../src/main/resources/static/',
+                DEV: '../../../src/main/frontend/.dev/',
+                FRONTEND: '../../../src/main/frontend/'
             },
             anyValue: 1,
             anyParams: []
@@ -24,12 +25,21 @@ config(gulp, {
 });
 
 
+gulp.task('buildProd', function (callback) {
+    runSequence(
+        ['clean:Prod', 'transpiling'],
+        ['systemjs-builder', 'sass:Prod', 'copy:AppProd', 'copy:ScriptsProd'],
+        'inject:Prod',
+        callback
+    );
+});
+
 gulp.task('default', function (callback) {
     runSequence(
-        'clean:Dist',
-        ['transpiling:Dist', 'sass:Dist'],
-        ['copy:App', 'copy:Scripts'],
-        //'connect:Dist',
+        ['clean:Dev', 'transpiling'],
+        ['sass:Dev', 'copy:AppDev', 'copy:ScriptsDev'],
+        'inject:Dev',
+        'connect:Dev',
         callback
     );
 });
@@ -49,7 +59,7 @@ gulp.task('e2e', function (callback) {
 
     runSequence(
         'clean:E2e',
-        ['transpiling:E2e', 'sass:E2e'],
+        ['transpiling', 'sass:E2e'],
         ['copy:E2eApp', 'copy:E2eScripts'],
         'connect:E2e',
         'angularProtractor',

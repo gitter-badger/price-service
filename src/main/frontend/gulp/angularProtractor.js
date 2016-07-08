@@ -5,9 +5,9 @@ module.exports = function (gulp, data, util, taskName) {
 
     gulp.task(taskName, function () {
 
-        gulp.src([data.path.e2e + 'suites/*.js'])
+        gulp.src([data.path.E2E + 'suites/*.js'])
             .pipe(angularProtractor({
-                'configFile': data.path.e2e + 'protractor.config.js'
+                'configFile': data.path.E2E + 'protractor.config.js'
             }))
             .on('end', function () {
                 connect.serverClose();
