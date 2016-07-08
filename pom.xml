@@ -55,6 +55,8 @@
         <unit-tests.skip>false</unit-tests.skip>
         <!-- Skip Integration Test  -->
         <integration-tests.skip>true</integration-tests.skip>
+        <argLine>-XX:PermSize=128m -XX:MaxPermSize=512m</argLine>
+
 
         <assertj.version>1.7.0</assertj.version>
         <mockito.version>1.10.8</mockito.version>
@@ -390,7 +392,7 @@
             <id>jacoco</id>
             <build>
                 <plugins>
-                    <plugin>
+                 <!--   <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
                         <version>0.7.5.201505241946</version>
@@ -430,7 +432,35 @@
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>-->
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.7.5.201505241946</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>report</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
+
+                    <!-- SureFire -->
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <argLine>${argLine}</argLine>
+                        </configuration>
+                    </plugin>
+
                 </plugins>
             </build>
         </profile>
