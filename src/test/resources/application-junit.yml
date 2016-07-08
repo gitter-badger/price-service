@@ -19,7 +19,7 @@ soap:
     server: http://localhost:8080
 
 logging:
-  level: ERROR
-  level.org.springframework.boot: DEBUG
-  level.org.springframework.boot.web: DEBUG
-  level.org.springframework.boot.web.client: DEBUG
+  level: error
+  level.org.springframework.boot: debug
+  level.org.springframework.boot.web: debug
+  level.org.springframework.boot.web.client: debug

@@ -24,11 +24,11 @@ public class ServiceRequestHelper {
 
         PersonListType personList = new PersonListType();
 
-        Person person = new Person();
+        Person person = new Person(); // TODO: 08.07.2016  UI
         person.setId("0");
-        DateTime birtday = new DateTime(1975, 9, 27, 0, 0, 0, 0);
+        DateTime birtday = new DateTime(1975, 9, 27, 0, 0, 0, 0); // TODO: 08.07.2016  UI
         person.setGeburtsdatum(CalendarConverter.dateToXMLGregorianCalendar(birtday.toDate()));
-        person.setGeschlecht("1");
+        person.setGeschlecht("1");  // TODO: 08.07.2016  UI
 
         ProduktListType produktList = new ProduktListType();
 
@@ -42,24 +42,17 @@ public class ServiceRequestHelper {
         produkt1.setProduktId("PRO_P0BEPH_HEL_IG");
         produkt1.setUnfall("COD_ausgeschlossen_HEL");
         produktList.getProdukt().add(produkt1);
-
-        // Produkt 2
-        Vertragsbaustein produkt2 = new Vertragsbaustein();
-        produkt2.setErgaenzungsmodul("Ja");
-        produkt2.setProduktId("PRO_Z2FLEX_HEL_IG");
-        produkt2.setUnfall("COD_eingeschlossen_HEL");
-        produkt2.setVariante("COD_Z2FLEX_Variante_FLEX2_HEL");
-        produktList.getProdukt().add(produkt2);
-
         person.setProduktList(produktList);
         personList.getPerson().add(person);
 
         request.setPersonList(personList);
 
+        // TODO: 08.07.2016  UI
         Versicherungsvertrag versicherungsvertrag = new Versicherungsvertrag();
-        versicherungsvertrag.setGemeindeNummer("199");
-        versicherungsvertrag.setPostleitzahl("8307");
-        versicherungsvertrag.setPostleitzahlZusatz("00");
+        versicherungsvertrag.setGemeindeNummer("199");  // TODO: 08.07.2016 UI
+        versicherungsvertrag.setPostleitzahl("8307");  // TODO: 08.07.2016 UI
+        versicherungsvertrag.setPostleitzahlZusatz("00");  // TODO: 08.07.2016 UI
+
         DateTime vertragsbeginn = new DateTime(2016, 1, 7, 0, 0, 0, 0); //2016-07-01
         versicherungsvertrag.setVertragsbeginn(CalendarConverter.dateToXMLGregorianCalendar(vertragsbeginn.toDate()));
 

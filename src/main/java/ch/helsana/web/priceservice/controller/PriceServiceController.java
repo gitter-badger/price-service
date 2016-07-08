@@ -14,6 +14,7 @@ import ch.helsana.web.priceservice.service.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,7 +52,7 @@ public class PriceServiceController {
             value = "/best-price",
             method = {RequestMethod.POST}
     )
-    public BerechneBesterPreisResponse berechneBesterPreis(BerechneBesterPreisRequest parameters) {
+    public BerechneBesterPreisResponse berechneBesterPreis(@RequestBody BerechneBesterPreisRequest parameters) {
         // TODO: 07.07.2016 implement me !!
         return null;
     }
@@ -61,7 +62,7 @@ public class PriceServiceController {
      * <p>
      * POST because a new price is created.
      *
-     * @param parameters
+     * @param request
      * @return
      * @throws Exception
      */
@@ -69,11 +70,12 @@ public class PriceServiceController {
             value = "/price",
             method = {RequestMethod.POST, RequestMethod.GET}
     )
-    public ResponseEntity berechnePraemie(BerechnePraemieRequest parameters) throws Exception {
+    public ResponseEntity berechnePraemie(@RequestBody BerechnePraemieRequest request) throws Exception {
         BerechnePraemieResponse response = null;
         ResponseEntity responseEntity;
+
         try {
-            response = priceService.berechnePraemie(parameters);
+            response = priceService.berechnePraemie(request);
             responseEntity = new ResponseEntity(response.getPreis(), HttpStatus.ACCEPTED);
             return responseEntity;
         } catch (BerechnePraemieSystemFaultMessage systemFaultMessage) {
@@ -81,7 +83,8 @@ public class PriceServiceController {
         } catch (BerechnePraemieBusinessFaultMessage businessFaultMessage) {
             throw new BusinessException("Price business exception : ", HttpStatus.BAD_REQUEST);
         } finally {
-           throw new SystemException("System business exception : ", HttpStatus.BAD_REQUEST);
+            // TODO: 08.07.2016 clean up code
+           //throw new SystemException("System business exception : ", HttpStatus.BAD_REQUEST);
            // throw new BusinessException("Price business exception.... : ", HttpStatus.BAD_REQUEST);
         }
     }
@@ -91,7 +94,7 @@ public class PriceServiceController {
             value = "/filter",
             method = {RequestMethod.GET}
     )
-    public FiltereProdukteResponse filtereProdukte(FiltereProdukteRequest parameters) {
+    public FiltereProdukteResponse filtereProdukte(@RequestBody FiltereProdukteRequest parameters) {
         // TODO: 07.07.2016 implement me !!
         return null;
     }
