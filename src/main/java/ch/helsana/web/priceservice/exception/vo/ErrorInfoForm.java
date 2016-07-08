@@ -1,4 +1,4 @@
-package ch.helsana.web.component.service.price.exception.vo;
+package ch.helsana.web.priceservice.exception.vo;
 
 import java.util.ArrayList;
 import java.util.List;

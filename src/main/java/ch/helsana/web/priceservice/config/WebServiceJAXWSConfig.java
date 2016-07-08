@@ -1,4 +1,4 @@
-package ch.helsana.web.component.service.price.config;
+package ch.helsana.web.priceservice.config;
 
 import ch.helsana.services.spezialfunktionen.tarif.v2.TarifPortType;
 import org.springframework.beans.factory.annotation.Autowire;
@@ -36,8 +36,6 @@ public class WebServiceJAXWSConfig {
 
     @Value("${soap.endpoint.url}")
     public String ENDPOINT_URL;
-
-
 
 
     @Bean(name = "tarifPortType", autowire = Autowire.BY_NAME)

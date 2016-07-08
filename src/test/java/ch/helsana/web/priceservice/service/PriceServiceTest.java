@@ -1,4 +1,4 @@
-package ch.helsana.web.component.service.price.service;
+package ch.helsana.web.priceservice.service;
 
 import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage;
 import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieSystemFaultMessage;
@@ -8,7 +8,7 @@ import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemiefaults.Bere
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemieresponse.Preis;
-import ch.helsana.web.component.service.price.PriceServiceApplication;
+import ch.helsana.web.priceservice.PriceServiceApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

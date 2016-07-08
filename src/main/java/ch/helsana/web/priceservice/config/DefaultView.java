@@ -1,4 +1,4 @@
-package ch.helsana.web.component.service.price.config;
+package ch.helsana.web.priceservice.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;

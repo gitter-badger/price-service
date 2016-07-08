@@ -1,4 +1,4 @@
-package ch.helsana.web.component.service.price.exception;
+package ch.helsana.web.priceservice.exception;
 
 import org.springframework.http.HttpStatus;
 

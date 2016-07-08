@@ -1,4 +1,4 @@
-package ch.helsana.web.component.service.price.converter;
+package ch.helsana.web.priceservice.converter;
 
 /**
  * Created by panter on 23/12/15.

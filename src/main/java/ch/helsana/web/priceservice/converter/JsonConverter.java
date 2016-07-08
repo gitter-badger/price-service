@@ -1,4 +1,4 @@
-package ch.helsana.web.component.service.price.converter;
+package ch.helsana.web.priceservice.converter;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;

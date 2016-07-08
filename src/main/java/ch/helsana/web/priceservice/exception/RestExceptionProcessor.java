@@ -1,7 +1,7 @@
-package ch.helsana.web.component.service.price.exception;
+package ch.helsana.web.priceservice.exception;
 
-import ch.helsana.web.component.service.price.exception.vo.ErrorInfo;
-import ch.helsana.web.component.service.price.exception.vo.ErrorInfoForm;
+import ch.helsana.web.priceservice.exception.vo.ErrorInfo;
+import ch.helsana.web.priceservice.exception.vo.ErrorInfoForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

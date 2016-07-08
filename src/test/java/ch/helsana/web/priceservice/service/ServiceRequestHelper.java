@@ -1,4 +1,4 @@
-package ch.helsana.web.component.service.price.service;
+package ch.helsana.web.priceservice.service;
 
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Leistungserbringer;
@@ -7,7 +7,7 @@ import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Per
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.ProduktListType;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Versicherungsvertrag;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Vertragsbaustein;
-import ch.helsana.web.component.service.price.converter.CalendarConverter;
+import ch.helsana.web.priceservice.converter.CalendarConverter;
 import org.joda.time.DateTime;
 
 /**

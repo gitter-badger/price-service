@@ -1,4 +1,4 @@
-package ch.helsana.web.component.service.price.exception.vo;
+package ch.helsana.web.priceservice.exception.vo;
 
 /**
  * This class is for any kind of error which need to inform a client about error cause.

@@ -1,4 +1,4 @@
-package ch.helsana.web.component.service.price;
+package ch.helsana.web.priceservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

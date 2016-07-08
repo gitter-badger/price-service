@@ -1,4 +1,4 @@
-package ch.helsana.web.component.service.price.service;
+package ch.helsana.web.priceservice.service;
 
 import ch.helsana.services.spezialfunktionen.tarif.v2.BerechneBesterPreisBusinessFaultMessage;
 import ch.helsana.services.spezialfunktionen.tarif.v2.BerechneBesterPreisSystemFaultMessage;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
- * Created by hkesq on 23.11.2015.
+ * Created by Marcel Widmer on 08.07.2016.
  */
 // tag::PriceService[]
 @Service

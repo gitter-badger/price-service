@@ -1,4 +1,4 @@
-# Server Ports
+# Server
 server:
   port: 0
 
