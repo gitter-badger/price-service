@@ -1441,6 +1441,7 @@ Back-to-back with previous interval.
 
 
 
+image::https://img.shields.io/travis/marzelwidmer/price-service.svg?style=flat-square[travisCI]
 
 
 
