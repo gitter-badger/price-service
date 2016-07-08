@@ -8,12 +8,11 @@ import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemiefaults.Bere
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemieresponse.Preis;
-import ch.helsana.web.priceservice.PriceServiceApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
@@ -25,29 +24,25 @@ import static org.mockito.Mockito.when;
 /**
  * Created by hkesq on 07.07.2016.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {PriceServiceApplication.class})
+@RunWith(MockitoJUnitRunner.class)
 public class PriceServiceTest {
 
+    @Mock
+    TarifPortType mockService;
+
+    @InjectMocks
     private PriceService priceService;
-    @Autowired
-    public void setPriceService(PriceService priceService) {
-        this.priceService = priceService;
-    }
 
 
     @Test
     public void berechnePraemie() throws Exception {
         // setup
         BerechnePraemieRequest request = ServiceRequestHelper.berechnePraemieRequest();
-        TarifPortType mockService = mock(TarifPortType.class); //http://mockito.org/
 
         BerechnePraemieResponse response = new BerechnePraemieResponse();
         Preis preis = new Preis();
         preis.setNettoPreis(new BigDecimal("22.22"));
         response.setPreis(preis);
-        // set Mock in Service // TODO: 07.07.2016 search for a better solution to remove the package private setter method
-        ReflectionTestUtils.setField(priceService, PriceService.class, "tarifPortType", mockService, TarifPortType.class);
 
         //stubbing
         when(mockService.berechnePraemie(request)).thenReturn(response);
