@@ -23,7 +23,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Created by hkesq on 07.07.2016.
+ * Created by Marcel Widmer on 07.07.2016.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class PriceServiceTest {
@@ -35,8 +35,12 @@ public class PriceServiceTest {
     private PriceService priceService;
 
 
+    /**
+     * Test berechne price
+     * @throws Exception
+     */
     @Test
-    public void berechnePraemie() throws Exception {
+    public void price() throws Exception {
         // setup
         BerechnePraemieRequest request = ServiceRequestHelper.berechnePraemieRequest();
 
@@ -55,12 +59,13 @@ public class PriceServiceTest {
     }
 
 
-
-
+    /**
+     * Test System Excpetion.
+     * @throws Exception
+     */
     @Test(expected = ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieSystemFaultMessage.class)
     public void priceSystemException() throws Exception {
         // setup
-        BerechnePraemieRequest request = ServiceRequestHelper.berechnePraemieRequest();
         TarifPortType mockService = mock(TarifPortType.class); //http://mockito.org/
         // set Mock in Service
         ReflectionTestUtils.setField(priceService, PriceService.class, "tarifPortType", mockService, TarifPortType.class);
@@ -72,9 +77,13 @@ public class PriceServiceTest {
 
         // run
         priceService.berechnePraemie(null);
-        fail();
+        fail(); // if the expected don't come from the backend test will fail.
     }
 
+    /**
+     * Test Business Exception
+     * @throws Exception
+     */
     @Test(expected = ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage.class)
     public void priceBusinessException() throws Exception {
         // setup
@@ -90,8 +99,7 @@ public class PriceServiceTest {
 
         // run
         BerechnePraemieResponse berechnePraemieResponse = priceService.berechnePraemie(null);
-        fail();
-
+        fail(); // if the expected don't come from the backend test will fail.
     }
 
 }

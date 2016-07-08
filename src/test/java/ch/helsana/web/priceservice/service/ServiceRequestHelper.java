@@ -8,12 +8,21 @@ import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Pro
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Versicherungsvertrag;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Vertragsbaustein;
 import ch.helsana.web.priceservice.converter.CalendarConverter;
+import ch.helsana.web.priceservice.converter.JsonConverter;
 import org.joda.time.DateTime;
 
 /**
  * Created by hkesq on 05.07.2016.
  */
 public class ServiceRequestHelper {
+
+
+
+
+    public static BerechnePraemieRequest berechnePraemieRequest(String testRequestJsonFileName) {
+        BerechnePraemieRequest request = new JsonConverter<BerechnePraemieRequest>().convert("/sampleRequest/" + testRequestJsonFileName, BerechnePraemieRequest.class);
+        return request;
+    }
 
 
 
