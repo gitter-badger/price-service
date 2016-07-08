@@ -8,7 +8,7 @@
 [circle-url]: https://circleci.com/gh/marzelwidmer/price-service/tree/develop
 
 
-[![Join the chat at https://gitter.im/marzelwidmer/leaf](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marzelwidmer/leaf?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/marzelwidmer/price-service](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/marzelwidmer/price-service?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![travis Build status][travis-image]][travis-url]
 [![circle Build Status][circle-image]][circle-url]
 [![codacy status][codacy-image]][codacy-url]
@@ -18,8 +18,8 @@
 [Manual](https://raw.githubusercontent.com/marzelwidmer/price-service/develop/src/main/resources/static/manual.html)
 
 [circleci](https://circleci.com/gh/marzelwidmer)
-[travis](https://travis-ci.org/marzelwidmer/leaf)
-[codacy](https://www.codacy.com/app/marzelwidmer/leaf/dashboard)
+[travis](https://travis-ci.org/marzelwidmer/price-service)
+[codacy](https://www.codacy.com/app/marzelwidmer/price-service/dashboard)
 
 
 
