@@ -15,7 +15,7 @@
 [![License][license-image]][license-url]
 
 
-[Manual](https://raw.githubusercontent.com/marzelwidmer/price-service/develop/src/main/resources/static/manual.adoc)
+[Manual](https://raw.githubusercontent.com/marzelwidmer/price-service/develop/src/main/resources/static/manual.html)
 
 [circleci](https://circleci.com/gh/marzelwidmer)
 [travis](https://travis-ci.org/marzelwidmer/leaf)
