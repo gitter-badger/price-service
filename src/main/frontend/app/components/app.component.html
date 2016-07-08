@@ -1,0 +1,39 @@
+<form class="form" #calcPremiums="ngForm">
+    <h2>{{title}}</h2>
+    <fieldset class="fieldset">
+        <div>
+            <span>
+                <input class="input" name="birthday" type="text" placeholder="Geburtsdatum" required
+                       [(ngModel)]="model.dateOfBirth" name="dateOfBirth" #dateOfBirth="ngModel">
+            </span>
+        </div>
+        <div>
+            <span class="line-height-3">Geschlecht:</span>
+            <aside class="input input--gender">
+
+                <input id="gender-female" class="input__radio" type="radio" name="gender" value='female'
+                       [(ngModel)]="model.gender">
+                <label class="input--gender__label input--left icon icon-female"
+                       title='male' for="gender-female"></label>
+                <input id="gender-male" class="input__radio" type="radio" name="gender" value='male'
+                       [(ngModel)]="model.gender">
+                <label class="input--gender__label input--right icon icon-male"
+                       title='female' for="gender-male"></label>
+            </aside>
+
+        </div>
+        <input class="input" name="zip" type="text" maxlength="444" placeholder="PLZ (Wohnort)"
+               [(ngModel)]="model.zip" required>
+        <div>
+            <span>
+                <input name="plz" type="hidden">
+            </span>
+        </div>
+        <input type="hidden">
+    </fieldset>
+    <input class="btn btn--form btn--clear-left" type="submit" (click)="submit()" value='Starten'>
+    <a class="link" href='https://portal.helsana.ch/offer/#/personal-details/persons/?locale=de&baby=true '
+       target="_blank">Prämie
+        für ungeborenes Kind berechnen ></a>
+    <div></div>
+</form>

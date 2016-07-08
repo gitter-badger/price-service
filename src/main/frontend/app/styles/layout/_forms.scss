@@ -1,0 +1,37 @@
+/*---
+title:   Form
+section: Layout
+---
+
+Link styles can be applied to an `<form>` element:
+
+```example:html
+<form class="form">
+    <h2>Title</h2>
+    <span>some text</span>
+</form>
+```
+```example:html
+<fieldset class="fieldset" style="padding: 20px;  background-color: darkgray;>
+    <h2>Title</h2>
+    <span>some text</span>
+</fieldset>
+```
+*/
+
+@mixin form($width) {
+  background-color: $helsana-light;
+  color: $snow;
+  width: $width;
+  padding: 8px 14px 16px 14px;
+}
+
+.form {
+  @include form(150px);
+}
+
+.fieldset {
+  border: none;
+  padding: 0 0 0 0;
+  margin: 0;
+}

@@ -1,0 +1,28 @@
+/*---
+title:   Icons
+section: Elements
+---
+
+Button styles can be applied to any element. Typically you'll want to use
+to a `<label>`:
+
+```example:html
+<label class="icon icon-female"></button>
+```
+```example:html
+<label class="icon icon-male"></button>
+```
+*/
+
+.icon {
+  font-family: 'icomoon';
+  cursor: pointer;
+}
+
+.icon-male:before {
+  content: "\e900";
+}
+
+.icon-female:before {
+  content: "\e901";
+}
