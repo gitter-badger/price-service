@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ch.helsana.web</groupId>
@@ -8,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>price-service</name>
-    <description>Price service calculate product  / Product Engine</description>
+    <description>Price service calculate product / Product Engine</description>
 
 
     <parent>
@@ -32,7 +33,8 @@
         <asciidoctorj-pdf.version>1.5.0-alpha.7</asciidoctorj-pdf.version>
         <asciidoctorj-diagram.version>1.3.1</asciidoctorj-diagram.version>
         <snippetsDirectory>${project.build.directory}/generated-snippets</snippetsDirectory>
-        <asciidoctor-maven-plugin.outputDirectory>${project.basedir}/src/main/resources/static</asciidoctor-maven-plugin.outputDirectory>
+        <asciidoctor-maven-plugin.outputDirectory>${project.basedir}/src/main/resources/static
+        </asciidoctor-maven-plugin.outputDirectory>
 
         <!-- Joda -->
         <joda-time-version>2.8.2</joda-time-version>
@@ -142,7 +144,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-     
+
 
     <build>
         <finalName>${project.name}-${project.version}</finalName>
@@ -245,6 +247,9 @@
                     </execution>
                 </executions>
             </plugin>
+
+
+
             <!-- Asciidoctor Plugin-->
             <plugin>
                 <groupId>org.asciidoctor</groupId>
@@ -329,7 +334,8 @@
                                 </extraargs>
                                 <bindingFiles>
                                     <bindingFile>${project.basedir}/src/main/resources/wsdl/binding.xml</bindingFile>
-                                    <bindingFile>${project.basedir}/src/main/resources/wsdl/enum-binding.xml</bindingFile>
+                                    <bindingFile>${project.basedir}/src/main/resources/wsdl/enum-binding.xml
+                                    </bindingFile>
                                 </bindingFiles>
                             </defaultOptions>
                         </configuration>
@@ -383,54 +389,51 @@
         </profile>
 
 
-
         <profile>
             <id>jacoco</id>
             <build>
                 <plugins>
                     <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.7.5.201505241946</version>
-                    <executions>
-                        <!--
-                            Prepares the property pointing to the JaCoCo runtime agent which
-                            is passed as VM argument when Maven the Surefire plugin is executed.
-                        -->
-                        <execution>
-                            <id>pre-unit-test</id>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                            <configuration>
-                                <!-- Sets the path to the file which contains the execution data. -->
-                                <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
-                                <!--
-                                    Sets the name of the property containing the settings
-                                    for JaCoCo runtime agent.
-                                -->
-                                <propertyName>surefireArgLine</propertyName>
-                            </configuration>
-                        </execution>
-                        <!--
-                            Ensures that the code coverage report for unit tests is created after
-                            unit tests have been run.
-                        -->
-                        <execution>
-                            <id>post-unit-test</id>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                            <configuration>
-                                <!-- Sets the path to the file which contains the execution data. -->
-                                <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
-                                <!-- Sets the output directory for the code coverage report. -->
-                                <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.7.5.201505241946</version>
+                        <executions>
+                            <execution>
+                                <id>pre-unit-test</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>post-unit-test</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>pre-integration-test</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                                <configuration>
+                                    <destFile>target/jacoco-it.exec</destFile>
+                                    <propertyName>failsafe.argLine</propertyName>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>post-integration-test</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <dataFile>target/jacoco-it.exec</dataFile>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
