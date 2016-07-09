@@ -25,7 +25,13 @@ import org.springframework.web.bind.annotation.RestController;
  * This Class would be responsible for Mapping from Request to internal Datamodel (and backwards),
  * for calling Backend-Services and handling Backend-Exceptions
  * So it decouples the WSDL-generated Classes from the internal Classes - for when the former changes,
- * nothing or only the mapping has to be changed
+ * nothing or only the mapping has to be changed.
+ * <p>
+ * price-service
+ * - get product (service side configuration / config-server or own DB)
+ * - create resource product/s
+ * - create resource form entries (Plz/birthday/gender)
+ * - compute result
  */
 @RestController
 @RequestMapping("/product")
@@ -68,7 +74,8 @@ public class PriceServiceController {
      */
     @RequestMapping(
             value = "/price",
-            method = {RequestMethod.POST, RequestMethod.GET}
+            method = {RequestMethod.POST},
+            produces = "application/json; charset=utf-8"
     )
     public ResponseEntity berechnePraemie(@RequestBody BerechnePraemieRequest request) throws Exception {
         BerechnePraemieResponse response = null;
@@ -84,8 +91,8 @@ public class PriceServiceController {
             throw new BusinessException("Price business exception : ", HttpStatus.BAD_REQUEST);
         } finally {
             // TODO: 08.07.2016 clean up code
-           //throw new SystemException("System business exception : ", HttpStatus.BAD_REQUEST);
-           // throw new BusinessException("Price business exception.... : ", HttpStatus.BAD_REQUEST);
+            throw new SystemException("System business exception : ", HttpStatus.BAD_REQUEST);
+            //throw new BusinessException("Price business exception.... : ", HttpStatus.BAD_REQUEST);
         }
     }
 
