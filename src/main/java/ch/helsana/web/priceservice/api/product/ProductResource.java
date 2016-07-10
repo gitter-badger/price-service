@@ -1,5 +1,6 @@
 package ch.helsana.web.priceservice.api.product;
 
+import ch.helsana.web.priceservice.model.Doctor;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.math.BigDecimal;
@@ -11,8 +12,11 @@ public class ProductResource extends ResourceSupport {
 
     private String productId;
     private String description;
-    private String imageUrl;
     private BigDecimal price;
+    private String unfall;
+    private String franchise;
+    private String drittesKin;
+    private Doctor doctor;
 
 
     public String getProductId() {
@@ -31,13 +35,6 @@ public class ProductResource extends ResourceSupport {
         this.description = description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public BigDecimal getPrice() {
         return price;
@@ -45,5 +42,37 @@ public class ProductResource extends ResourceSupport {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public void setUnfall(String unfall) {
+        this.unfall = unfall;
+    }
+
+    public String getUnfall() {
+        return unfall;
+    }
+
+    public void setFranchise(String franchise) {
+        this.franchise = franchise;
+    }
+
+    public String getFranchise() {
+        return franchise;
+    }
+
+    public void setDrittesKin(String drittesKin) {
+        this.drittesKin = drittesKin;
+    }
+
+    public String getDrittesKin() {
+        return drittesKin;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
     }
 }

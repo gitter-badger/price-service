@@ -1,16 +1,29 @@
 package ch.helsana.web.priceservice.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 /**
  * Created by marcelwidmer on 21/03/16.
+ * <p>
+ * "produkt": [
+ * {
+ * "arzt": {
+ * "avmNetz": "AVN_N_1AH_HEL"
+ * },
+ * "drittesKind": "Nein",
+ * "franchise": "COD_Franchise_KVG-O_Erwachsener_1500_HEL",
+ * "produktId": "PRO_P0BEPH_HEL_IG",
+ * "unfall": "COD_ausgeschlossen_HEL"
+ * }
  */
 @Entity
 public class Product {
@@ -22,91 +35,86 @@ public class Product {
     @Version
     private Integer version;
 
-    @Size(min=1, max=36)
+
+    @Size(min = 1, max = 36)
     private String productId;
-    @Size(min=2, max=30)
+    @Size(min = 2, max = 30)
     private String description;
-    private String imageUrl;
-    @NotNull
+
+    private String unfall;
+    private String franchise;
+    private String drittesKind;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="doctor_id")
+    private Doctor doctor;
+
     private BigDecimal price;
 
     /**
      * Used for Entity
      */
-    public Product(){
-
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
+    public Product() {}
 
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public String getDescription() {
+        return description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getUnfall() {
+        return unfall;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public String getFranchise() {
+        return franchise;
+    }
+
+    public String getDrittesKind() {
+        return drittesKind;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
     }
 
     public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-
     private Product(Builder builder) {
-        setId(builder.id);
-        setDescription(builder.description);
-        setImageUrl(builder.imageUrl);
-        setPrice(builder.price);
-        setProductId(builder.productId);
+        id = builder.id;
+        productId = builder.productId;
+        description = builder.description;
+        unfall = builder.unfall;
+        franchise = builder.franchise;
+        drittesKind = builder.drittesKind;
+        doctor = builder.doctor;
+        price = builder.price;
     }
 
     public static Builder newBuilder() {
         return new Builder();
     }
 
+
     /**
      * {@code Product} builder static inner class.
      */
     public static final class Builder {
         private Integer id;
-        private Integer version;
         private String productId;
         private String description;
-        private String imageUrl;
+        private String unfall;
+        private String franchise;
+        private String drittesKind;
+        private Doctor doctor;
         private BigDecimal price;
 
         private Builder() {
@@ -120,17 +128,6 @@ public class Product {
          */
         public Builder id(Integer val) {
             id = val;
-            return this;
-        }
-
-        /**
-         * Sets the {@code version} and returns a reference to this Builder so that the methods can be chained together.
-         *
-         * @param val the {@code version} to set
-         * @return a reference to this Builder
-         */
-        public Builder version(Integer val) {
-            version = val;
             return this;
         }
 
@@ -157,13 +154,46 @@ public class Product {
         }
 
         /**
-         * Sets the {@code imageUrl} and returns a reference to this Builder so that the methods can be chained together.
+         * Sets the {@code unfall} and returns a reference to this Builder so that the methods can be chained together.
          *
-         * @param val the {@code imageUrl} to set
+         * @param val the {@code unfall} to set
          * @return a reference to this Builder
          */
-        public Builder imageUrl(String val) {
-            imageUrl = val;
+        public Builder unfall(String val) {
+            unfall = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code franchise} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code franchise} to set
+         * @return a reference to this Builder
+         */
+        public Builder franchise(String val) {
+            franchise = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code drittesKind} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code drittesKind} to set
+         * @return a reference to this Builder
+         */
+        public Builder drittesKind(String val) {
+            drittesKind = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code doctor} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code doctor} to set
+         * @return a reference to this Builder
+         */
+        public Builder doctor(Doctor val) {
+            doctor = val;
             return this;
         }
 
@@ -186,7 +216,5 @@ public class Product {
         public Product build() {
             return new Product(this);
         }
-
-
     }
 }
