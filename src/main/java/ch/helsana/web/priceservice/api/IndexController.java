@@ -1,6 +1,7 @@
 package ch.helsana.web.priceservice.api;
 
 
+import ch.helsana.web.priceservice.api.product.ProductController;
 import ch.helsana.web.priceservice.controller.PriceServiceController;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpEntity;
@@ -29,8 +30,13 @@ public class IndexController {
 
         List<Link> links = new ArrayList<Link>();
         Link self = linkTo(IndexController.class).withSelfRel();
+
+        Link products = linkTo(methodOn(ProductController.class).showAll()).withRel("products");
+        //Link products = linkTo(ProductController.class).withRel("products");
+
         Link productBestPrice = linkTo(methodOn(PriceServiceController.class).berechneBesterPreis(null)).withRel("best-price");
         Link productPrice = linkTo(methodOn(PriceServiceController.class).berechnePraemie(null)).withRel("price");
+
 
 
        /* Link person = linkTo(methodOn(PersonController.class).show(1L)).withRel("person");
@@ -41,6 +47,7 @@ public class IndexController {
         Link search = linkTo(methodOn(PersonController.class).searchPersonForm()).withRel("search");
 */
         links.add(self);
+        links.add(products);
         links.add(productBestPrice);
         links.add(productPrice);
         //links.add(search);
