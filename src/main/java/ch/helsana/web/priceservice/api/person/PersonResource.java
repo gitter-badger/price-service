@@ -7,9 +7,17 @@ import org.springframework.hateoas.ResourceSupport;
  */
 public class PersonResource extends ResourceSupport {
 
-    private String personId;
+    private Integer personId;
     private String firstName;
     private String lastName;
+
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -25,13 +33,5 @@ public class PersonResource extends ResourceSupport {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(String personId) {
-        this.personId = personId;
     }
 }

@@ -33,6 +33,16 @@ public class Person {
         this.lastName = lastName;
     }
 
+    private Person(Builder builder) {
+        personId = builder.personId;
+        setFirstName(builder.firstName);
+        setLastName(builder.lastName);
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
     public Integer getId() {
         return personId;
     }
@@ -58,5 +68,57 @@ public class Person {
     }
 
 
+    /**
+     * {@code Person} builder static inner class.
+     */
+    public static final class Builder {
+        private Integer personId;
+        private String firstName;
+        private String lastName;
 
+        private Builder() {
+        }
+
+        /**
+         * Sets the {@code personId} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code personId} to set
+         * @return a reference to this Builder
+         */
+        public Builder personId(Integer val) {
+            personId = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code firstName} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code firstName} to set
+         * @return a reference to this Builder
+         */
+        public Builder firstName(String val) {
+            firstName = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code lastName} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code lastName} to set
+         * @return a reference to this Builder
+         */
+        public Builder lastName(String val) {
+            lastName = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code Person} built from the parameters previously set.
+         *
+         * @return a {@code Person} built with parameters of this {@code Person.Builder}
+         */
+        public Person build() {
+            return new Person(this);
+        }
+    }
 }

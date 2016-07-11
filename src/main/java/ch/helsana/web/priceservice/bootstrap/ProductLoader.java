@@ -2,7 +2,9 @@ package ch.helsana.web.priceservice.bootstrap;
 
 
 import ch.helsana.web.priceservice.model.Doctor;
+import ch.helsana.web.priceservice.model.Person;
 import ch.helsana.web.priceservice.model.Product;
+import ch.helsana.web.priceservice.repository.PersonRepository;
 import ch.helsana.web.priceservice.repository.ProductRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +24,14 @@ import org.springframework.stereotype.Component;
 public class ProductLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private ProductRepository productRepository;
+    private PersonRepository personRepository;
 
     private Logger log = Logger.getLogger(ProductLoader.class);
 
     @Autowired
-    public void setProductRepository(ProductRepository productRepository) {
+    public void setProductRepository(ProductRepository productRepository, PersonRepository personRepository) {
         this.productRepository = productRepository;
+        this.personRepository = personRepository;
     }
 
     @Override
@@ -54,6 +58,9 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         productRepository.save(productTwo);
         log.info("Product-Two - id: " + productTwo.getId());
 
+        Person personOne = Person.newBuilder().firstName("Foo").lastName("Bar").build();
+        personRepository.save(personOne);
+        log.info("Person-One - id: " + personOne.getId());
 
 
 
