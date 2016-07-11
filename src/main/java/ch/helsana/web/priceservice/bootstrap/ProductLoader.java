@@ -44,5 +44,16 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         log.info("Product-One - id: " + productOne.getId());
 
 
+        Product productTwo = Product.newBuilder()
+                .productId("PRO_P0BEPH_HEL_IG")
+                .description("Product one")
+                .drittesKind("Ja")
+                .unfall("COD_ausgeschlossen_HEL")
+                .doctor(Doctor.newBuilder().avmNetz("AVN_N_1AH_HEL").build())
+                .build();
+        productRepository.save(productTwo);
+        log.info("Product-Two - id: " + productTwo.getId());
+
+
     }
 }
