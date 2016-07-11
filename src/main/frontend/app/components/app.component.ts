@@ -1,26 +1,19 @@
 import {Component} from '@angular/core'
-import {NgForm}    from '@angular/forms';
 
-import {PriceService} from "./shared/price.service";
-import {Person} from "./shared/person";
+import {PriceService} from "./calcPremium/shared/price.service";
+import {CalcPremiumComponent} from "./calcPremium/form/calc-premium.component";
 
 
 @Component({
 	selector: 'my-app',
 	templateUrl: 'app/components/app.component.html',
-	styleUrls: ['app/components/app.component.css'],
+	directives: [
+		CalcPremiumComponent
+	],
 	providers: [
 		PriceService
 	]
 })
 export class AppComponent {
-	title = 'Prämie berechnen';
-	model = new Person();
 
-	constructor(private priceService:PriceService) {
-	}
-
-	submit() {
-		this.priceService.getPrice(this.model);
-	}
 }
