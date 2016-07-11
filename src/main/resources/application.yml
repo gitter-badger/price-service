@@ -3,7 +3,9 @@ spring:
   profiles.active: dev
   application:
           name: price-service
-
+  data:
+    rest:
+      base-path: /api
 
 # I18N (MessageSourceAutoConfiguration)
   messages:

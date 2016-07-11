@@ -20,16 +20,18 @@ public class ProductResourceAssembler extends ResourceAssemblerSupport<Product, 
         super(ProductController.class, ProductResource.class);
     }
 
+
+
     /**
      * Convert domain product to resource product
      *
      * @param product
      * @return
      */
-    @Override
+   @Override
     public ProductResource toResource(Product product) {
         ProductResource resource = createResourceWithId(product.getId(), product); // adds a "self" link
-        // TODO: 11.07.2016  exception handling here ??!!!
+       // TODO: 11.07.2016  exception handling here ??!!!
         try {
             Link products = linkTo(methodOn(ProductController.class).price(null)).withRel("price");
             resource.add(products);

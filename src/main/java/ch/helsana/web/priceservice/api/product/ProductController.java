@@ -27,7 +27,7 @@ import java.util.List;
  * Created by marcelwidmer on 11/04/16.
  */
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/productss")
 public class ProductController {
 
     private ProductResourceService resourceService;
