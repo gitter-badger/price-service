@@ -5,7 +5,6 @@ import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieSystemFault
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.BerechneBesterPreisRequest;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.BerechneBesterPreisResponse;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
-import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
 import ch.helsana.services.spezialfunktionen.tarif.v2.filtereprodukterequest.FiltereProdukteRequest;
 import ch.helsana.services.spezialfunktionen.tarif.v2.filtereprodukteresponse.FiltereProdukteResponse;
 import ch.helsana.web.priceservice.exception.BusinessException;
@@ -25,7 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
  * This Class would be responsible for Mapping from Request to internal Datamodel (and backwards),
  * for calling Backend-Services and handling Backend-Exceptions
  * So it decouples the WSDL-generated Classes from the internal Classes - for when the former changes,
- * nothing or only the mapping has to be changed
+ * nothing or only the mapping has to be changed.
+ * <p>
+ * price-service
+ * - get product (service side configuration / config-server or own DB)
+ * - create resource product/s
+ * - create resource form entries (Plz/birthday/gender)
+ * - compute result
  */
 @RestController
 @RequestMapping("/product")
@@ -68,25 +73,18 @@ public class PriceServiceController {
      */
     @RequestMapping(
             value = "/price",
-            method = {RequestMethod.POST, RequestMethod.GET}
+            method = {RequestMethod.POST},
+            produces = "application/json; charset=utf-8"
     )
     public ResponseEntity berechnePraemie(@RequestBody BerechnePraemieRequest request) throws Exception {
-        BerechnePraemieResponse response = null;
-        ResponseEntity responseEntity;
-
         try {
-            response = priceService.berechnePraemie(request);
-            responseEntity = new ResponseEntity(response.getPreis(), HttpStatus.ACCEPTED);
-            return responseEntity;
+            return new ResponseEntity(priceService.berechnePraemie(request).getPreis(), HttpStatus.ACCEPTED);
         } catch (BerechnePraemieSystemFaultMessage systemFaultMessage) {
             throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (BerechnePraemieBusinessFaultMessage businessFaultMessage) {
             throw new BusinessException("Price business exception : ", HttpStatus.BAD_REQUEST);
-        } finally {
-            // TODO: 08.07.2016 clean up code
-           //throw new SystemException("System business exception : ", HttpStatus.BAD_REQUEST);
-           // throw new BusinessException("Price business exception.... : ", HttpStatus.BAD_REQUEST);
         }
+
     }
 
 

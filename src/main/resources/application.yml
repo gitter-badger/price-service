@@ -1,6 +1,6 @@
 # default profile
 spring:
-  #profiles.active: dev
+  profiles.active: dev
   application:
           name: price-service
 
@@ -17,6 +17,17 @@ info.build:
   name: @project.name@
   description: @project.description@
   version: @project.version@
+
+ # Database
+  datasource:
+    initialize: false
+    # keep database connection alive
+    test-on-borrow: true
+    validation-query: SELECT 1 FROM DUAL
+  jpa:
+    generate-ddl: false
+    show-sql: false
+    hibernate.ddl-auto: validate
 
 # Management
 management:
