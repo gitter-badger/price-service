@@ -1,4 +1,4 @@
-package ch.helsana.web.priceservice.controller;
+package ch.helsana.web.priceservice.api.person;
 
 
 import ch.helsana.web.priceservice.PriceServiceApplication;

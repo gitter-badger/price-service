@@ -1,5 +1,6 @@
-package ch.helsana.web.priceservice.controller;
+package ch.helsana.web.priceservice.api.person;
 
+import ch.helsana.web.priceservice.controller.PriceServiceController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Ignore;
