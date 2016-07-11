@@ -26,20 +26,79 @@ include::http-status-codes.adoc[]
 
 [[resources]]
 = Resources
-[[resources-product]]
-== Product
-The Product resource is used to calculate the product prices.
+[[resources-person]]
+== Person
+The Person resource is used to create, modify and list people.
 
-[[resource-get-product]]
-=== Caclulate product
-A `GET` request calculate the price of products.
-include::{snippets}/calculate-product/response-fields.adoc[]
+[[resource-person-list]]
+=== Listing person
+A `GET` request lists all of the service's person.
+
+include::{snippets}/list-person/response-fields.adoc[]
 
 ==== Example request
-include::{snippets}/calculate-product/curl-request.adoc[]
+
+include::{snippets}/list-person/curl-request.adoc[]
 
 ==== Example response
-include::{snippets}/calculate-product/http-response.adoc[]
+
+include::{snippets}/list-person/http-response.adoc[]
+
+
+[[resource-person-get]]
+=== Fetching person
+A `GET` request fetches a specific person.
+
+include::{snippets}/get-person/response-fields.adoc[]
+
+==== Example request
+
+include::{snippets}/get-person/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/get-person/http-response.adoc[]
+
+
+[[resource-people-create]]
+=== Creating people
+A `POST` request creates a new person.
+
+==== Request structure
+
+include::{snippets}/create-person/request-fields.adoc[]
+
+==== Example request
+
+include::{snippets}/create-person/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/create-person/http-response.adoc[]
+
+
+[[resource-person-update]]
+=== Updating person
+A `PUT` request updates an existing person.
+
+==== Request structure
+
+include::{snippets}/create-person/request-fields.adoc[]
+
+==== Example request
+
+
+include::{snippets}/update-person/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/update-person/http-response.adoc[]
+
+
+
+
+
+
 
 
 [architecture]
