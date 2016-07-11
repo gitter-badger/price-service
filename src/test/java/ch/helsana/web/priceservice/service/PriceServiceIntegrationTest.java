@@ -26,7 +26,7 @@ import java.math.BigInteger;
 @SpringApplicationConfiguration(classes = {PriceServiceApplication.class, WebServiceJAXWSConfig.class})
 @WebAppConfiguration
 @IntegrationTest
-public class PriceServiceApplicationIntegrationTest {
+public class PriceServiceIntegrationTest {
 
     @Autowired
     PriceService priceService;

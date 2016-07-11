@@ -36,7 +36,7 @@ public class PriceServiceTest {
 
 
     /**
-     * Test berechne price
+     * Test calcutate price
      * @throws Exception
      */
     @Test
@@ -54,7 +54,7 @@ public class PriceServiceTest {
 
         // run
         BerechnePraemieResponse serviceResponse = priceService.berechnePraemie(request);
-        assertEquals(preis.getNettoPreis(), serviceResponse.getPreis().getNettoPreis());
+        assertEquals(new BigDecimal("22.22"), serviceResponse.getPreis().getNettoPreis());
 
     }
 

@@ -426,7 +426,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <span id="author" class="author">Marcel Widmer</span><br>
 <span id="email" class="email"><a href="mailto:marzelwidmer@gmail.com">marzelwidmer@gmail.com</a></span><br>
 <span id="revnumber">version 0.0.1-SNAPSHOT,</span>
-<span id="revdate">2016-07-08</span>
+<span id="revdate">2016-07-09</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -461,6 +461,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#_default_profile">Default Profile</a></li>
 <li><a href="#_profiles">Profiles</a></li>
+<li><a href="#_soap_debug_vm_argument">SOAP Debug VM-Argument</a></li>
 </ul>
 </li>
 </ul>
@@ -594,18 +595,18 @@ use of HTTP status codes.</p>
 <h3 id="resource-get-product"><a class="link" href="#resource-get-product">Caclulate product</a></h3>
 <div class="paragraph">
 <p>A <code>GET</code> request calculate the price of products.
-Unresolved directive in manual.adoc - include::C:\Users\Public\App\dev\git\price-service\target/generated-snippets/calculate-product/response-fields.adoc[]</p>
+Unresolved directive in manual.adoc - include::/Users/marcelwidmer/Dev/git/price-service/target/generated-snippets/calculate-product/response-fields.adoc[]</p>
 </div>
 <div class="sect3">
 <h4 id="_example_request"><a class="link" href="#_example_request">Example request</a></h4>
 <div class="paragraph">
-<p>Unresolved directive in manual.adoc - include::C:\Users\Public\App\dev\git\price-service\target/generated-snippets/calculate-product/curl-request.adoc[]</p>
+<p>Unresolved directive in manual.adoc - include::/Users/marcelwidmer/Dev/git/price-service/target/generated-snippets/calculate-product/curl-request.adoc[]</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_example_response"><a class="link" href="#_example_response">Example response</a></h4>
 <div class="paragraph">
-<p>Unresolved directive in manual.adoc - include::C:\Users\Public\App\dev\git\price-service\target/generated-snippets/calculate-product/http-response.adoc[]</p>
+<p>Unresolved directive in manual.adoc - include::/Users/marcelwidmer/Dev/git/price-service/target/generated-snippets/calculate-product/http-response.adoc[]</p>
 </div>
 </div>
 </div>
@@ -672,6 +673,18 @@ For more information please visit the <a href="http://docs.spring.io/spring-boot
 </tr>
 </thead>
 </table>
+</div>
+<div class="sect3">
+<h4 id="_soap_debug_vm_argument"><a class="link" href="#_soap_debug_vm_argument">SOAP Debug VM-Argument</a></h4>
+<div class="literalblock">
+<div class="content">
+<pre>-Dcom.sun.xml.internal.ws.transport.http.client.HttpTransportPipe.dump=true
+-Dcom.sun.xml.ws.transport.http.client.HttpTransportPipe.dump=true
+-Dcom.sun.xml.ws.transport.local.LocalTransportPipe.dump=true
+-Dcom.sun.xml.ws.transport.http.HttpAdapter.dump=true
+-Dcom.sun.xml.internal.ws.transport.http.HttpAdapter.dumpTreshold=10000</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -766,11 +779,11 @@ For more information please visit the <a href="http://docs.spring.io/spring-boot
 </dd>
 <dt class="hdlist1">docdir</dt>
 <dd>
-<p>C:/Users/Public/App/dev/git/price-service/src/docs/asciidoc-resources</p>
+<p>/Users/marcelwidmer/Dev/git/price-service/src/docs/asciidoc-resources</p>
 </dd>
 <dt class="hdlist1">docfile</dt>
 <dd>
-<p>C:/Users/Public/App/dev/git/price-service/src/docs/asciidoc/manual.adoc</p>
+<p>/Users/marcelwidmer/Dev/git/price-service/src/docs/asciidoc/manual.adoc</p>
 </dd>
 <dt class="hdlist1">imagesdir</dt>
 <dd>
@@ -792,7 +805,7 @@ For more information please visit the <a href="http://docs.spring.io/spring-boot
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2016-07-04 09:12:01 CEST
+Last updated 2016-07-04 20:43:10 CEST
 </div>
 </div>
 </body>

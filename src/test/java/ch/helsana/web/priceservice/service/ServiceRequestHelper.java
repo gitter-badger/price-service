@@ -25,7 +25,10 @@ public class ServiceRequestHelper {
     }
 
 
-
+    /**
+     *
+     * @return BerechnePraemieRequest object.
+     */
     public static BerechnePraemieRequest berechnePraemieRequest() {
         BerechnePraemieRequest request = new BerechnePraemieRequest();
 
@@ -66,6 +69,15 @@ public class ServiceRequestHelper {
         versicherungsvertrag.setVertragsbeginn(CalendarConverter.dateToXMLGregorianCalendar(vertragsbeginn.toDate()));
 
         request.setVersicherungsvertrag(versicherungsvertrag);
+
+        return request;
+    }
+
+
+    // TODO: 08/07/16 finish BuilderPattern request object.
+    public static BerechnePraemieRequest berechnePraemieRequestWithTwoProducts(){
+        BerechnePraemieRequest request = new BerechnePraemieRequest();
+        request.withCorrelationId("12341");
 
         return request;
     }
