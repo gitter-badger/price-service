@@ -28,25 +28,25 @@ public class ProductResourceAssembler extends ResourceAssemblerSupport<Product, 
      */
     @Override
     public ProductResource toResource(Product product) {
-        ProductResource productResource = createResourceWithId(product.getId(), product); // adds a "self" link
+        ProductResource resource = createResourceWithId(product.getId(), product); // adds a "self" link
         // TODO: 11.07.2016  exception handling here ??!!!
         try {
             Link products = linkTo(methodOn(ProductController.class).price(null)).withRel("price");
-            productResource.add(products);
+            resource.add(products);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // TODO: copy properties from product to productResource
-        productResource.setProductId(product.getProductId());
-        productResource.setDescription(product.getDescription());
-        productResource.setUnfall(product.getUnfall());
-        productResource.setFranchise(product.getFranchise());
-        productResource.setDrittesKin(product.getDrittesKind());
-        productResource.setDoctor(product.getDoctor());
-        productResource.setPrice(product.getPrice());
+        resource.setProductId(product.getProductId());
+        resource.setDescription(product.getDescription());
+        resource.setUnfall(product.getUnfall());
+        resource.setFranchise(product.getFranchise());
+        resource.setDrittesKin(product.getDrittesKind());
+        resource.setDoctor(product.getDoctor());
+        resource.setPrice(product.getPrice());
 
-        return productResource;
+        return resource;
     }
 }
 

@@ -1,7 +1,7 @@
 package ch.helsana.web.priceservice.api;
 
 
-import ch.helsana.web.priceservice.api.customer.CustomerController;
+import ch.helsana.web.priceservice.api.person.PersonController;
 import ch.helsana.web.priceservice.api.product.ProductController;
 import ch.helsana.web.priceservice.api.zip.ZipController;
 import org.springframework.hateoas.Link;
@@ -30,22 +30,13 @@ public class IndexController {
 
         List<Link> links = new ArrayList<Link>();
         Link self = linkTo(IndexController.class).withSelfRel();
-
-        //Link products = linkTo(methodOn(ProductController.class).showAll()).withRel("products");
         Link products = linkTo(ProductController.class).withRel("products");
         Link zip = linkTo(ZipController.class).withRel("zip"); // TODO: 11.07.2016
-        Link customer = linkTo(CustomerController.class).withRel("customer"); // TODO: 11.07.2016
-        //Link productPrice = linkTo(PriceServiceController.class).withRel("price");
-
-
-       // Link productBestPrice = linkTo(methodOn(PriceServiceController.class).berechneBesterPreis(null)).withRel("best-price");
-        //Link productPrice = linkTo(methodOn(PriceServiceController.class).berechnePraemie(null)).withRel("price");
-
-
+        Link person = linkTo(PersonController.class).withRel("person"); // TODO: 11.07.2016
 
         links.add(self);
         links.add(zip);
-        links.add(customer);
+        links.add(person);
         links.add(products);
 
         return new HttpEntity<List<Link>>(links);

@@ -31,13 +31,13 @@ import java.util.List;
 public class ProductController {
 
     private ProductResourceService resourceService;
-    private PriceService priceService;
+    private PriceService service;
 
 
     @Autowired
     public void setProductService(ProductResourceService resourceService, PriceService priceService) {
         this.resourceService = resourceService;
-        this.priceService = priceService;
+        this.service = priceService;
     }
 
     /**
@@ -48,8 +48,8 @@ public class ProductController {
      */
     @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
     public HttpEntity<ProductResource> findOne(@PathVariable("productId") Integer productId) {
-        ProductResource productResource = resourceService.findOne(productId);
-        return new ResponseEntity<>(productResource, HttpStatus.OK);
+        ProductResource resource = resourceService.findOne(productId);
+        return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
     /**
@@ -59,8 +59,8 @@ public class ProductController {
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<ProductResource>> showAll() {
-        List<ProductResource> productResources = resourceService.listAll();
-        return new ResponseEntity<List<ProductResource>>(productResources, HttpStatus.OK);
+        List<ProductResource> resources = resourceService.listAll();
+        return new ResponseEntity<List<ProductResource>>(resources, HttpStatus.OK);
     }
 
 
@@ -80,7 +80,7 @@ public class ProductController {
     )
     public ResponseEntity price(@RequestBody BerechnePraemieRequest request) throws Exception {
         try {
-            return new ResponseEntity(priceService.berechnePraemie(request).getPreis(), HttpStatus.ACCEPTED);
+            return new ResponseEntity(service.berechnePraemie(request).getPreis(), HttpStatus.ACCEPTED);
         } catch (BerechnePraemieSystemFaultMessage systemFaultMessage) {
             throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (BerechnePraemieBusinessFaultMessage businessFaultMessage) {

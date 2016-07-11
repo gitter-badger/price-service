@@ -55,5 +55,7 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         log.info("Product-Two - id: " + productTwo.getId());
 
 
+
+
     }
 }

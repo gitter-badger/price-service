@@ -19,27 +19,27 @@ import java.util.List;
 public class ProductResourceService {
 
 
-    private ProductRepository productRepository;
-    private ProductResourceAssembler productResourceAssembler;
+    private ProductRepository repository;
+    private ProductResourceAssembler resourceAssembler;
 
     @Autowired
-    public void setProductRepository(ProductRepository productRepository, ProductResourceAssembler productResourceAssembler) {
-        this.productRepository = productRepository;
-        this.productResourceAssembler = productResourceAssembler;
+    public void setProductRepository(ProductRepository repository, ProductResourceAssembler resourceAssembler) {
+        this.repository = repository;
+        this.resourceAssembler = resourceAssembler;
     }
 
 
     /**
      * Convert model to Resource
      *
-     * @param productId
+     * @param id
      * @return  one ProductResource
      */
     @Transactional
-    public ProductResource findOne(Integer productId) {
-        Product model = productRepository.findOne(productId);
-        ProductResource productResource = productResourceAssembler.toResource(model);
-        return productResource;
+    public ProductResource findOne(Integer id) {
+        Product model = repository.findOne(id);
+        ProductResource resource = resourceAssembler.toResource(model);
+        return resource;
     }
 
     /**
@@ -50,8 +50,8 @@ public class ProductResourceService {
     @Transactional
     public List<ProductResource> listAll() {
         List<ProductResource> products = new ArrayList<ProductResource>();
-        for (Product model : productRepository.findAll()) {
-            products.add(productResourceAssembler.toResource(model));
+        for (Product model : repository.findAll()) {
+            products.add(resourceAssembler.toResource(model));
         }
         return products;
     }
