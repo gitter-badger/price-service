@@ -3,10 +3,8 @@ package ch.helsana.web.priceservice.controller;
 import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage;
 import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieSystemFaultMessage;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.BerechneBesterPreisRequest;
-import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.BerechneBesterPreisResponse;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
 import ch.helsana.services.spezialfunktionen.tarif.v2.filtereprodukterequest.FiltereProdukteRequest;
-import ch.helsana.services.spezialfunktionen.tarif.v2.filtereprodukteresponse.FiltereProdukteResponse;
 import ch.helsana.web.priceservice.exception.BusinessException;
 import ch.helsana.web.priceservice.exception.SystemException;
 import ch.helsana.web.priceservice.service.PriceService;
@@ -57,7 +55,7 @@ public class PriceServiceController {
             value = "/best-price",
             method = {RequestMethod.POST}
     )
-    public BerechneBesterPreisResponse berechneBesterPreis(@RequestBody BerechneBesterPreisRequest parameters) {
+    public ResponseEntity berechneBesterPreis(@RequestBody BerechneBesterPreisRequest parameters) {
         // TODO: 07.07.2016 implement me !!
         return null;
     }
@@ -92,7 +90,7 @@ public class PriceServiceController {
             value = "/filter",
             method = {RequestMethod.GET}
     )
-    public FiltereProdukteResponse filtereProdukte(@RequestBody FiltereProdukteRequest parameters) {
+    public ResponseEntity filtereProdukte(@RequestBody FiltereProdukteRequest parameters) {
         // TODO: 07.07.2016 implement me !!
         return null;
     }

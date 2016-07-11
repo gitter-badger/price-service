@@ -38,6 +38,8 @@ public class ProductResourceAssembler extends ResourceAssemblerSupport<Product, 
         productResource.setPrice(product.getPrice());
 
 
+
+
         return productResource;
     }
 }
