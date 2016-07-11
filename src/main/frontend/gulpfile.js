@@ -16,6 +16,7 @@ config(gulp, {
                 PROD: '../resources/static/',
                 DEV: '.dev/',
                 E2E_SOURCE: '.e2e/',
+                UNIT_TESTS: 'unitTests/',
                 FRONTEND: './',
                 STYLEGUIDE: '.styleguide/'
             },
@@ -62,6 +63,14 @@ gulp.task('e2e', function (callback) {
         'inject:E2e',
         'connect:E2e',
         'angularProtractor',
+        callback
+    );
+});
+
+gulp.task('unitTests', function (callback) {
+    runSequence(
+        'transpiling',
+        'connect:UnitTests',
         callback
     );
 });

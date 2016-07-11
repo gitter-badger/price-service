@@ -22,4 +22,11 @@ module.exports = function (gulp, data, util, taskName) {
             port: 8000
         });
     });
+
+    gulp.task(taskName + ':UnitTests', function () {
+        return connect.server({
+            root: [data.path.UNIT_TESTS, data.path.FRONTEND],
+            port: 9011
+        });
+    });
 };

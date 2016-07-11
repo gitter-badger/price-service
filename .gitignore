@@ -52,3 +52,6 @@ typings
 
 #Test
 .e2e
+
+#Logs
+*.log
