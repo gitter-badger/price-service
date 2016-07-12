@@ -37,7 +37,7 @@ public class Product {
     @JoinColumn(name="doctor_id")
     private Doctor doctor;
 
-    @ManyToMany(mappedBy = "customer")
+    @ManyToMany(mappedBy = "products")
     private List<Customer> customer;
 
 
@@ -104,13 +104,13 @@ public class Product {
         this.price = price;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
-    }
+//    public Doctor getDoctor() {
+//        return doctor;
+//    }
 
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
+//    public void setDoctor(Doctor doctor) {
+//        this.doctor = doctor;
+//    }
 
     private Product(Builder builder) {
         id = builder.id;
@@ -120,7 +120,7 @@ public class Product {
         franchise = builder.franchise;
         drittesKind = builder.drittesKind;
         price = builder.price;
-        doctor = builder.doctor;
+//        doctor = builder.doctor;
     }
 
     public static Builder newBuilder() {

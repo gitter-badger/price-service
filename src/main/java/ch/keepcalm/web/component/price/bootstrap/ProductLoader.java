@@ -67,9 +67,14 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         log.info("Person-One - id: " + customerOne.getId());
 
         Customer customerTwo = Customer.newBuilder().firstName("Mr").lastName("X").build();
-        Product myProduct = Product.newBuilder().description("This ist a Product").build();
-
-        customerTwo.addProduct(myProduct);
+        Product productTwox = Product.newBuilder()
+                .productNumber("PRO_P0BEPH_HEL_IG")
+                .description("Product one")
+                .drittesKind("Ja")
+                .unfall("COD_ausgeschlossen_HEL")
+                .build();
+        productRepository.save(productTwox);
+        customerTwo.addProduct(productTwox);
         customerRepository.save(customerTwo);
 
         log.info("Person-Two - id: " + customerTwo.getId());

@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class Customer {
     private String firstName;
     private String lastName;
 
-    @OneToMany
+    @ManyToMany(targetEntity = Product.class)
     private List <Product> products;
 
 
@@ -74,6 +74,7 @@ public class Customer {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
     public void addProduct(Product product) {
         if(products == null)
             products = new ArrayList<>();
