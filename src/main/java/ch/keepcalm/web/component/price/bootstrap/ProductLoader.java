@@ -11,6 +11,9 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by marcelwidmer on 21/03/16.
@@ -37,7 +40,7 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
         Product productOne = Product.newBuilder()
-                .productId("PRO_P0BEPH_HEL_IG")
+                .productNumber("PRO_P0BEPH_HEL_IG")
                 .description("Product one")
                 .drittesKind("Nein")
                 .unfall("COD_ausgeschlossen_HEL")
@@ -47,7 +50,7 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
 
 
         Product productTwo = Product.newBuilder()
-                .productId("PRO_P0BEPH_HEL_IG")
+                .productNumber("PRO_P0BEPH_HEL_IG")
                 .description("Product one")
                 .drittesKind("Ja")
                 .unfall("COD_ausgeschlossen_HEL")
@@ -55,13 +58,21 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         productRepository.save(productTwo);
         log.info("Product-Two - id: " + productTwo.getId());
 
-        Customer personOne = Customer.newBuilder().firstName("Foo").lastName("Bar").build();
-        customerRepository.save(personOne);
-        log.info("Person-One - id: " + personOne.getId());
+        List<Product> products = new ArrayList();
+        products.add(productOne);
+        products.add(productTwo);
 
-        Customer personTwo = Customer.newBuilder().firstName("Mr").lastName("X").build();
-        customerRepository.save(personTwo);
-        log.info("Person-Two - id: " + personTwo.getId());
+        Customer customerOne = Customer.newBuilder().firstName("Foo").lastName("Bar").products(products).build();
+        customerRepository.save(customerOne);
+        log.info("Person-One - id: " + customerOne.getId());
+
+        Customer customerTwo = Customer.newBuilder().firstName("Mr").lastName("X").build();
+        Product myProduct = Product.newBuilder().description("This ist a Product").build();
+
+        customerTwo.addProduct(myProduct);
+        customerRepository.save(customerTwo);
+
+        log.info("Person-Two - id: " + customerTwo.getId());
 
 
 
