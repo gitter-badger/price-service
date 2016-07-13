@@ -24,13 +24,12 @@ module.exports = {
             // global scss
             {
                 test: /all.scss$/,
-                //include: [helpers.root('frontend', 'app', 'styles')],
                 loader: ExtractTextPlugin.extract('style', 'css!sass')
             },
             // components scss
             {
-                test: /calc-premium.component.scss$/,
-                //  include: String(path.resolve(__dirname, 'app', 'components', 'calcPremium', 'form')),
+                test: /\.scss$/,
+                include: [/components/],
                 loader: 'raw!sass'
             },
             {
