@@ -23,8 +23,6 @@ public class CustomerResourceAssembler extends ResourceAssemblerSupport<Customer
         Link productsLink = new Link(linkTo(CustomerController.class).slash(customer.getId()).slash("products").toUriComponentsBuilder().build().toUriString(), "products");
         Link productLink = new Link(linkTo(ProductController.class).slash(customer.getId()).toUriComponentsBuilder().build().toUriString(), "product");
 
-        customerResource.setCustomer(customer);
-
         customerResource.add(productLink);
         customerResource.add(productsLink);
         return customerResource;
