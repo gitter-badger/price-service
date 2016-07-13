@@ -17,7 +17,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping(value = "/api/customer", produces = "application/hal+json")
+@RequestMapping(value = "/api/customers", produces = "application/hal+json")
 public class CustomerController {
 
     @Autowired
@@ -46,7 +46,6 @@ public class CustomerController {
         List<CustomerResource> customerResources = customerResourceAssembler.toResources(customers);
         customerListResource.setCustomerResourceList(customerResources);
         return customerListResource;
-
     }
 
     private CustomerResource customerToResource(Customer customer) {

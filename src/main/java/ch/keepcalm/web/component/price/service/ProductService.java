@@ -40,5 +40,14 @@ public class ProductService {
     public List<Product> getProductByCustomerId(int customerId) {
         return repository.getProductByCustomerId(customerId);
     }
+
+    public List<Product> getProducts() {
+        List<Product> products = new ArrayList<Product>();
+        for (Product model : repository.findAll()) { // TODO: 12/07/16  no better solution
+            products.add(model);
+        }
+        return products;
+    }
+
 }
 // end::ProductService[]

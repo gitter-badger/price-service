@@ -19,7 +19,7 @@ public class IndexController {
     public ResourceSupport index() {
         ResourceSupport index = new ResourceSupport();
         index.add(linkTo(ProductController.class).withRel("products"));
-        index.add(linkTo(CustomerController.class).withRel("customer"));
+        index.add(linkTo(CustomerController.class).withRel("customers"));
         index.add(linkTo(IndexController.class).withSelfRel());
         return index;
     }
