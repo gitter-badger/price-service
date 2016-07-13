@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var helpers = require('./helpers');
+var path = require('path');
 
 module.exports = {
     entry: {
@@ -21,14 +21,16 @@ module.exports = {
                 test: /\.ts$/,
                 loaders: ['ts', 'angular2-template-loader']
             },
+            // global scss
             {
-                test: /\.scss$/,
-                exclude: helpers.root('app', 'components'),
+                test: /all.scss$/,
+                //include: [helpers.root('frontend', 'app', 'styles')],
                 loader: ExtractTextPlugin.extract('style', 'css!sass')
             },
+            // components scss
             {
-                test: /\.scss$/,
-                include: helpers.root('app', 'components'),
+                test: /calc-premium.component.scss$/,
+                //  include: String(path.resolve(__dirname, 'app', 'components', 'calcPremium', 'form')),
                 loader: 'raw!sass'
             },
             {
@@ -51,4 +53,5 @@ module.exports = {
             template: 'index.html'
         })
     ]
-};
+}
+;

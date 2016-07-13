@@ -5,7 +5,9 @@ module.exports = function (gulp, data, util, taskName) {
         return gulp.src(
             [
                 data.path.PROD + 'app',
-                data.path.PROD + 'index.html'
+                data.path.PROD + 'assets',
+                data.path.PROD + 'index.html',
+                data.path.PROD + '*.js'
             ],
             {read: false})
             .pipe(clean({force: true}));
