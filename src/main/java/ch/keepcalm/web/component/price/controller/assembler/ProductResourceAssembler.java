@@ -16,6 +16,13 @@ public class ProductResourceAssembler extends ResourceAssemblerSupport<Product, 
     @Override
     public ProductResource toResource(Product product) {
         ProductResource productResource = createResourceWithId(product.getId(), product);
+
+
+        /*ProductResource productResource = createResourceWithId(product.getId(), product);
+        Link customerLink = new Link(linkTo(ProductController.class).slash(product.getId()).slash("customers").toUriComponentsBuilder().build().toUriString(), "customers");
+        productResource.add(customerLink);*/
+
+
         productResource.setProduct(product);
 
         return productResource;
