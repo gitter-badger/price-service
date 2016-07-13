@@ -1,4 +1,4 @@
-package ch.keepcalm.web.component.price.service.converter;
+package ch.keepcalm.web.component.price.converter;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;

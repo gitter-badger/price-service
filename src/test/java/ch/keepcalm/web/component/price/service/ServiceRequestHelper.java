@@ -7,8 +7,8 @@ import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Per
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.ProduktListType;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Versicherungsvertrag;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Vertragsbaustein;
-import ch.keepcalm.web.component.price.service.converter.CalendarConverter;
-import ch.keepcalm.web.component.price.service.converter.JsonConverter;
+import ch.keepcalm.web.component.price.converter.CalendarConverter;
+import ch.keepcalm.web.component.price.converter.JsonConverter;
 import org.joda.time.DateTime;
 
 
