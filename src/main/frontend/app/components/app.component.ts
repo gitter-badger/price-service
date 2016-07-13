@@ -6,7 +6,7 @@ import {CalcPremiumComponent} from "./calcPremium/form/calc-premium.component";
 
 @Component({
 	selector: 'my-app',
-	templateUrl: 'app/components/app.component.html',
+	templateUrl: './app.component.html',
 	directives: [
 		CalcPremiumComponent
 	],
