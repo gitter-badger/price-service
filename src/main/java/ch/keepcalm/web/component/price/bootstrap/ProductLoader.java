@@ -40,20 +40,22 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
         Product productOne = Product.newBuilder()
-                .productNumber("ProductNumer_1")
+                .productNumber("PRO_P0BEPH_HEL_IG")
                 .description("Product one")
                 .drittesKind("Nein")
                 .unfall("COD_ausgeschlossen_HEL")
+                .franchise("COD_Franchise_KVG-O_Erwachsener_1500_HEL")
                 .build();
         productRepository.save(productOne);
         log.info("Product-One - id: " + productOne.getId());
 
 
-        Product productTwo = Product.newBuilder()
-                .productNumber("ProductNumer_2")
+        Product productTwo =Product.newBuilder()
+                .productNumber("PRO_P0BEPH_HEL_IG")
                 .description("Product one")
-                .drittesKind("Ja")
+                .drittesKind("Nein")
                 .unfall("COD_ausgeschlossen_HEL")
+                .franchise("COD_Franchise_KVG-O_Erwachsener_300_HEL")
                 .build();
         productRepository.save(productTwo);
         log.info("Product-Two - id: " + productTwo.getId());

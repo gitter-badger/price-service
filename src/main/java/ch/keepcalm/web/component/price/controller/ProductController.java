@@ -1,21 +1,12 @@
 package ch.keepcalm.web.component.price.controller;
 
-import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage;
-import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieSystemFaultMessage;
-import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
 import ch.keepcalm.web.component.price.controller.assembler.ProductResourceAssembler;
-import ch.keepcalm.web.component.price.exception.BusinessException;
-import ch.keepcalm.web.component.price.exception.SystemException;
 import ch.keepcalm.web.component.price.model.Product;
 import ch.keepcalm.web.component.price.resource.ProductListResource;
 import ch.keepcalm.web.component.price.resource.ProductResource;
-import ch.keepcalm.web.component.price.service.PriceService;
 import ch.keepcalm.web.component.price.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,6 +47,7 @@ public class ProductController {
     public ProductResource getProduct(@PathVariable int id) {
         return productToResource(productService.getProductById(id));
     }
+
 
 
     /**
