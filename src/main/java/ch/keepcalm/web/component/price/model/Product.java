@@ -20,7 +20,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="product_id")
+    @Column(name = "product_id")
     private int id;
 
     @Size(min = 1, max = 36)
@@ -34,19 +34,18 @@ public class Product {
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name="doctor_id")
+    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
     @ManyToMany(mappedBy = "products")
     private List<Customer> customer;
 
 
-
-
     /**
      * Used for Entity
      */
-    public Product() {}
+    public Product() {
+    }
 
     public int getId() {
         return id;
@@ -104,13 +103,13 @@ public class Product {
         this.price = price;
     }
 
-//    public Doctor getDoctor() {
-//        return doctor;
-//    }
+    public Doctor getDoctor() {
+        return doctor;
+    }
 
-//    public void setDoctor(Doctor doctor) {
-//        this.doctor = doctor;
-//    }
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
 
     private Product(Builder builder) {
         id = builder.id;

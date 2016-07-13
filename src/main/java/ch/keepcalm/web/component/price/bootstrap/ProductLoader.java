@@ -40,7 +40,7 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
         Product productOne = Product.newBuilder()
-                .productNumber("PRO_P0BEPH_HEL_IG")
+                .productNumber("ProductNumer_1")
                 .description("Product one")
                 .drittesKind("Nein")
                 .unfall("COD_ausgeschlossen_HEL")
@@ -50,7 +50,7 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
 
 
         Product productTwo = Product.newBuilder()
-                .productNumber("PRO_P0BEPH_HEL_IG")
+                .productNumber("ProductNumer_2")
                 .description("Product one")
                 .drittesKind("Ja")
                 .unfall("COD_ausgeschlossen_HEL")
@@ -67,17 +67,26 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         log.info("Person-One - id: " + customerOne.getId());
 
         Customer customerTwo = Customer.newBuilder().firstName("Mr").lastName("X").build();
-        Product productTwox = Product.newBuilder()
-                .productNumber("PRO_P0BEPH_HEL_IG")
+        Product productThree = Product.newBuilder()
+                .productNumber("ProductNumer_3")
                 .description("Product one")
                 .drittesKind("Ja")
                 .unfall("COD_ausgeschlossen_HEL")
                 .build();
-        productRepository.save(productTwox);
-        customerTwo.addProduct(productTwox);
+        productRepository.save(productThree);
+        customerTwo.addProduct(productThree);
         customerRepository.save(customerTwo);
-
         log.info("Person-Two - id: " + customerTwo.getId());
+
+
+        Customer customerThree = Customer.newBuilder().firstName("Miss").lastName("Y").build();
+        customerThree.addProduct(productOne);
+        customerThree.addProduct(productThree);
+        customerRepository.save(customerThree);
+
+        log.info("Person-Three - id: " + customerThree.getId());
+
+
 
 
 
