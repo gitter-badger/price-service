@@ -27,11 +27,10 @@ config(gulp, {
 });
 
 
-gulp.task('buildProd', function (callback) {
+gulp.task('Prod', function (callback) {
     runSequence(
-        ['clean:Prod', 'transpiling'],
-        ['systemjs-builder', 'sass:Prod', 'copy:AppProd', 'copy:ScriptsProd'],
-        'inject:Prod',
+        ['clean:Prod'],
+        ['webpack:Prod'],
         callback
     );
 });

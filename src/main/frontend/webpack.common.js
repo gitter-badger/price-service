@@ -23,6 +23,12 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
+                exclude: helpers.root('app', 'components'),
+                loader: ExtractTextPlugin.extract('style', 'css!sass')
+            },
+            {
+                test: /\.scss$/,
+                include: helpers.root('app', 'components'),
                 loader: 'raw!sass'
             },
             {
