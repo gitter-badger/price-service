@@ -70,15 +70,18 @@ public class ProductPriceController {
         }
     }
 
+
+    // TODO: 14.07.2016
     /**
      * @param id
      * @return a product
      */
     @RequestMapping(
             value = "{id}/price",
-            method = RequestMethod.PUT,
+            method = {RequestMethod.PUT, RequestMethod.GET},
             produces = "application/json; charset=utf-8"
     )
+    @Deprecated
     public ProductResource getPrice(@PathVariable int id) {
         // TODO: 13.07.2016  HACK
         Product product = productToResource(productService.getProductById(id)).getProduct();

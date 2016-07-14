@@ -23,19 +23,9 @@ public class ProductService {
         this.repository = repository;
     }
 
-
     public Product getProductById(int id) {
         return repository.findOne(id);
     }
-
-    public List<Product> listAll() {
-        List<Product> products = new ArrayList<Product>();
-        for (Product model : repository.findAll()) { // TODO: 12/07/16  no better solution
-            products.add(model);
-        }
-        return products;
-    }
-
 
     public List<Product> getProductByCustomerId(int customerId) {
         return repository.getProductByCustomerId(customerId);
@@ -49,5 +39,12 @@ public class ProductService {
         return products;
     }
 
+    public Product saveProduct(Product product) {
+        return repository.save(product);
+    }
+
+    public Product updateProduct(Product product) {
+        return repository.saveAndFlush(product);
+    }
 }
 // end::ProductService[]

@@ -1,7 +1,7 @@
 package ch.keepcalm.web.component.price.repository;
 
 import ch.keepcalm.web.component.price.model.Product;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * The Spring Data JPA CRUD Repository
  */
 // tag::ProductRepository[]
-public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> getProductByCustomerId(int customerId);
 // end::ProductRepository[]
 }
