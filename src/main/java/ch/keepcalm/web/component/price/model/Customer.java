@@ -1,12 +1,16 @@
 package ch.keepcalm.web.component.price.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -20,6 +24,15 @@ public class Customer {
     private String firstName;
     private String lastName;
 
+    private Date dateOfBirth;
+    private String gender;
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+
     @ManyToMany(targetEntity = Product.class)
     private List <Product> products;
 
@@ -29,6 +42,20 @@ public class Customer {
      */
     public Customer() {
 
+    }
+
+    private Customer(Builder builder) {
+        this.id = builder.id;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.products = builder.products;
+        this.dateOfBirth = builder.dateOfBirth;
+        this.gender = builder.gender;
+        this.address = builder.address;
+    }
+
+    public static Builder newCustomer() {
+        return new Builder();
     }
 
 
@@ -56,11 +83,58 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    private Customer(Builder builder) {
-        setId(builder.id);
-        setFirstName(builder.firstName);
-        setLastName(builder.lastName);
-        setProducts(builder.products);
+    /**
+     * Getter for property 'dateOfBirth'.
+     *
+     * @return Value for property 'dateOfBirth'.
+     */
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    /**
+     * Setter for property 'dateOfBirth'.
+     *
+     * @param dateOfBirth Value to set for property 'dateOfBirth'.
+     */
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    /**
+     * Getter for property 'gender'.
+     *
+     * @return Value for property 'gender'.
+     */
+    public String getGender() {
+        return gender;
+    }
+
+    /**
+     * Setter for property 'gender'.
+     *
+     * @param gender Value to set for property 'gender'.
+     */
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    /**
+     * Getter for property 'address'.
+     *
+     * @return Value for property 'address'.
+     */
+    public Address getAddress() {
+        return address;
+    }
+
+    /**
+     * Setter for property 'address'.
+     *
+     * @param address Value to set for property 'address'.
+     */
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public static Builder newBuilder() {
@@ -90,6 +164,9 @@ public class Customer {
         private String firstName;
         private String lastName;
         private List<Product> products;
+        private Date dateOfBirth;
+        private String gender;
+        private Address address;
 
         private Builder() {
         }
@@ -145,6 +222,21 @@ public class Customer {
          */
         public Customer build() {
             return new Customer(this);
+        }
+
+        public Builder dateOfBirth(Date dateOfBirth) {
+            this.dateOfBirth = dateOfBirth;
+            return this;
+        }
+
+        public Builder gender(String gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public Builder address(Address address) {
+            this.address = address;
+            return this;
         }
     }
 }

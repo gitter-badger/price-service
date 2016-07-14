@@ -1,5 +1,15 @@
 {
-  "dateOfBirth": "10.09.1990",
-  "gender": "female",
-  "zip": "8610"
+  "id": 4,
+  "firstName": "Many",
+  "lastName": "Mayer",
+  "dateOfBirth": 181004400000,
+  "gender": null,
+  "address": {
+    "street": null,
+    "municipality": "Dübendorf",
+    "municipality_nr": "191",
+    "postal_code": "8044",
+    "locality": "Gockhausen"
+  },
+  "products": null
 }
