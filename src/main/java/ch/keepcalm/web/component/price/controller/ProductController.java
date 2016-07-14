@@ -43,7 +43,7 @@ public class ProductController {
     private ProductResourceAssembler productResourceAssembler;
 
     @Autowired
-    public void setProductService(ProductService productService, ProductResourceAssembler productResourceAssembler,  PriceService priceService) {
+    public void setProductService(ProductService productService, ProductResourceAssembler productResourceAssembler, PriceService priceService) {
         this.productService = productService;
         this.productResourceAssembler = productResourceAssembler;
         this.priceService = priceService;
@@ -78,61 +78,39 @@ public class ProductController {
             produces = "application/json; charset=utf-8")
     @ResponseStatus(HttpStatus.CREATED)
     public ProductResource addProduct(@RequestBody Product product) {
-        Product newProduct = productService.saveProduct(product);
-
-        // TODO: 13.07.2016  HACK
-        Product updateProduct = productToResource(productService.getProductById(newProduct.getId())).getProduct();
 
         BerechnePraemieRequest request = new BerechnePraemieRequest();
-        PersonListType personListType = new PersonListType();
-
-        Person person = new Person();
-        person.setId("1");
-        DateTime birtday = new DateTime(1975, 9, 27, 0, 0, 0, 0); // TODO: 08.07.2016  UI
-        person.setGeburtsdatum(CalendarConverter.dateToXMLGregorianCalendar(birtday.toDate()));
-        person.setGeschlecht("1");  // TODO: 08.07.2016  UI
-
-        Vertragsbaustein produkt1 = new Vertragsbaustein()
-                .withFranchise(updateProduct.getFranchise())
-                .withProduktId(updateProduct.getProductNumber())
-                .withDrittesKind(updateProduct.getDrittesKind())
-                .withUnfall(updateProduct.getUnfall());
-
-        ProduktListType produktListType = new ProduktListType();
-        produktListType.getProdukt().add(produkt1);
-
-        person.setProduktList(produktListType);
-        personListType.getPerson().add(person);
-
-        // TODO: 08.07.2016  UI
-        Versicherungsvertrag versicherungsvertrag = new Versicherungsvertrag();
-        versicherungsvertrag.setGemeindeNummer("199");  // TODO: 08.07.2016 UI
-        versicherungsvertrag.setPostleitzahl("8307");  // TODO: 08.07.2016 UI
-        versicherungsvertrag.setPostleitzahlZusatz("00");  // TODO: 08.07.2016 UI
-        DateTime vertragsbeginn = new DateTime(2016, 1, 7, 0, 0, 0, 0); //2016-07-01
-        versicherungsvertrag.setVertragsbeginn(CalendarConverter.dateToXMLGregorianCalendar(vertragsbeginn.toDate()));
-
-        request.setPersonList(personListType);
+        request.setPersonList(new PersonListType()
+                .withPerson(new Person()
+                        .withProduktList(new ProduktListType()
+                                .withProdukt(new Vertragsbaustein()
+                                        .withFranchise(product.getFranchise())
+                                        .withProduktId(product.getProductNumber())
+                                        .withDrittesKind(product.getDrittesKind())
+                                        .withUnfall(product.getUnfall())))
+                        .withGeburtsdatum(CalendarConverter.dateToXMLGregorianCalendar(new DateTime(1975, 9, 27, 0, 0, 0, 0).toDate()))
+                        .withGeschlecht("1")
+                        .withId("1")));
 
         request.setCorrelationId("32424");
-        request.setVersicherungsvertrag(versicherungsvertrag);
-
+        request.setVersicherungsvertrag(new Versicherungsvertrag()
+                .withGemeindeNummer("199")
+                .withPostleitzahl("8307")
+                .withPostleitzahlZusatz("00")
+                .withVertragsbeginn(CalendarConverter.dateToXMLGregorianCalendar(new DateTime(2016, 1, 7, 0, 0, 0, 0).toDate())));
 
         try {
             Preis preis = priceService.berechnePraemie(request).getPreis();
-            ProductResource productResource = productToResource(productService.getProductById(newProduct.getId()));
-            newProduct.setPrice(preis.getBruttoPreis());
-            productService.updateProduct(newProduct);   // TODO: 14.07.2016 update product in DB with price !!!??!!!
-            productResource.getProduct().setPrice(preis.getBruttoPreis());
-            return productResource;
+            product.setPrice(preis.getBruttoPreis());
+            productService.saveProduct(product);
+            return productToResource(productService.getProductById(product.getId()));
         } catch (BerechnePraemieSystemFaultMessage berechnePraemieSystemFaultMessage) {
             berechnePraemieSystemFaultMessage.printStackTrace();
         } catch (BerechnePraemieBusinessFaultMessage berechnePraemieBusinessFaultMessage) {
             berechnePraemieBusinessFaultMessage.printStackTrace();
         }
-        return  productToResource(productService.getProductById(newProduct.getId()));
+        return productToResource(productService.getProductById(product.getId()));
     }
-
 
 
     /**
