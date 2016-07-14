@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  * We’re using Spring to inject the Spring Data JPA repository into the class for our use.
  * In this example, I’m creating two entities and saving them to the database.
  */
-//@Component
+@Component
 public class ProductLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private ProductRepository productRepository;
