@@ -22,6 +22,9 @@ module.exports = webpackMerge(commonConfig, {
     },
 
     plugins: [
+        new webpack.NoErrorsPlugin(),
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.UglifyJsPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'vendor']
         }),
