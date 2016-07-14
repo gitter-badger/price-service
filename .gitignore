@@ -33,8 +33,11 @@ rebel.xml
 
 
 #Deployment
-src/main/resources/static/
+src/main/resources/static/**
+!src/main/resources/static/images/**
+!manual.html
 .dev
+.dist
 
 #TypeScript
 src/main/frontend/app/**/*.js

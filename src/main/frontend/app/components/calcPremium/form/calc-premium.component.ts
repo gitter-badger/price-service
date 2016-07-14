@@ -7,8 +7,8 @@ import {Person} from "../shared/person";
 
 @Component({
 	selector: 'calc-premium',
-	templateUrl: 'app/components/calcPremium/form/calc-premium.component.html',
-	styleUrls: ['app/components/calcPremium/form/calc-premium.component.css']
+	templateUrl: 'calc-premium.component.html',
+	styleUrls: [String('calc-premium.component.scss')]
 })
 export class CalcPremiumComponent {
 	title = 'Prämie berechnen';
