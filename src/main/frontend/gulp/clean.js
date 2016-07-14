@@ -4,10 +4,7 @@ module.exports = function (gulp, data, util, taskName) {
     gulp.task(taskName + ':Prod', function () {
         return gulp.src(
             [
-                data.path.PROD + 'app',
-                data.path.PROD + 'assets',
-                data.path.PROD + 'index.html',
-                data.path.PROD + '*.js'
+                data.path.PROD + '/*'
             ],
             {read: false})
             .pipe(clean({force: true}));
@@ -19,11 +16,6 @@ module.exports = function (gulp, data, util, taskName) {
                 data.path.DEV
             ],
             {read: false})
-            .pipe(clean({force: true}));
-    });
-
-    gulp.task(taskName + ':E2e', function () {
-        return gulp.src(data.path.E2E_SOURCE, {read: false})
             .pipe(clean({force: true}));
     });
 

@@ -8,7 +8,7 @@ const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
 
 module.exports = webpackMerge(commonConfig, {
-    devtool: 'cheap-module-eval-source-map', //--> source-map for prod
+    devtool: 'source-map',
     entry: {
         'vendor': './app/prod.vendor.ts',
         'app': './app/main.ts'
@@ -25,6 +25,11 @@ module.exports = webpackMerge(commonConfig, {
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'vendor']
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'ENV': JSON.stringify(ENV)
+            }
         })
     ],
     module: {

@@ -26,6 +26,12 @@ config(gulp, {
         pack)
 });
 
+gulp.task('default', function (callback) {
+    runSequence(
+        'Dev',
+        callback
+    );
+});
 
 gulp.task('Prod', function (callback) {
     runSequence(
@@ -44,17 +50,7 @@ gulp.task('Dev', function (callback) {
     );
 });
 
-gulp.task('default', function (callback) {
-    runSequence(
-        ['clean:Dev', 'transpiling'],
-        ['sass:Dev', 'copy:AppDev', 'copy:ScriptsDev'],
-        'inject:Dev',
-        'connect:Dev',
-        callback
-    );
-});
-
-gulp.task('serveStyleGuide', function (callback) {
+gulp.task('Styleguide', function (callback) {
     runSequence(
         ['clean:Styleguide'],
         ['sass:Styleguide'],
@@ -64,24 +60,6 @@ gulp.task('serveStyleGuide', function (callback) {
     );
 });
 
-gulp.task('e2e', function (callback) {
-    runSequence(
-        ['clean:E2e', 'transpiling'],
-        ['sass:E2e', 'copy:E2eApp', 'copy:E2eScripts'],
-        'inject:E2e',
-        'connect:E2e',
-        'angularProtractor',
-        callback
-    );
-});
-
-gulp.task('unitTests', function (callback) {
-    runSequence(
-        'transpiling',
-        'connect:UnitTests',
-        callback
-    );
-});
 
 
 
