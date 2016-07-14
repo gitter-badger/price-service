@@ -4,7 +4,7 @@ module.exports = function (gulp, data, util, taskName) {
 
     gulp.task(taskName + ':Dev', function () {
         return connect.server({
-            root: [data.path.DEV, data.path.FRONTEND],
+            root: [data.path.DEV],
             port: 9000
         });
     });
