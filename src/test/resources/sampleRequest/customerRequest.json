@@ -1,8 +1,8 @@
 {
   "firstName": "Many",
   "lastName": "Mayer",
-  "dateOfBirth": 181004400000,
-  "gender": "female",
+  "dateOfBirth": "1982-01-01",
+  "gender": "w",
   "address": {
     "street": "Mainstreet",
     "municipality": "Dübendorf",
