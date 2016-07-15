@@ -4,11 +4,10 @@
   "dateOfBirth": 181004400000,
   "gender": "female",
   "address": {
-    "street": null,
+    "street": "Mainstreet",
     "municipality": "Dübendorf",
     "municipality_nr": "191",
     "postal_code": "8044",
     "locality": "Gockhausen"
-  },
-  "products": null
+  }
 }
