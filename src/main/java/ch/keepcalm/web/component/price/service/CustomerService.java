@@ -30,4 +30,8 @@ public class CustomerService {
         }
         return customers;
     }
+
+    public Customer saveCustomer(Customer customer) {
+        return repository.save(customer);
+    }
 }

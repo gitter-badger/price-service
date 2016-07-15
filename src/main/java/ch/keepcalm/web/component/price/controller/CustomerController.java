@@ -39,8 +39,8 @@ public class CustomerController {
             produces = "application/json; charset=utf-8")
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerResource addCustomer(@RequestBody Customer customer) {
-        // TODO: 14.07.2016  Implement me !!
-        return customerToResource(customer);
+        customerService.saveCustomer(customer);
+        return customerToResource(customerService.getCustomer(customer.getId()));
     }
 
 
