@@ -20,13 +20,20 @@ public class CustomerResourceAssembler extends ResourceAssemblerSupport<Customer
     @Override
     public CustomerResource toResource(Customer customer) {
         CustomerResource customerResource = createResourceWithId(customer.getId(), customer);
-        Link productsLink = new Link(linkTo(CustomerController.class).slash(customer.getId()).slash("products").toUriComponentsBuilder().build().toUriString(), "products");
-        Link productLink = new Link(linkTo(ProductController.class).slash(customer.getId()).toUriComponentsBuilder().build().toUriString(), "product");
 
+       /*
+       Link productsLink = new Link(linkTo(CustomerController.class).slash(customer.getId()).slash("products").toUriComponentsBuilder().build().toUriString(), "products");
+        customerResource.add(productsLink)
+        */
+        // TODO: 15.07.2016 check if there a product
+        if (customer.getProducts() != null ) {
+            if (customer.getProducts().size() > 0){
+                Link productLink = new Link(linkTo(ProductController.class).slash(customer.getId()).toUriComponentsBuilder().build().toUriString(), "product");
+                customerResource.add(productLink);
+            }
+        }
         customerResource.setCustomer(customer);
 
-        customerResource.add(productLink);
-        customerResource.add(productsLink);
         return customerResource;
     }
 

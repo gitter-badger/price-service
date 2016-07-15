@@ -2,6 +2,7 @@ package ch.keepcalm.web.component.price.controller;
 
 import ch.keepcalm.web.component.price.controller.assembler.CustomerResourceAssembler;
 import ch.keepcalm.web.component.price.model.Customer;
+import ch.keepcalm.web.component.price.model.Product;
 import ch.keepcalm.web.component.price.resource.CustomerListResource;
 import ch.keepcalm.web.component.price.resource.CustomerResource;
 import ch.keepcalm.web.component.price.service.CustomerService;
@@ -53,6 +54,26 @@ public class CustomerController {
     public CustomerResource getCustomer(@PathVariable int id) {
         return customerToResource(customerService.getCustomer(id));
     }
+
+
+    // TODO: 15.07.2016 DUMMY IMPL.
+
+    @RequestMapping(
+            value = "{id}/products",
+            method = RequestMethod.POST,
+            produces = "application/json; charset=utf-8")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CustomerResource addProductToCustomer(@RequestBody Product product, @PathVariable int id) {
+        Customer customer = customerService.getCustomer(id);
+        customer.getProducts().add(product);
+        customerService.updateCustmer(customer);
+        return customerToResource(customerService.getCustomer(customer.getId()));
+    }
+
+
+
+
+
 
     private CustomerListResource customerToResource(List<Customer> customers) {
         CustomerListResource customerListResource = new CustomerListResource();

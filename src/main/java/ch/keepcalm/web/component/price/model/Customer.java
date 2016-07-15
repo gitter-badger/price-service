@@ -33,7 +33,7 @@ public class Customer {
     private Address address;
 
 
-    @ManyToMany(targetEntity = Product.class)
+    @ManyToMany(targetEntity = Product.class, cascade = CascadeType.ALL)
     private List <Product> products;
 
 
