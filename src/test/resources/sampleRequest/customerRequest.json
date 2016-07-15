@@ -1,9 +1,8 @@
 {
-  "id": 4,
   "firstName": "Many",
   "lastName": "Mayer",
   "dateOfBirth": 181004400000,
-  "gender": null,
+  "gender": "female",
   "address": {
     "street": null,
     "municipality": "Dübendorf",
