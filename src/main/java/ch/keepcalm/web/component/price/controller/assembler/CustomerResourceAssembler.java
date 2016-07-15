@@ -26,11 +26,14 @@ public class CustomerResourceAssembler extends ResourceAssemblerSupport<Customer
         customerResource.add(productsLink)
         */
         // TODO: 15.07.2016 check if there a product
-        if (customer.getProducts() != null ) {
-            if (customer.getProducts().size() > 0){
+
+
+
+        if (customer.getProducts() != null  && customer.getProducts().size() > 0) {
+            //if (customer.getProducts().size() > 0){
                 Link productLink = new Link(linkTo(ProductController.class).slash(customer.getId()).toUriComponentsBuilder().build().toUriString(), "product");
                 customerResource.add(productLink);
-            }
+
         }
         customerResource.setCustomer(customer);
 

@@ -65,9 +65,12 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerResource addProductToCustomer(@RequestBody Product product, @PathVariable int id) {
         Customer customer = customerService.getCustomer(id);
-        customer.getProducts().add(product);
-        customerService.updateCustmer(customer);
-        return customerToResource(customerService.getCustomer(customer.getId()));
+        if(customer != null){
+            customer.getProducts().add(product);
+            customerService.updateCustmer(customer);
+            return customerToResource(customerService.getCustomer(customer.getId()));
+        }
+       return customerToResource(new Customer()); // TODO: 15.07.2016 not nice solution
     }
 
 
