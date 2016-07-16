@@ -28,6 +28,7 @@ public class CustomerController {
     private CustomerService customerService;
     @Autowired
     private CustomerResourceAssembler customerResourceAssembler;
+
     @Autowired
     public void setCustomerService(CustomerService customerService, CustomerResourceAssembler customerResourceAssembler) {
         this.customerService = customerService;
@@ -45,12 +46,17 @@ public class CustomerController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(
+            value = "",
+            method = RequestMethod.GET,
+            produces = "application/json; charset=utf-8")
     public CustomerListResource getCustomers() {
         return customerToResource(customerService.getCustomers());
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}",
+            method = RequestMethod.GET,
+            produces = "application/json; charset=utf-8")
     public CustomerResource getCustomer(@PathVariable int id) {
         return customerToResource(customerService.getCustomer(id));
     }
@@ -65,17 +71,13 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerResource addProductToCustomer(@RequestBody Product product, @PathVariable int id) {
         Customer customer = customerService.getCustomer(id);
-        if(customer != null){
+        if (customer != null) {
             customer.getProducts().add(product);
             customerService.updateCustmer(customer);
             return customerToResource(customerService.getCustomer(customer.getId()));
         }
-       return customerToResource(new Customer()); // TODO: 15.07.2016 not nice solution
+        return customerToResource(new Customer()); // TODO: 15.07.2016 not nice solution
     }
-
-
-
-
 
 
     private CustomerListResource customerToResource(List<Customer> customers) {
