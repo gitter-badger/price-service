@@ -34,65 +34,40 @@ The Customer resource is used to create, modify and list customer.
 === Listing customers
 A `GET` request lists all of the service's customers.
 
-include::{snippets}/list-customer/response-fields.adoc[]
+ TODO include::{snippets}/list-customer/response-fields.adoc[]
 
-==== Example request
+==== Example request curl
 
 include::{snippets}/list-customer/curl-request.adoc[]
+
+==== Example request HTTP
+
+include::{snippets}/list-customer/http-request.adoc[]
 
 ==== Example response
 
 include::{snippets}/list-customer/http-response.adoc[]
 
 
-[[resource-customer-get]]
-=== Fetching customer
-A `GET` request fetches a specific customer.
-
-include::{snippets}/get-customer/response-fields.adoc[]
-
-==== Example request
-
-include::{snippets}/get-customer/curl-request.adoc[]
-
-==== Example response
-
-include::{snippets}/get-customer/http-response.adoc[]
-
-
-[[resource-people-create]]
+[[resource-customer-create]]
 === Creating customer
 A `POST` request creates a new customer.
 
 ==== Request structure
 
-include::{snippets}/create-customer/request-fields.adoc[]
+ TODO include::{snippets}/create-customer/request-fields.adoc[]
 
-==== Example request
+==== Example request curl
 
 include::{snippets}/create-customer/curl-request.adoc[]
+
+==== Example request HTTP
+
+include::{snippets}/create-customer/http-request.adoc[]
 
 ==== Example response
 
 include::{snippets}/create-customer/http-response.adoc[]
-
-
-[[resource-customer-update]]
-=== Updating customer
-A `PUT` request updates an existing customer.
-
-==== Request structure
-
-include::{snippets}/create-customer/request-fields.adoc[]
-
-==== Example request
-
-
-include::{snippets}/update-customer/curl-request.adoc[]
-
-==== Example response
-
-include::{snippets}/update-customer/http-response.adoc[]
 
 
 
@@ -121,7 +96,7 @@ include::installation.adoc[]
 
 [[sourceCode]]
 = Source Code
-include::sourceCode.adoc[]
+ include::sourceCode.adoc[]
 
 [[releaseNotes]]
 = Release Notes
