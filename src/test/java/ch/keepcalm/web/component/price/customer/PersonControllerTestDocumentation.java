@@ -108,7 +108,7 @@ public class PersonControllerTestDocumentation {
     @Ignore
     @Test
     public void getCustomer() throws Exception {
-        Customer samplePerson = createSampleCustomer("Henry", "King");
+        Customer sampleCustomer = createSampleCustomer("Henry", "King");
 
         this.document.snippets(
                 responseFields(
@@ -119,16 +119,16 @@ public class PersonControllerTestDocumentation {
         );
 
         this.mockMvc.perform(
-                get("/api/customers" + samplePerson.getId()).accept(MediaType.APPLICATION_JSON)
+                get("/api/customers" + sampleCustomer.getId()).accept(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
     }
 
     @Ignore
     @Test
     public void createCustomer() throws Exception {
-        Map<String, String> newPerson = new HashMap();
-        newPerson.put("firstName", "Anne");
-        newPerson.put("lastName", "Queen");
+        Map<String, String> newCustomer = new HashMap();
+        newCustomer.put("firstName", "Anne");
+        newCustomer.put("lastName", "Queen");
 
         ConstrainedFields fields = new ConstrainedFields(Customer.class);
 
@@ -141,7 +141,7 @@ public class PersonControllerTestDocumentation {
 
         this.mockMvc.perform(
                 post("api/customers").contentType(MediaType.APPLICATION_JSON).content(
-                        this.objectMapper.writeValueAsString(newPerson)
+                        this.objectMapper.writeValueAsString(newCustomer)
                 )
         ).andExpect(status().isCreated());
     }
@@ -150,9 +150,9 @@ public class PersonControllerTestDocumentation {
     @Test
     public void updateCustomer() throws Exception {
         Customer originalCustomers = createSampleCustomer("Victoria", "Queen");
-        Map<String, String> updatedPerson = new HashMap();
-        updatedPerson.put("firstName", "Edward");
-        updatedPerson.put("lastName", "King");
+        Map<String, String> updatedCustomer = new HashMap();
+        updatedCustomer.put("firstName", "Edward");
+        updatedCustomer.put("lastName", "King");
 
         ConstrainedFields fields = new ConstrainedFields(Customer.class);
 
@@ -165,7 +165,7 @@ public class PersonControllerTestDocumentation {
 
         this.mockMvc.perform(
                 put("api/customers" + originalCustomers.getId()).contentType(MediaType.APPLICATION_JSON).content(
-                        this.objectMapper.writeValueAsString(updatedPerson)
+                        this.objectMapper.writeValueAsString(updatedCustomer)
                 )
         ).andExpect(status().isNoContent());
     }
