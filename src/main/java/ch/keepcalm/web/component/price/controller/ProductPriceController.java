@@ -85,7 +85,7 @@ public class ProductPriceController {
     public ProductResource getPrice(@PathVariable int id) {
 
         Product product = productToResource(productService.getProductById(id)).getProduct();
-
+        // TODO: 16/07/16 Hard ooded stuff 
         BerechnePraemieRequest request = new BerechnePraemieRequest();
         request.setPersonList(new PersonListType()
                 .withPerson(new Person()
