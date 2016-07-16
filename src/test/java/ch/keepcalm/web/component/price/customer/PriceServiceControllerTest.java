@@ -1,6 +1,6 @@
-package ch.helsana.web.priceservice.api.person;
+package ch.keepcalm.web.component.price.customer;
 
-import ch.helsana.web.priceservice.api.PriceServiceController;
+import ch.keepcalm.web.component.price.PriceServiceApplication;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -23,8 +23,6 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 /**
  * Created by hkesq on 08.07.2016.
@@ -32,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @Ignore
 @ActiveProfiles(profiles = {"junit"})
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = PriceServiceController.class)
+@SpringApplicationConfiguration(classes = PriceServiceApplication.class)
 @WebAppConfiguration
 public class PriceServiceControllerTest {
 

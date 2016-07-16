@@ -4,7 +4,6 @@ package ch.keepcalm.web.component.price.bootstrap;
 import ch.keepcalm.web.component.price.converter.JsonConverter;
 import ch.keepcalm.web.component.price.model.Address;
 import ch.keepcalm.web.component.price.model.Customer;
-import ch.keepcalm.web.component.price.model.Product;
 import ch.keepcalm.web.component.price.repository.CustomerRepository;
 import ch.keepcalm.web.component.price.repository.ProductRepository;
 import org.apache.log4j.Logger;
@@ -12,10 +11,9 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -25,7 +23,7 @@ import java.util.List;
  * We’re using Spring to inject the Spring Data JPA repository into the class for our use.
  * In this example, I’m creating two entities and saving them to the database.
  */
-//@Component
+@Component
 public class ProductLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private ProductRepository productRepository;
@@ -42,6 +40,31 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
+
+
+        Customer customer = Customer.newBuilder()
+                .firstName("Many")
+                .lastName("Mayer")
+                .dateOfBirth(new DateTime(1975, 9, 27, 0, 0, 0, 0).toDateTime().toDate())
+                .address(Address.newAddress()
+                        .locality("Gockhausen")
+                        .municipality("Dübendorf")
+                        .postal_code("8044")
+                        .municipality_nr("191")
+                        .build())
+                .build();
+        customerRepository.save(customer);
+        log.info("Customer with Address with- id: " + customer.getId());
+
+        try {
+            String s = new JsonConverter().convertObjectToJson(customer);
+            System.out.println(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+/*
 
         Product productOne = Product.newBuilder()
                 .productNumber("PRO_P0BEPH_HEL_IG")
@@ -92,28 +115,7 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
 
         log.info("Person-Three - id: " + customerThree.getId());
 
-
-
-        Customer customer = Customer.newBuilder()
-                .firstName("Many")
-                .lastName("Mayer")
-                .dateOfBirth(new DateTime(1975, 9, 27, 0, 0, 0, 0).toDateTime().toDate())
-                .address(Address.newAddress()
-                        .locality("Gockhausen")
-                        .municipality("Dübendorf")
-                        .postal_code("8044")
-                        .municipality_nr("191")
-                        .build())
-                .build();
-        customerRepository.save(customer);
-        log.info("Customer with Address with- id: " + customer.getId());
-
-        try {
-            String s = new JsonConverter().convertObjectToJson(customer);
-            System.out.println(s);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+*/
 
     }
 }

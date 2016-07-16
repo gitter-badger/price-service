@@ -1,9 +1,8 @@
-package ch.helsana.web.priceservice.api.person;
+package ch.keepcalm.web.component.price.customer;
 
-
-import ch.helsana.web.priceservice.PriceServiceApplication;
-import ch.helsana.web.priceservice.model.Person;
-import ch.helsana.web.priceservice.repository.PersonRepository;
+import ch.keepcalm.web.component.price.PriceServiceApplication;
+import ch.keepcalm.web.component.price.model.Customer;
+import ch.keepcalm.web.component.price.repository.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -21,6 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
@@ -59,7 +59,7 @@ public class PersonControllerTestDocumentation {
     private WebApplicationContext context;
 
     @Autowired
-    private PersonRepository personRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -80,29 +80,35 @@ public class PersonControllerTestDocumentation {
                 .build();
     }
 
+
+
     @Test
-    public void listPerson() throws Exception {
-        createSamplePerson("George", "King");
-        createSamplePerson("Mary", "Queen");
+    public void listCustomers() throws Exception {
+        createSampleCustomer("George", "King");
+        createSampleCustomer("Mary", "Queen");
 
         this.document.snippets(
                 responseFields(
-                        fieldWithPath("[].personId").description("The persons' ID"),
-                        fieldWithPath("[].links").description("The persons self resource"),
-                        fieldWithPath("[].firstName").description("The persons' first name"),
-                        fieldWithPath("[].lastName").description("The persons' last name")
+                        fieldWithPath("[].id").description("The customers' ID"),
+                        fieldWithPath("[].links").description("The customer self resource"),
+                        fieldWithPath("[].firstName").description("The customers' first name"),
+                        fieldWithPath("[].lastName").description("The customers' last name")
                 )
         );
 
+        ResultActions perform = this.mockMvc.perform(get("/api/customers").accept(MediaType.APPLICATION_JSON));
+        System.out.printf(perform.toString());
+
+
         this.mockMvc.perform(
-                get("/api/person").accept(MediaType.APPLICATION_JSON)
+                get("/api/customers").accept(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
     }
 
     @Ignore
     @Test
-    public void getPerson() throws Exception {
-        Person samplePerson = createSamplePerson("Henry", "King");
+    public void getCustomer() throws Exception {
+        Customer samplePerson = createSampleCustomer("Henry", "King");
 
         this.document.snippets(
                 responseFields(
@@ -113,18 +119,18 @@ public class PersonControllerTestDocumentation {
         );
 
         this.mockMvc.perform(
-                get("/api/person" + samplePerson.getId()).accept(MediaType.APPLICATION_JSON)
+                get("/api/customers" + samplePerson.getId()).accept(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
     }
 
     @Ignore
     @Test
-    public void createPerson() throws Exception {
+    public void createCustomer() throws Exception {
         Map<String, String> newPerson = new HashMap();
         newPerson.put("firstName", "Anne");
         newPerson.put("lastName", "Queen");
 
-        ConstrainedFields fields = new ConstrainedFields(Person.class);
+        ConstrainedFields fields = new ConstrainedFields(Customer.class);
 
         this.document.snippets(
                 requestFields(
@@ -134,7 +140,7 @@ public class PersonControllerTestDocumentation {
         );
 
         this.mockMvc.perform(
-                post("api/person").contentType(MediaType.APPLICATION_JSON).content(
+                post("api/customers").contentType(MediaType.APPLICATION_JSON).content(
                         this.objectMapper.writeValueAsString(newPerson)
                 )
         ).andExpect(status().isCreated());
@@ -142,13 +148,13 @@ public class PersonControllerTestDocumentation {
 
     @Ignore
     @Test
-    public void updatePerson() throws Exception {
-        Person originalPerson = createSamplePerson("Victoria", "Queen");
+    public void updateCustomer() throws Exception {
+        Customer originalCustomers = createSampleCustomer("Victoria", "Queen");
         Map<String, String> updatedPerson = new HashMap();
         updatedPerson.put("firstName", "Edward");
         updatedPerson.put("lastName", "King");
 
-        ConstrainedFields fields = new ConstrainedFields(Person.class);
+        ConstrainedFields fields = new ConstrainedFields(Customer.class);
 
         this.document.snippets(
                 requestFields(
@@ -158,16 +164,26 @@ public class PersonControllerTestDocumentation {
         );
 
         this.mockMvc.perform(
-                put("api/person" + originalPerson.getId()).contentType(MediaType.APPLICATION_JSON).content(
+                put("api/customers" + originalCustomers.getId()).contentType(MediaType.APPLICATION_JSON).content(
                         this.objectMapper.writeValueAsString(updatedPerson)
                 )
         ).andExpect(status().isNoContent());
     }
 
-    private Person createSamplePerson(String firstName, String lastName) {
-        return personRepository.save(new Person(firstName, lastName));
+
+    /**
+     *
+     * @param firstName
+     * @param lastName
+     * @return
+     */
+    private Customer createSampleCustomer(String firstName, String lastName) {
+        return customerRepository.save(new Customer().newBuilder().firstName(firstName).lastName(lastName).build());
     }
 
+    /**
+     *
+     */
     private static class ConstrainedFields {
 
         private final ConstraintDescriptions constraintDescriptions;

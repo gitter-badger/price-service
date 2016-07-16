@@ -79,6 +79,7 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     public ProductResource addProduct(@RequestBody Product product) {
 
+        // TODO: 16/07/16 hard coded stuff
         BerechnePraemieRequest request = new BerechnePraemieRequest();
         request.setPersonList(new PersonListType()
                 .withPerson(new Person()
