@@ -1,9 +1,11 @@
 package ch.keepcalm.web.component.price.customer;
 
 import ch.keepcalm.web.component.price.PriceServiceApplication;
+import ch.keepcalm.web.component.price.model.Address;
 import ch.keepcalm.web.component.price.model.Customer;
 import ch.keepcalm.web.component.price.repository.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -39,7 +41,6 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -49,7 +50,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = PriceServiceApplication.class)
 @WebAppConfiguration
-public class PersonControllerTestDocumentation {
+public class CustomerControllerTestDocumentation {
     @Rule
     public final RestDocumentation restDocumentation = new RestDocumentation(
             "target/generated-snippets"
@@ -68,17 +69,17 @@ public class PersonControllerTestDocumentation {
 
     private RestDocumentationResultHandler document;
 
-   /* @Before
-    public void setUp() {
-        this.document = document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()));
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
-                .apply(documentationConfiguration(this.restDocumentation).uris()
-                        .withScheme("https")
-                        .withHost("rest-docs.scapp.io")
-                        .withPort(443))
-                .alwaysDo(this.document)
-                .build();
-    }*/
+    /* @Before
+     public void setUp() {
+         this.document = document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()));
+         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
+                 .apply(documentationConfiguration(this.restDocumentation).uris()
+                         .withScheme("https")
+                         .withHost("rest-docs.scapp.io")
+                         .withPort(443))
+                 .alwaysDo(this.document)
+                 .build();
+     }*/
     @Before
     public void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
@@ -88,27 +89,34 @@ public class PersonControllerTestDocumentation {
 
 
     @Test
-    public void getCustomers() throws Exception {
-
-        RestDocumentationResultHandler document = documentPrettyPrintReqResp("getCustomers");
-        document.snippets(
-         /*       pathParameters(
-                        parameterWithName("page").description("Page of results"),
-                        parameterWithName("size").description("Size of results")
-                ),*/
-                responseFields(userFields(true))
-        );
-
-        //get("/api/v1/users?page={page}&size={size}", 0, 10)
+    public void listCustomer() throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp("list-customer");
         this.mockMvc.perform(get("/api/customers")
-                .contentType(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("customerResourceList").isArray())
-               // .andExpect(jsonPath("$").isArray())
-                //.andExpect(jsonPath("[*].id").isNotEmpty())
-              /*  .andExpect(jsonPath("[*].firstName").isNotEmpty())
-                .andExpect(jsonPath("[*].lastName").isNotEmpty())
-                .andExpect(jsonPath("[*].dateOfBirth").isNotEmpty())*/
+                .andDo(document);
+    }
+
+    @Test
+    public void createCustomer() throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp("create-customer");
+        Customer newCustomer = Customer.newBuilder()
+                .firstName("Foo")
+                .lastName("Bar")
+                .dateOfBirth(new DateTime(1975, 9, 27, 0, 0, 0, 0).toDateTime().toDate())
+                .address(Address.newAddress()
+                        .locality("Gockhausen")
+                        .municipality("Dübendorf")
+                        .postal_code("8044")
+                        .municipality_nr("191")
+                        .build())
+                .build();
+
+        this.mockMvc.perform(post("/api/customers")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newCustomer))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
                 .andDo(document);
     }
 
@@ -124,31 +132,7 @@ public class PersonControllerTestDocumentation {
                 preprocessResponse(prettyPrint()));
     }
 
-    /**
-     * User fields used in requests and responses.
-     * An array field equivalent can be proveded
-     *
-     * @param isJsonArray if the fields are used in a JsonArray
-     * @return
-     */
-    private static FieldDescriptor[] userFields(boolean isJsonArray) {
-        return isJsonArray ?
-                new FieldDescriptor[]{
-                        fieldWithPath("[]").description("Customer resource list"),
-                        fieldWithPath("[].customerResourceList").description(USERS_ID_DESCRIPTION),
-                        fieldWithPath("[].userId").description(USERS_ID_DESCRIPTION),
-                        fieldWithPath("[].firstName").description(USERS_FIRST_NAME_DESCRIPTION),
-                        fieldWithPath("[].lastName").description(USERS_LAST_NAME_DESCRIPTION),
-                        fieldWithPath("[].username").description(USERS_USERNAME_DESCRIPTION)
-                } :
-                new FieldDescriptor[]{
-                        fieldWithPath("customerResourceList").description(USERS_ID_DESCRIPTION),
-                        fieldWithPath("userId").description(USERS_ID_DESCRIPTION),
-                        fieldWithPath("firstName").description(USERS_FIRST_NAME_DESCRIPTION),
-                        fieldWithPath("lastName").description(USERS_LAST_NAME_DESCRIPTION),
-                        fieldWithPath("username").description(USERS_USERNAME_DESCRIPTION)
-                };
-    }
+
 /*
 
 
@@ -180,18 +164,6 @@ public class PersonControllerTestDocumentation {
 
 */
 
-    private static final String USERS_USERNAME_DESCRIPTION = "User's username";
-    private static final String USERS_LAST_NAME_DESCRIPTION = "User's last name";
-    private static final String USERS_FIRST_NAME_DESCRIPTION = "User's first name";
-    private static final String USERS_ID_DESCRIPTION = "User's identifier";
-
-
-
-
-
-
-
-
 
     @Ignore
     @Test
@@ -218,7 +190,7 @@ public class PersonControllerTestDocumentation {
 
     @Ignore
     @Test
-    public void getCustomer() throws Exception {
+    public void getCustomers() throws Exception {
         Customer sampleCustomer = createSampleCustomer("Henry", "King");
 
         this.document.snippets(
@@ -236,7 +208,7 @@ public class PersonControllerTestDocumentation {
 
     @Ignore
     @Test
-    public void createCustomer() throws Exception {
+    public void createCustomers() throws Exception {
         Map<String, String> newCustomer = new HashMap();
         newCustomer.put("firstName", "Anne");
         newCustomer.put("lastName", "Queen");
@@ -259,7 +231,7 @@ public class PersonControllerTestDocumentation {
 
     @Ignore
     @Test
-    public void updateCustomer() throws Exception {
+    public void updateCustomers() throws Exception {
         Customer originalCustomers = createSampleCustomer("Victoria", "Queen");
         Map<String, String> updatedCustomer = new HashMap();
         updatedCustomer.put("firstName", "Edward");
