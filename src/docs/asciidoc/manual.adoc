@@ -34,8 +34,6 @@ The Customer resource is used to create, modify and list customer.
 === Listing customers
 A `GET` request lists all of the service's customers.
 
- TODO include::{snippets}/list-customer/response-fields.adoc[]
-
 ==== Example request curl
 
 include::{snippets}/list-customer/curl-request.adoc[]
@@ -55,7 +53,7 @@ A `POST` request creates a new customer.
 
 ==== Request structure
 
- TODO include::{snippets}/create-customer/request-fields.adoc[]
+include::{snippets}/create-customer/request-fields.adoc[]
 
 ==== Example request curl
 
@@ -78,7 +76,7 @@ A `POST` request creates a new product to a customer.
 
 ==== Request structure
 
- TODO include::{snippets}/create-product/request-fields.adoc[]
+include::{snippets}/create-product/request-fields.adoc[]
 
 ==== Example request curl
 
@@ -112,9 +110,22 @@ include::installation.adoc[]
 [[landingpage]]
 === Landing Page
     /
+
+http://localhost:8080/
+
+[[apiEntryPoint]]
+=== API Entry Point
+    /api/
+
+http://localhost:8080/api/
+
+
 [[monitoring]]
 === Monitoring / Manage
     /manage/
+
+http://localhost:8080/manage
+
 
 
 [[sourceCode]]

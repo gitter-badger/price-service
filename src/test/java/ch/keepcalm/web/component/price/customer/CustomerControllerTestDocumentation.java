@@ -28,6 +28,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -80,9 +81,25 @@ public class CustomerControllerTestDocumentation {
                 .andDo(document);
     }
 
+
+
+
+
     @Test
     public void createCustomer() throws Exception {
         RestDocumentationResultHandler document = documentPrettyPrintReqResp("create-customer");
+
+        ConstrainedFields fields = new ConstrainedFields(Customer.class);
+        this.document.snippets(
+                requestFields(
+                        fields.withPath("firstName").description("The customers' first name"),
+                        fields.withPath("lastName").description("The customers' last name"),
+                        fields.withPath("dateOfBirth").description("The customers' birthday"),
+                        fields.withPath("gender").description("The customers' gender (w/m)"),
+                        fields.withPath("address").description("The customers' address")
+                )
+        );
+
         Customer newCustomer = getCustomer("John" , "Doe", "m");
 
         this.mockMvc.perform(post("/api/customers")
