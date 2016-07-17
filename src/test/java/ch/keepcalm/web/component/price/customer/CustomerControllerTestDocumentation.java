@@ -3,6 +3,7 @@ package ch.keepcalm.web.component.price.customer;
 import ch.keepcalm.web.component.price.PriceServiceApplication;
 import ch.keepcalm.web.component.price.model.Address;
 import ch.keepcalm.web.component.price.model.Customer;
+import ch.keepcalm.web.component.price.model.Product;
 import ch.keepcalm.web.component.price.repository.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.DateTime;
@@ -82,17 +83,7 @@ public class CustomerControllerTestDocumentation {
     @Test
     public void createCustomer() throws Exception {
         RestDocumentationResultHandler document = documentPrettyPrintReqResp("create-customer");
-        Customer newCustomer = Customer.newBuilder()
-                .firstName("Foo")
-                .lastName("Bar")
-                .dateOfBirth(new DateTime(1975, 9, 27, 0, 0, 0, 0).toDateTime().toDate())
-                .address(Address.newAddress()
-                        .locality("Gockhausen")
-                        .municipality("Dübendorf")
-                        .postal_code("8044")
-                        .municipality_nr("191")
-                        .build())
-                .build();
+        Customer newCustomer = getCustomer("John" , "Doe", "m");
 
         this.mockMvc.perform(post("/api/customers")
                 .accept(MediaType.APPLICATION_JSON)
@@ -101,6 +92,47 @@ public class CustomerControllerTestDocumentation {
                 .andExpect(status().isCreated())
                 .andDo(document);
     }
+
+    @Test
+    public void createProduct() throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp("create-product");
+        // first create one customer
+        Customer newCustomer = customerRepository.save(getCustomer("Foo", "Bar", "w"));
+        Product product = Product.newBuilder()
+                .productNumber("PRO_P0BEPH_HEL_IG")
+                .description("Product one")
+                .drittesKind("Nein")
+                .unfall("COD_ausgeschlossen_HEL")
+                .franchise("COD_Franchise_KVG-O_Erwachsener_1500_HEL")
+                .build();
+
+        this.mockMvc.perform(post("/api/customers/" + newCustomer.getId() + "/products")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andDo(document);
+    }
+
+    /**
+     *
+     * @return a customer
+     */
+    private Customer getCustomer(String firstName, String lastName, String gender) {
+        return Customer.newBuilder()
+                    .firstName(firstName)
+                    .lastName(lastName)
+                    .gender(gender)
+                    .dateOfBirth(new DateTime(1975, 9, 27, 0, 0, 0, 0).toDateTime().toDate())
+                    .address(Address.newAddress()
+                            .locality("Gockhausen")
+                            .municipality("Dübendorf")
+                            .postal_code("8044")
+                            .municipality_nr("191")
+                            .build())
+                    .build();
+    }
+
 
     /**
      * Pretty print request and response
