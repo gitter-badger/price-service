@@ -35,6 +35,12 @@ public class CustomerController {
         this.customerResourceAssembler = customerResourceAssembler;
     }
 
+    /**
+     * Create a customer resource
+     *
+     * @param customer
+     * @return
+     */
     @RequestMapping(
             value = "",
             method = RequestMethod.POST,
@@ -46,6 +52,11 @@ public class CustomerController {
     }
 
 
+    /**
+     * Get all customer resources
+     *
+     * @return
+     */
     @RequestMapping(
             value = "",
             method = RequestMethod.GET,
@@ -54,6 +65,12 @@ public class CustomerController {
         return customerToResource(customerService.getCustomers());
     }
 
+    /**
+     * Get one customer resource
+     *
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "{id}",
             method = RequestMethod.GET,
             produces = "application/json; charset=utf-8")
@@ -62,8 +79,13 @@ public class CustomerController {
     }
 
 
-    // TODO: 15.07.2016 DUMMY IMPL.
-
+    /**
+     * Add a product to a customer
+     *
+     * @param product
+     * @param id
+     * @return
+     */
     @RequestMapping(
             value = "{id}/products",
             method = RequestMethod.POST,
@@ -74,12 +96,18 @@ public class CustomerController {
         if (customer != null) {
             customer.getProducts().add(product);
             customerService.updateCustmer(customer);
-            return customerToResource(customerService.getCustomer(customer.getId()));
+            return customerToResource(customerService.getCustomer(customer.getId())); // TODO: 17/07/16 calculate price also
         }
         return customerToResource(new Customer()); // TODO: 15.07.2016 not nice solution
     }
 
 
+    /**
+     * Create a list of customer resource
+     *
+     * @param customers
+     * @return
+     */
     private CustomerListResource customerToResource(List<Customer> customers) {
         CustomerListResource customerListResource = new CustomerListResource();
         customerListResource.add(linkTo(methodOn(CustomerController.class).getCustomers()).withSelfRel());
@@ -88,6 +116,12 @@ public class CustomerController {
         return customerListResource;
     }
 
+    /**
+     * Create a customer resource
+     *
+     * @param customer
+     * @return
+     */
     private CustomerResource customerToResource(Customer customer) {
         return customerResourceAssembler.toResource(customer);
     }
