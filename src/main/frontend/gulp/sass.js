@@ -7,4 +7,16 @@ module.exports = function (gulp, data, util, taskName) {
             .pipe(sass().on('error', sass.logError))
             .pipe(gulp.dest(data.path.STYLEGUIDE + 'app'));
     });
+
+    gulp.task(taskName + ':Dev', function () {
+        return gulp.src('./app/**/*.scss')
+            .pipe(sass().on('error', sass.logError))
+            .pipe(gulp.dest(data.path.DEV + 'app'));
+    });
+
+    gulp.task(taskName + ':Prod', function () {
+        return gulp.src('./app/**/*.scss')
+            .pipe(sass().on('error', sass.logError))
+            .pipe(gulp.dest(data.path.PROD + 'app'));
+    });
 };
