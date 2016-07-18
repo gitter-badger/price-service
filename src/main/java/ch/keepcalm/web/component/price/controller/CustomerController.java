@@ -7,6 +7,7 @@ import ch.keepcalm.web.component.price.resource.CustomerListResource;
 import ch.keepcalm.web.component.price.resource.CustomerResource;
 import ch.keepcalm.web.component.price.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -112,8 +113,16 @@ public class CustomerController {
     private CustomerListResource customerToResource(List<Customer> customers) {
         CustomerListResource customerListResource = new CustomerListResource();
         customerListResource.add(linkTo(methodOn(CustomerController.class).getCustomers()).withSelfRel());
+
         List<CustomerResource> customerResources = customerResourceAssembler.toResources(customers);
         customerListResource.setCustomerResourceList(customerResources);
+
+        Link createCustomerLink = new Link(linkTo(CustomerController.class).toUriComponentsBuilder().build().toUriString(), "create_customer");
+        customerListResource.add(createCustomerLink);
+
+        Link getCustomerLink = new Link(linkTo(CustomerController.class).toUriComponentsBuilder().build().toUriString(), "get_customers");
+        customerListResource.add(getCustomerLink);
+
         return customerListResource;
     }
 

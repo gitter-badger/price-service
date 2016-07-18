@@ -75,7 +75,6 @@ public class CustomerAggregateController {
     }
 
 
-
     /**
      * @param products
      * @return
@@ -83,16 +82,20 @@ public class CustomerAggregateController {
     private ProductListResource productToResource(List<Product> products, int id) {
         ProductListResource productListResource = new ProductListResource();
 
-       // productListResource.add(linkTo(CustomerAggregateController.class).withSelfRel());
+        // productListResource.add(linkTo(CustomerAggregateController.class).withSelfRel());
         List<ProductResource> productResources = productResourceAssembler.toResources(products);
         productListResource.setProductResourceList(productResources);
 
-            // TODO: 17/07/16 http://localhost:8080/api/customers/1/products
-            Link productsLink = new Link(linkTo(CustomerAggregateController.class)
-                    .slash(id)
-                    .slash("products").toUriComponentsBuilder().build().toUriString(), "products");
-         productListResource.add(productsLink);
+        // TODO: 17/07/16 http://localhost:8080/api/customers/1/products
+        Link productsLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(id)
+                .slash("products").toUriComponentsBuilder().build().toUriString(), "get_products");
+        productListResource.add(productsLink);
 
+        Link createProductsLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(id)
+                .slash("products").toUriComponentsBuilder().build().toUriString(), "create_products");
+        productListResource.add(createProductsLink);
 
 
         return productListResource;
@@ -100,14 +103,12 @@ public class CustomerAggregateController {
 
 
     /**
-     *
      * @param product
      * @return
      */
     private ProductResource productToResource(Product product) {
         return productResourceAssembler.toResource(product);
     }
-
 
 
 }
