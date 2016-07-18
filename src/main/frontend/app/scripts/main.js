@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import {inputAsset} from './inputAsset';
 
-
 $(function () {
     var inputContainer = $('#input-container');
 
