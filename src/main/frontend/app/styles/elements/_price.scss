@@ -1,4 +1,6 @@
 .price {
+  color: $dunkelgrau3;
+
   &__container {
     display: flex;
   }
@@ -6,6 +8,9 @@
   &__text {
     padding-right: 1rem;
     text-align: right;
+    display: inline-table;
+    padding-top: 5px;
+    color: $snow-dark;
   }
 
   &__value {
