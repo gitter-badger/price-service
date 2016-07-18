@@ -1,7 +1,10 @@
 package ch.keepcalm.web.component.price.controller;
 
+import ch.helsana.services.spezialfunktionen.tarif.v2.BerechneBesterPreisBusinessFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.BerechneBesterPreisSystemFaultMessage;
 import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage;
 import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieSystemFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.BerechneBesterPreisRequest;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Person;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.PersonListType;
@@ -26,6 +29,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/products", produces = "application/hal+json")
@@ -70,6 +77,36 @@ public class ProductPriceController {
         }
     }
 
+    /**
+     * https://tools.ietf.org/html/rfc7231#section-8.1.3
+     * <p>
+     * POST because a new price is created.
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(
+            value = "/bestprice",
+            method = {RequestMethod.POST},
+            produces = "application/json; charset=utf-8"
+    )
+    @Deprecated
+    public ResponseEntity bestprice(@RequestBody BerechneBesterPreisRequest request) throws Exception {
+        try {
+            // FIXME: 18.07.2016 QuickWin
+            Map<String, BigDecimal> bestPriceResults = new HashMap<String, BigDecimal>();
+            for (ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.Vertragsbaustein product : priceService.berechneBesterPreis(request).getProduktList().getProdukt()) {
+                bestPriceResults.put(product.getProduktId(), product.getPreis().getNettoPreis());
+            }
+            return new ResponseEntity(bestPriceResults, HttpStatus.ACCEPTED);
+
+        } catch (BerechneBesterPreisSystemFaultMessage systemFaultMessage) {
+            throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (BerechneBesterPreisBusinessFaultMessage businessFaultMessage) {
+            throw new BusinessException("Price business exception : ", HttpStatus.BAD_REQUEST);
+        }
+    }
 
     // TODO: 14.07.2016
     /**
