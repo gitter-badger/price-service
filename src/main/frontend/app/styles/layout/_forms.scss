@@ -19,15 +19,11 @@ Link styles can be applied to an `<form>` element:
 ```
 */
 
-@mixin form($width) {
+.form {
   background-color: $helsana-light;
   color: $snow;
-  width: $width;
+  width: 197px;
   padding: 8px 14px 16px 14px;
-}
-
-.form {
-  @include form(150px);
 }
 
 .fieldset {

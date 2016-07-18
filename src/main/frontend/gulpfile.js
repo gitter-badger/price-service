@@ -33,19 +33,19 @@ gulp.task('default', function (callback) {
     );
 });
 
-gulp.task('Prod', function (callback) {
+gulp.task('Dev', function (callback) {
     runSequence(
-        ['clean:Prod'],
-        ['webpack:Prod'],
+        ['clean:Dev'],
+        ['sass:Dev', 'copy:Dev', 'browserify:Dev'],
+        ['connect:Dev'],
         callback
     );
 });
 
-gulp.task('Dev', function (callback) {
+gulp.task('Prod', function (callback) {
     runSequence(
-        ['clean:Dev'],
-        ['webpack:Dev'],
-        ['connect:Dev'],
+        ['clean:Prod'],
+        ['sass:Prod', 'copy:Prod', 'browserify:Prod'],
         callback
     );
 });
