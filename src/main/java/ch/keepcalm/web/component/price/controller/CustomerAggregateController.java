@@ -68,9 +68,8 @@ public class CustomerAggregateController {
     public ProductResource getProductFromCustomer(@PathVariable int id, @PathVariable int productId) {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
-            // TODO: 18.07.2016 FIX  IndexOutOfBoundsException
             if (customer.getProducts() != null) {
-                return productToResource(customer.getProducts().get(productId - 1));
+                return productToResource(customer.getProducts().get(productId - 1)); // List start on 0
             }
         }
         return productToResource(null); // TODO: 15.07.2016 not nice solution
@@ -90,7 +89,7 @@ public class CustomerAggregateController {
         // TODO: 17/07/16 http://localhost:8080/api/customers/1/products
         Link productsLink = new Link(linkTo(CustomerAggregateController.class)
                 .slash(id)
-                .slash("products").toUriComponentsBuilder().build().toUriString(), "get_products");
+                .slash("products").toUriComponentsBuilder().build().toUriString(), "list_products");
         productListResource.add(productsLink);
 
         Link createProductsLink = new Link(linkTo(CustomerAggregateController.class)

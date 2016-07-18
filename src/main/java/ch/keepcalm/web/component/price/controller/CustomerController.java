@@ -120,7 +120,7 @@ public class CustomerController {
         Link createCustomerLink = new Link(linkTo(CustomerController.class).toUriComponentsBuilder().build().toUriString(), "create_customer");
         customerListResource.add(createCustomerLink);
 
-        Link getCustomerLink = new Link(linkTo(CustomerController.class).toUriComponentsBuilder().build().toUriString(), "get_customers");
+        Link getCustomerLink = new Link(linkTo(CustomerController.class).toUriComponentsBuilder().build().toUriString(), "list_customers");
         customerListResource.add(getCustomerLink);
 
         return customerListResource;
