@@ -493,6 +493,9 @@
         <!-- Copy manual -->
         <profile>
             <id>copydocu</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <build>
                 <plugins>
                     <!-- Resources Plugin -->
