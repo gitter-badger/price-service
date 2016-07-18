@@ -64,8 +64,8 @@ public class CustomerControllerTestDocumentation {
          this.document = document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()));
          this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
                  .apply(documentationConfiguration(this.restDocumentation).uris()
-                         .withScheme("https")
-                         .withHost("price-service.scapp.io")
+                         .withScheme("http")
+                         .withHost("msswlmp01")
                          .withPort(443))
                  .alwaysDo(this.document)
                  .build();

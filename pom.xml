@@ -54,6 +54,7 @@
         <unit-tests.skip>false</unit-tests.skip>
         <!-- Skip Integration Test  -->
         <integration-tests.skip>true</integration-tests.skip>
+
         <jacoco-maven-plugin.version>0.7.5.201505241946</jacoco-maven-plugin.version>
         <argLine>-XX:PermSize=128m -XX:MaxPermSize=512m</argLine>
         <assertj.version>1.7.0</assertj.version>
