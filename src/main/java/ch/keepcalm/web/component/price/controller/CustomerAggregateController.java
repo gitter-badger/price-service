@@ -59,6 +59,23 @@ public class CustomerAggregateController {
         return productToResource(new ArrayList<Product>(), 0); // TODO: 15.07.2016 not nice solution
     }
 
+
+    @RequestMapping(
+            value = "{id}/products/{productId}",
+            method = RequestMethod.GET,
+            produces = "application/json; charset=utf-8")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ProductResource getProductFromCustomer(@PathVariable int id, @PathVariable int productId) {
+        Customer customer = customerService.getCustomer(id);
+        if (customer != null) {
+            // TODO: 18.07.2016 FIX  IndexOutOfBoundsException
+            return productToResource(customer.getProducts().get(productId));
+        }
+        return productToResource(null); // TODO: 15.07.2016 not nice solution
+    }
+
+
+
     /**
      * @param products
      * @return
