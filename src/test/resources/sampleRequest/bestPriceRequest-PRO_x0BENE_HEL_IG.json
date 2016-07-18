@@ -1,0 +1,24 @@
+{
+  "alleMarken": "false",
+  "correlationId": "5392ad2d-3206-432b-99a5-ade72ece2bab",
+  "person": {
+    "geburtsdatum": "1975-09-27",
+    "geschlecht": "1",
+    "id": "N/A",
+    "produktList": {
+      "produkt": [{
+        "instanz": "0a966f51aa30439f80b1cc52935c8fe8",
+        "produktId": "PRO_x0BENE_HEL_IG",
+        "unfall": "COD_ausgeschlossen_HEL"
+      }]
+    }
+  },
+  "vertrag": {
+    "gemeindeNummer": "351",
+    "land": "CHE",
+    "marke": ["A"],
+    "postleitzahl": "3000",
+    "postleitzahlZusatz": "00",
+    "vertragsbeginn": "2016-06-01"
+  }
+}

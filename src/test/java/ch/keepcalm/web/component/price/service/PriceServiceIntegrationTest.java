@@ -1,7 +1,11 @@
 package ch.keepcalm.web.component.price.service;
 
+import ch.helsana.services.spezialfunktionen.tarif.v2.BerechneBesterPreisBusinessFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.BerechneBesterPreisSystemFaultMessage;
 import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage;
 import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieSystemFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.BerechneBesterPreisRequest;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.BerechneBesterPreisResponse;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemieresponse.BerechnePraemieResponse;
 import ch.keepcalm.web.component.price.PriceServiceApplication;
@@ -39,7 +43,6 @@ public class PriceServiceIntegrationTest {
         BerechnePraemieResponse response = priceService.berechnePraemie(request);
         // TODO: 08.07.2016 Check better soulution
         Assert.assertEquals(new BigInteger("288"), response.getPreis().getBruttoPreis().toBigInteger());
-
     }
 
     /**
@@ -53,6 +56,15 @@ public class PriceServiceIntegrationTest {
     }
 
 
+
+
+    @Test
+    public void berechneBesterPreisTest() throws BerechneBesterPreisBusinessFaultMessage, BerechneBesterPreisSystemFaultMessage {
+        BerechneBesterPreisRequest request = ServiceRequestHelper.berechneBesterPreisRequest("bestPriceRequest-PRO_x0BENE_HEL_IG.json");
+        BerechneBesterPreisResponse response = priceService.berechneBesterPreis(request);
+        // TODO: 08.07.2016 Check better soulution
+        //Assert.assertEquals(new BigInteger("288"), response.getPreis().getBruttoPreis().toBigInteger());
+    }
 
 
 }
