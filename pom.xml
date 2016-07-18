@@ -252,8 +252,12 @@
                     <excludes>
                         <exclude>**/*IntegrationTest.java</exclude>
                     </excludes>
+                    <includes>
+                        <include>**/*Documentation.java</include>
+                    </includes>
                 </configuration>
             </plugin>
+
             <!-- FailSafe -->
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -392,8 +396,6 @@
             </activation>
             <build>
                 <plugins>
-
-
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
@@ -441,7 +443,7 @@
 
         <!-- Copy manual -->
         <profile>
-            <id>copy-manual</id>
+            <id>copydocu</id>
             <build>
                 <plugins>
                     <!-- Resources Plugin -->
