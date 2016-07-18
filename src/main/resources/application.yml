@@ -51,6 +51,7 @@ soap:
   namespace: http://services.helsana.ch/spezialfunktionen/tarif/v2
   endpoint:
     server: http://services.spfkern-test.hel.kko.ch
+    #server: http://services.spf-go-preprod.hel.kko.ch
     path: soa-infra/services/businessdomain_spezialfunktionen/Tarif_v2_ebs
     url: ${soap.endpoint.server}/${soap.endpoint.path}
     service: ${soap.endpoint.url}/Tarif
