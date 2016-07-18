@@ -8,4 +8,15 @@ module.exports = function (gulp, data, util, taskName) {
         ], {base: './'})
             .pipe(gulp.dest(data.path.STYLEGUIDE));
     });
+
+
+    gulp.task(taskName + ':Dev', function () {
+        return gulp.src([
+            '!./**/*.scss',
+            '!./app/styles/**',
+            './app/**',
+            './index.html'
+        ], {base: './'})
+            .pipe(gulp.dest(data.path.DEV));
+    });
 };

@@ -24,6 +24,21 @@ Typography styles can be applied to any element. Typically you'll want to use
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Akkurat-Light';
+  src: url('../fonts/akklg.eot'); /* IE9+ */
+  src: url('../fonts/akklg.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../fonts/akklg.woff') format('woff'), /* Modern Browsers */
+  url('../fonts/akklg.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('../fonts/akklg.svg#akklg') format('svg'); /* Legacy iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: Akkurat-Light;
+}
+
 .line-height {
   &-3 {
     line-height: 3rem;

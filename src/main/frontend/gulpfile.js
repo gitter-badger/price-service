@@ -44,7 +44,9 @@ gulp.task('Prod', function (callback) {
 gulp.task('Dev', function (callback) {
     runSequence(
         ['clean:Dev'],
-        ['webpack:Dev'],
+        ['sass:Dev'],
+        ['copy:Dev'],
+        ['browserify:Dev'],
         ['connect:Dev'],
         callback
     );
