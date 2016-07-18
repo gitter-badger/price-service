@@ -9,6 +9,16 @@ module.exports = function (gulp, data, util, taskName) {
             .require(data.path.FRONTEND + "app/main.js", {entry: true})
             .bundle()
             .pipe(source('bundle.js'))
-            .pipe(gulp.dest(data.path.DEV + 'scripts'));
-    })
+            .pipe(gulp.dest(data.path.DEV + 'app/scripts'));
+    });
+
+
+    gulp.task(taskName + ':Prod', function () {
+        return browserify({debug: true})
+            .transform("babelify", {presets: ["es2015"]})
+            .require(data.path.FRONTEND + "app/main.js", {entry: true})
+            .bundle()
+            .pipe(source('bundle.js'))
+            .pipe(gulp.dest(data.path.PROD + 'app/scripts'));
+    });
 };
