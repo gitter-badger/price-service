@@ -65,12 +65,7 @@ public class ProductController {
     public ProductResource getProduct(@PathVariable int id) {
         return productToResource(productService.getProductById(id));
     }
-
-    @RequestMapping(value = "{id}", method = RequestMethod.POST)
-    public ProductResource createProduct(@PathVariable int id) {
-        return productToResource(productService.getProductById(id));
-    }
-
+/*
 
     @RequestMapping(
             value = "",
@@ -113,6 +108,7 @@ public class ProductController {
         return productToResource(productService.getProductById(product.getId()));
     }
 
+*/
 
     /**
      * @param products

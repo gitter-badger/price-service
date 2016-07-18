@@ -74,6 +74,7 @@ public class CustomerController {
     @RequestMapping(value = "{id}",
             method = RequestMethod.GET,
             produces = "application/json; charset=utf-8")
+    @ResponseStatus(HttpStatus.FOUND)
     public CustomerResource getCustomer(@PathVariable int id) {
         return customerToResource(customerService.getCustomer(id));
     }
