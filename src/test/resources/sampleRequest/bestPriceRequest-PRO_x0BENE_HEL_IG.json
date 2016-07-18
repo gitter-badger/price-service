@@ -1,24 +1,34 @@
 {
-  "alleMarken": "false",
-  "correlationId": "5392ad2d-3206-432b-99a5-ade72ece2bab",
-  "person": {
-    "geburtsdatum": "1975-09-27",
-    "geschlecht": "1",
-    "id": "N/A",
-    "produktList": {
-      "produkt": [{
-        "instanz": "0a966f51aa30439f80b1cc52935c8fe8",
-        "produktId": "PRO_x0BENE_HEL_IG",
-        "unfall": "COD_ausgeschlossen_HEL"
-      }]
+    "alleMarken": "true",
+    "correlationId": "2525252",
+    "person": {
+      "geburtsdatum": "1980-01-01",
+      "geschlecht": "1",
+      "id": "2",
+      "produktList": {
+        "produkt": [
+          {
+            "franchise": "COD_Franchise_KVG-O_Erwachsener_300_HEL",
+            "produktId": "PRO_x0BAS__HEL_IG",
+            "unfall": "COD_ausgeschlossen_HEL"
+          },
+          {
+            "produktId": "PRO_Z1PRIM_HEL_IG",
+            "unfall": "COD_eingeschlossen_HEL"
+          }
+        ]
+      }
+    },
+    "vertrag": {
+      "gemeindeNummer": "2773",
+      "marke": [
+        "H",
+        "P",
+        "S",
+        "A"
+      ],
+      "postleitzahl": "4153",
+      "postleitzahlZusatz": "00",
+      "vertragsbeginn": "2016-04-01"
     }
-  },
-  "vertrag": {
-    "gemeindeNummer": "351",
-    "land": "CHE",
-    "marke": ["A"],
-    "postleitzahl": "3000",
-    "postleitzahlZusatz": "00",
-    "vertragsbeginn": "2016-06-01"
   }
-}
