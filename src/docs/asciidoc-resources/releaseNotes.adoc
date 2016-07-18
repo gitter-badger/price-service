@@ -1,1 +1,5 @@
 == 0.0.1
+====  Task
+http://msswlmp01.ads.hel.kko.ch:8080/browse/PRIC-1[PRIC-1] - initial setup (Maven,Jenkins-Build,Jenkins-Release...)
+
+
