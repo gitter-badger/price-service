@@ -20,6 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import static org.junit.Assert.fail;
@@ -63,7 +64,7 @@ public class PriceServiceIntegrationTest {
         BerechneBesterPreisRequest request = ServiceRequestHelper.berechneBesterPreisRequest("bestPriceRequest-PRO_x0BENE_HEL_IG.json");
         BerechneBesterPreisResponse response = priceService.berechneBesterPreis(request);
         // TODO: 08.07.2016 Check better soulution
-        //Assert.assertEquals(new BigInteger("288"), response.getPreis().getBruttoPreis().toBigInteger());
+        Assert.assertEquals(new BigDecimal("466.00"), response.getProduktList().getProdukt().get(1).getPreis().getNettoPreis());
     }
 
 
