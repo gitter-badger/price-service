@@ -113,6 +113,20 @@ public class CustomerControllerTestDocumentation {
     @Test
     public void createProduct() throws Exception {
         RestDocumentationResultHandler document = documentPrettyPrintReqResp("create-product");
+
+        ConstrainedFields fields = new ConstrainedFields(Customer.class);
+        this.document.snippets(
+                requestFields(
+                        fields.withPath("productNumber").description("The products' product number"),
+                        fields.withPath("description").description("The products' description"),
+                        fields.withPath("drittesKind").description("The products' drittes kind (Ja/Nein)"),
+                        fields.withPath("unfall").description("The products' unfall (COD_eingeschlossen_HEL7 / COD_ausgeschlossen_HEL)"),
+                        fields.withPath("franchise").description("The products' franchise"),
+                        fields.withPath("price").description("The products' price"),
+                        fields.withPath("doctor").description("The products' doctor object")
+                )
+        );
+
         // first create one customer
         Customer newCustomer = customerRepository.save(getCustomer("Foo", "Bar", "w"));
         Product product = Product.newBuilder()
