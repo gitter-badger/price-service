@@ -71,24 +71,32 @@
 
 
     <dependencies>
-        <!-- starter-actuator -->
+        <!-- Issue : SLF4J: Class path contains multiple SLF4J bindings. -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>logback-classic</artifactId>
+                    <groupId>ch.qos.logback</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- HATEOAS-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
-
-        <!-- TODO http://localhost:8080/api/browser/index.html#/  -->
+        <!--  http://localhost:8080/browser/index.html#/  -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-rest-hal-browser</artifactId>
             <version>${spring-data-rest-hal-browser.version}</version>
         </dependency>
-
         <!-- starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -104,6 +112,11 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <!--<scope>runtime</scope> used for H2 database console @see WebConfiguration-->
+        </dependency>
+        <!-- starter-actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- jGitFlow -->
