@@ -6,7 +6,7 @@ module.exports = function (gulp, data, util, taskName) {
     gulp.task(taskName + ':Dev', function () {
         return browserify({debug: true})
             .transform("babelify", {presets: ["es2015"]})
-            .require(data.path.FRONTEND + "app/main.js", {entry: true})
+            .require(data.path.FRONTEND + "app/scripts/main.js", {entry: true})
             .bundle()
             .pipe(source('bundle.js'))
             .pipe(gulp.dest(data.path.DEV + 'app/scripts'));
@@ -16,7 +16,7 @@ module.exports = function (gulp, data, util, taskName) {
     gulp.task(taskName + ':Prod', function () {
         return browserify({debug: true})
             .transform("babelify", {presets: ["es2015"]})
-            .require(data.path.FRONTEND + "app/main.js", {entry: true})
+            .require(data.path.FRONTEND + "app/scripts/main.js", {entry: true})
             .bundle()
             .pipe(source('bundle.js'))
             .pipe(gulp.dest(data.path.PROD + 'app/scripts'));
