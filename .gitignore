@@ -33,9 +33,7 @@ rebel.xml
 
 
 #Deployment
-src/main/resources/static/**
-!src/main/resources/static/images/**
-!manual.html
+src/main/resources/static/docs
 .dev
 .dist
 
