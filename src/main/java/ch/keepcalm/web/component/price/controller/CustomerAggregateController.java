@@ -69,7 +69,9 @@ public class CustomerAggregateController {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
             // TODO: 18.07.2016 FIX  IndexOutOfBoundsException
-            return productToResource(customer.getProducts().get(productId));
+            if (customer.getProducts() != null) {
+                return productToResource(customer.getProducts().get(productId - 1));
+            }
         }
         return productToResource(null); // TODO: 15.07.2016 not nice solution
     }
@@ -82,7 +84,6 @@ public class CustomerAggregateController {
     private ProductListResource productToResource(List<Product> products, int id) {
         ProductListResource productListResource = new ProductListResource();
 
-        // productListResource.add(linkTo(CustomerAggregateController.class).withSelfRel());
         List<ProductResource> productResources = productResourceAssembler.toResources(products);
         productListResource.setProductResourceList(productResources);
 
