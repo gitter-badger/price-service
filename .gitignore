@@ -39,13 +39,6 @@ src/main/resources/static/**
 .dev
 .dist
 
-#TypeScript
-src/main/frontend/app/**/*.js
-src/main/frontend/app/**/*.map
-!systemjs.config.js
-
-#Typings
-typings
 
 #Styleguide
 .styleguide
