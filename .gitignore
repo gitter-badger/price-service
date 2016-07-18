@@ -19,9 +19,7 @@ buildNumber.properties
 
 # JavaScript stuff
 node
-/node_modules/
-/src/main/resources/static/bower_components/
-.bowerrc
+node_modules
 
 #OS meta files
 .DS_Store
@@ -32,3 +30,31 @@ node
 /data/
 /global-groovy.log
 rebel.xml
+
+
+#Deployment
+src/main/resources/static/**
+!src/main/resources/static/images/**
+!manual.html
+.dev
+.dist
+
+#TypeScript
+src/main/frontend/app/**/*.js
+src/main/frontend/app/**/*.map
+!systemjs.config.js
+
+#Typings
+typings
+
+#Styleguide
+.styleguide
+
+#Gulp
+!gulp/*
+
+#Test
+.e2e
+
+#Logs
+*.log

@@ -1,0 +1,46 @@
+/*---
+title:   Typography
+section: Base
+---
+
+Typography styles can be applied to any element. Typically you'll want to use
+ an inline element or other text associated elements :
+
+```example:html
+<div style="background-color: darkgray;">
+  <label class="line-height-3">Text</label>
+</div>
+```
+*/
+
+@font-face {
+  font-family: 'icomoon';
+  src: url('../fonts/icomoon.eot?5ods54');
+  src: url('../fonts/icomoon.eot?5ods54#iefix') format('embedded-opentype'),
+  url('../fonts/icomoon.ttf?5ods54') format('truetype'),
+  url('../fonts/icomoon.woff?5ods54') format('woff'),
+  url('../fonts/icomoon.svg?5ods54#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Akkurat-Light';
+  src: url('../fonts/akklg.eot'); /* IE9+ */
+  src: url('../fonts/akklg.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../fonts/akklg.woff') format('woff'), /* Modern Browsers */
+  url('../fonts/akklg.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('../fonts/akklg.svg#akklg') format('svg'); /* Legacy iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: Akkurat-Light;
+}
+
+.line-height {
+  &-3 {
+    line-height: 3rem;
+  }
+}

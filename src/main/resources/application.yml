@@ -2,8 +2,10 @@
 spring:
   profiles.active: dev
   application:
-          name: calculate-product
-
+          name: price-service
+#  data:
+#    rest:
+#      base-path: /api
 
 # I18N (MessageSourceAutoConfiguration)
   messages:
@@ -18,6 +20,17 @@ info.build:
   description: @project.description@
   version: @project.version@
 
+ # Database
+  datasource:
+    initialize: false
+    # keep database connection alive
+    test-on-borrow: true
+    validation-query: SELECT 1 FROM DUAL
+  jpa:
+    generate-ddl: false
+    show-sql: false
+    hibernate.ddl-auto: validate
+
 # Management
 management:
   address: ${server.address}
@@ -29,25 +42,30 @@ endpoints.health:
   enabled: true
   sensitive: false
 
+
 # SOAP
 soap:
-  server: http://productengine-int03:8080
-  path : promos/tariff/v2/TariffService
+  wsdl: classpath:wsdl/Tarif_v2_0.wsdl
   portname: TarifPort
   servicename: Tarif
-  namespace.uri: http://services.sbi.ch/system/productengine/tarif/v2
-  wsdl: classpath:wsdl/TariffService_1.wsdl
+  namespace: http://services.helsana.ch/spezialfunktionen/tarif/v2
   endpoint:
-    url: ${soap.server}/${soap.path}
-    service: ${soap.endpoint.url}/${soap.servicename}
+    server: http://services.spfkern-test.hel.kko.ch
+    #server: http://services.spf-go-preprod.hel.kko.ch
+    path: soa-infra/services/businessdomain_spezialfunktionen/Tarif_v2_ebs
+    url: ${soap.endpoint.server}/${soap.endpoint.path}
+    service: ${soap.endpoint.url}/Tarif
 
 # Logging
 logging:
-  level.: error
+  level.: warn
+  level.org.springframework.boot: info
+  level.org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer: info
+
 
 # Server
 server:
-  address: 127.0.0.1
+  address: localhost
   port: 8080
 
 # Tomcat

@@ -1,0 +1,18 @@
+/*---
+title:   Link
+section: Elements
+---
+
+Link styles can be applied to an `<a>` element:
+
+```example:html
+<div style="padding: 20px;  background-color: darkgray;">
+  <a class="link" href=''>Helsana</a>
+</div>
+```
+*/
+
+.link {
+  color: $snow;
+  text-decoration: none;
+}

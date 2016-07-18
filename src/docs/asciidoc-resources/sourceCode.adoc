@@ -1,0 +1,28 @@
+[[configuration]]
+== Configuration
+=== WebService JAXWS
+[source,java]
+----
+include::{sourcedir}/ch/helsana/web/component/service/price/config/WebServiceJAXWSConfig.java[tags=WebServiceJAXWSConfig,indent=0]
+----
+
+== Service
+=== PriceService
+Extend ProtType class
+[source,java]
+----
+include::{sourcedir}/ch/helsana/web/component/service/price/service/PriceService.java[tags=PriceService,indent=0]
+----
+
+Define PortType
+[source,java]
+----
+include::{sourcedir}/ch/helsana/web/component/service/price/service/PriceService.java[tags=portType,indent=0]
+----
+
+Implement PortType method
+[source,java]
+----
+include::{sourcedir}/ch/helsana/web/component/service/price/service/PriceService.java[tags=implementPortTypeMethod,indent=0]
+----
+
