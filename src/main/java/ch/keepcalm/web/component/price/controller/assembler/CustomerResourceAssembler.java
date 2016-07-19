@@ -21,11 +21,17 @@ public class CustomerResourceAssembler extends ResourceAssemblerSupport<Customer
     public CustomerResource toResource(Customer customer) {
         CustomerResource customerResource = createResourceWithId(customer.getId(), customer);
 
-        // GET / POST products http://localhost:8080/api/customers/1/products
-        Link productsLink = new Link(linkTo(CustomerAggregateController.class)
+        // GET products http://localhost:8080/api/customers/1/products
+        Link listProducts = new Link(linkTo(CustomerAggregateController.class)
                 .slash(customer.getId())
                 .slash("products").toUriComponentsBuilder().build().toUriString(), "list_products");
-        customerResource.add(productsLink);
+        customerResource.add(listProducts);
+
+        // POST products http://localhost:8080/api/customers/1/products
+        Link createProducts = new Link(linkTo(CustomerAggregateController.class)
+                .slash(customer.getId())
+                .slash("products").toUriComponentsBuilder().build().toUriString(), "create_products");
+        customerResource.add(createProducts);
 
 
         customerResource.setCustomer(customer);
