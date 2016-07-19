@@ -1,13 +1,15 @@
 import $ from 'jquery';
 
 export const priceService = (function () {
-    var links = {};
+    var links = {},
+        observable = [];
 
     (function () {
         return new Promise(function (resolve, reject) {
             $.getJSON('api', {})
                 .done(function (data) {
-                    setLinks(data)
+                    setLinks(data);
+                    resolve(data);
                 })
                 .fail(function () {
                     reject('Failed to get API');
@@ -16,26 +18,65 @@ export const priceService = (function () {
     })();
 
     return {
-        createCustomer: createCustomer
+        createCustomer: createCustomer,
+        createProduct: createProduct,
+        registerNotification: registerNotification
     };
 
-
     function createCustomer(obj) {
-        if (links.customers) {
-            return postHelper(links.customers.href, obj)
-                .then(success, reject
-                );
+        return new Promise(function (resolve, reject) {
 
-            function success(response) {
-                setLinks(response);
-            }
+            if (links.customers) {
 
-            function reject() {
-                reject('Failed to create Customer');
+                postHelper(links.customers.href, obj)
+                    .then(success, fail);
+                
+                function success(response) {
+                    setLinks(response);
+                    resolve(response);
+                }
+
+                function fail() {
+                    reject('Failed to create Customer');
+                }
+            } else {
+                resolve('Clould not create Customer');
             }
-        }
-        return new Promise();
+        });
     }
+
+    function createProduct(obj) {
+        return new Promise(function (resolve, reject) {
+            if (links.products) {
+
+
+                postHelper(links.products.href, obj)
+                    .then(success, fail);
+
+                function success(response) {
+                    setLinks(response);
+                    resolve(response);
+                    //notifyObservers();
+                }
+
+                function fail() {
+                    reject('Failed to create Product');
+                }
+
+            } else {
+                resolve('could not create Product');
+            }
+        });
+    }
+
+    function registerNotification(observer) {
+        observable.push(observer);
+    }
+
+    function notifyObservers() {
+        observable.forEach(obj => obj());
+    }
+
 
     function postHelper(url, payload) {
         return $.ajax({

@@ -29,5 +29,23 @@ export const inputAsset = (function () {
             }
         );
 
+        //temp
+        $('#price').on('click', function () {
+                event.preventDefault();
+                var product = {
+                    "productNumber": "2_P0BEPH_HEL_IG",
+                    "description": "Product one",
+                    "unfall": "COD_ausgeschlossen_HEL",
+                    "franchise": "COD_Franchise_KVG-O_Erwachsener_1500_HEL",
+                    "drittesKind": "Nein"
+                };
+
+                priceService.createProduct(product)
+                    .then(function (response) {
+                        console.log(response);
+                    });
+            }
+        );
+
     }
 })();
