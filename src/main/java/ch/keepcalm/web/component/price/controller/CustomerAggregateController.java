@@ -12,6 +12,7 @@ import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrespons
 import ch.keepcalm.web.component.price.controller.assembler.CustomerResourceAssembler;
 import ch.keepcalm.web.component.price.controller.assembler.ProductResourceAssembler;
 import ch.keepcalm.web.component.price.converter.CalendarConverter;
+import ch.keepcalm.web.component.price.exception.SystemException;
 import ch.keepcalm.web.component.price.model.Customer;
 import ch.keepcalm.web.component.price.model.Product;
 import ch.keepcalm.web.component.price.resource.ProductListResource;
@@ -68,10 +69,10 @@ public class CustomerAggregateController {
             method = RequestMethod.POST,
             produces = "application/json; charset=utf-8")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductResource addProductToCustomer(@RequestBody Product product, @PathVariable int id) {
+    public ProductResource addProductToCustomer(@RequestBody Product product, @PathVariable int id) throws Exception {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
-            Preis preis = bestPrice(product, customer);// TODO: 17/07/16 calculate price also
+            Preis preis = bestPrice(product, customer);// TODO: 17/07/16 calculate price
             product.setPrice(preis.getNettoPreis());
             customer.getProducts().add(product);
             customerService.updateCustmer(customer);
@@ -80,7 +81,7 @@ public class CustomerAggregateController {
         return productToResource(new Product()); // TODO: 15.07.2016 not nice solution
     }
 
-    private Preis bestPrice(Product product, Customer customer) {
+    private Preis bestPrice(Product product, Customer customer) throws Exception {
         // FIXME: 18.07.2016 QuickWin
         Preis preis = null;
         try {
@@ -112,12 +113,13 @@ public class CustomerAggregateController {
             return preis;
 
         } catch (BerechneBesterPreisBusinessFaultMessage berechneBesterPreisBusinessFaultMessage) {
-            berechneBesterPreisBusinessFaultMessage.printStackTrace();
+            throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (BerechneBesterPreisSystemFaultMessage berechneBesterPreisSystemFaultMessage) {
-            berechneBesterPreisSystemFaultMessage.printStackTrace();
-        }
-        return preis;
+            throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
+         }
+
     }
+
 
 
     /**

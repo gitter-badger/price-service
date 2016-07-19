@@ -160,6 +160,7 @@ public class CustomerControllerTestDocumentation {
                             .municipality("Dübendorf")
                             .postal_code("8044")
                             .municipality_nr("191")
+                            .postal_code_addition("00")
                             .build())
                     .build();
     }

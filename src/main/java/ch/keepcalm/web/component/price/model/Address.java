@@ -36,101 +36,48 @@ public class Address {
         this.municipality = builder.municipality;
         this.municipality_nr = builder.municipality_nr;
         this.postal_code = builder.postal_code;
+        this.postal_code_addition = builder.postal_code_addition;
         this.locality = builder.locality;
     }
 
-    public static Builder newAddress() {
-        return new Builder();
+    public int getId() {
+        return id;
     }
 
-    /**
-     * Getter for property 'street'.
-     *
-     * @return Value for property 'street'.
-     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getStreet() {
         return street;
     }
 
-    /**
-     * Setter for property 'street'.
-     *
-     * @param street Value to set for property 'street'.
-     */
     public void setStreet(String street) {
         this.street = street;
     }
 
-    /**
-     * Getter for property 'municipality'.
-     *
-     * @return Value for property 'municipality'.
-     */
     public String getMunicipality() {
         return municipality;
     }
 
-    /**
-     * Setter for property 'municipality'.
-     *
-     * @param municipality Value to set for property 'municipality'.
-     */
     public void setMunicipality(String municipality) {
         this.municipality = municipality;
     }
 
-    /**
-     * Getter for property 'municipality_nr'.
-     *
-     * @return Value for property 'municipality_nr'.
-     */
     public String getMunicipality_nr() {
         return municipality_nr;
     }
 
-    /**
-     * Setter for property 'municipality_nr'.
-     *
-     * @param municipality_nr Value to set for property 'municipality_nr'.
-     */
     public void setMunicipality_nr(String municipality_nr) {
         this.municipality_nr = municipality_nr;
     }
 
-    /**
-     * Getter for property 'postal_code'.
-     *
-     * @return Value for property 'postal_code'.
-     */
     public String getPostal_code() {
         return postal_code;
     }
 
-    /**
-     * Setter for property 'postal_code'.
-     *
-     * @param postal_code Value to set for property 'postal_code'.
-     */
     public void setPostal_code(String postal_code) {
         this.postal_code = postal_code;
-    }
-
-    /**
-     * Getter for property 'locality'.
-     *
-     * @return Value for property 'locality'.
-     */
-    public String getLocality() {
-        return locality;
-    }
-
-    /**
-     * Setter for property 'locality'.
-     *
-     * @param locality Value to set for property 'locality'.
-     */
-    public void setLocality(String locality) {
-        this.locality = locality;
     }
 
     public String getPostal_code_addition() {
@@ -141,11 +88,25 @@ public class Address {
         this.postal_code_addition = postal_code_addition;
     }
 
+    public String getLocality() {
+        return locality;
+    }
+
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
+
+    public static Builder newAddress() {
+        return new Builder();
+    }
+
+
     public static final class Builder {
         private String street;
         private String municipality;
         private String municipality_nr;
         private String postal_code;
+        private String postal_code_addition;
         private String locality;
 
         private Builder() {
@@ -172,6 +133,11 @@ public class Address {
 
         public Builder postal_code(String postal_code) {
             this.postal_code = postal_code;
+            return this;
+        }
+
+        public Builder postal_code_addition(String postal_code_addition) {
+            this.postal_code_addition = postal_code_addition;
             return this;
         }
 
