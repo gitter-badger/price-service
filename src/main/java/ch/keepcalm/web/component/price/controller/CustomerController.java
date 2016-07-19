@@ -2,7 +2,6 @@ package ch.keepcalm.web.component.price.controller;
 
 import ch.keepcalm.web.component.price.controller.assembler.CustomerResourceAssembler;
 import ch.keepcalm.web.component.price.model.Customer;
-import ch.keepcalm.web.component.price.model.Product;
 import ch.keepcalm.web.component.price.resource.CustomerListResource;
 import ch.keepcalm.web.component.price.resource.CustomerResource;
 import ch.keepcalm.web.component.price.service.CustomerService;
@@ -88,7 +87,7 @@ public class CustomerController {
      * @param id
      * @return
      */
-    @RequestMapping(
+   /* // TODO: 19.07.2016 is now in CustomerAggregateCustomer   @RequestMapping(
             value = "{id}/products",
             method = RequestMethod.POST,
             produces = "application/json; charset=utf-8")
@@ -101,7 +100,7 @@ public class CustomerController {
             return customerToResource(customerService.getCustomer(customer.getId())); // TODO: 17/07/16 calculate price also
         }
         return customerToResource(new Customer()); // TODO: 15.07.2016 not nice solution
-    }
+    }*/
 
 
     /**

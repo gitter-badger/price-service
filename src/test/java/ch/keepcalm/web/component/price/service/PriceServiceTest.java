@@ -7,6 +7,10 @@ package ch.keepcalm.web.component.price.service;
 import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage;
 import ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieSystemFaultMessage;
 import ch.helsana.services.spezialfunktionen.tarif.v2.TarifPortType;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.BerechneBesterPreisRequest;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.BerechneBesterPreisResponse;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.ProduktListType;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.Vertragsbaustein;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemiefaults.BerechnePraemieBusinessFault;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemiefaults.BerechnePraemieSystemFault;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
@@ -46,7 +50,7 @@ public class PriceServiceTest {
     @Test
     public void price() throws Exception {
         // setup
-        BerechnePraemieRequest request = ServiceRequestHelper.berechnePraemieRequest();
+        BerechnePraemieRequest request = ServiceRequestHelperBerechnePraemieRequest.berechnePraemieRequest();
 
         BerechnePraemieResponse response = new BerechnePraemieResponse();
         Preis preis = new Preis();
@@ -59,6 +63,27 @@ public class PriceServiceTest {
         // run
         BerechnePraemieResponse serviceResponse = priceService.berechnePraemie(request);
         assertEquals(new BigDecimal("22.22"), serviceResponse.getPreis().getNettoPreis());
+
+    }
+
+    @Test
+    public void bestPrice() throws Exception {
+        // setup
+        BerechneBesterPreisRequest request = ServiceRequestHelperBerechneBesterPreisRequest.berechneBesterPreisRequest();
+
+        BerechneBesterPreisResponse response = new BerechneBesterPreisResponse();
+        Preis preis = new Preis();
+        preis.setNettoPreis(new BigDecimal("22.22"));
+        response.withProduktList(new ProduktListType().withProdukt(new Vertragsbaustein().withProduktId("PRO_A0BAS__HEL_IG").withMarke("H")
+                .withPreis(new ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.Preis().withNettoPreis(new BigDecimal("44.60")))));
+
+        //stubbing
+        when(mockService.berechneBesterPreis(request)).thenReturn(response);
+
+        // run
+        BerechneBesterPreisResponse serviceResponse = priceService.berechneBesterPreis(request);
+
+        assertEquals(new BigDecimal("44.60"), serviceResponse.getProduktList().getProdukt().get(0).getPreis().getNettoPreis());
 
     }
 
@@ -93,7 +118,7 @@ public class PriceServiceTest {
     @Test(expected = ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage.class)
     public void priceBusinessException() throws Exception {
         // setup
-        BerechnePraemieRequest request = ServiceRequestHelper.berechnePraemieRequest();
+        BerechnePraemieRequest request = ServiceRequestHelperBerechnePraemieRequest.berechnePraemieRequest();
         TarifPortType mockService = mock(TarifPortType.class); //http://mockito.org/
         // set Mock in Service
         ReflectionTestUtils.setField(priceService, PriceService.class, "tarifPortType", mockService, TarifPortType.class);

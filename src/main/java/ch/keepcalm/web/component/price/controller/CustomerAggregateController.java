@@ -1,16 +1,29 @@
 package ch.keepcalm.web.component.price.controller;
 
+import ch.helsana.services.spezialfunktionen.tarif.v2.BerechneBesterPreisBusinessFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.BerechneBesterPreisSystemFaultMessage;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.BerechneBesterPreisRequest;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.Person;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.ProduktListType;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.Versicherungsvertrag;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.Vertragsbaustein;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.BerechneBesterPreisResponse;
+import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.Preis;
 import ch.keepcalm.web.component.price.controller.assembler.CustomerResourceAssembler;
 import ch.keepcalm.web.component.price.controller.assembler.ProductResourceAssembler;
+import ch.keepcalm.web.component.price.converter.CalendarConverter;
 import ch.keepcalm.web.component.price.model.Customer;
 import ch.keepcalm.web.component.price.model.Product;
 import ch.keepcalm.web.component.price.resource.ProductListResource;
 import ch.keepcalm.web.component.price.resource.ProductResource;
 import ch.keepcalm.web.component.price.service.CustomerService;
+import ch.keepcalm.web.component.price.service.PriceService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,15 +41,82 @@ public class CustomerAggregateController {
     @Autowired
     private CustomerService customerService;
     @Autowired
+    private PriceService priceService;
+    @Autowired
     private CustomerResourceAssembler customerResourceAssembler;
     @Autowired
     private ProductResourceAssembler productResourceAssembler;
 
     @Autowired
-    public void setCustomerService(CustomerService customerService, CustomerResourceAssembler customerResourceAssembler, ProductResourceAssembler productResourceAssembler) {
+    public void setCustomerService(CustomerService customerService, CustomerResourceAssembler customerResourceAssembler, ProductResourceAssembler productResourceAssembler, PriceService priceService) {
         this.customerService = customerService;
         this.customerResourceAssembler = customerResourceAssembler;
         this.productResourceAssembler = productResourceAssembler;
+        this.priceService = priceService;
+    }
+
+
+    /**
+     * Add a product to a customer
+     *
+     * @param product
+     * @param id
+     * @return
+     */
+    @RequestMapping(
+            value = "{id}/products",
+            method = RequestMethod.POST,
+            produces = "application/json; charset=utf-8")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductResource addProductToCustomer(@RequestBody Product product, @PathVariable int id) {
+        Customer customer = customerService.getCustomer(id);
+        if (customer != null) {
+            Preis preis = bestPrice(product, customer);// TODO: 17/07/16 calculate price also
+            product.setPrice(preis.getNettoPreis());
+            customer.getProducts().add(product);
+            customerService.updateCustmer(customer);
+            return productToResource(product);
+        }
+        return productToResource(new Product()); // TODO: 15.07.2016 not nice solution
+    }
+
+    private Preis bestPrice(Product product, Customer customer) {
+        // FIXME: 18.07.2016 QuickWin
+        Preis preis = null;
+        try {
+            // TODO: 19.07.2016 dummy impl
+            BerechneBesterPreisRequest request = new BerechneBesterPreisRequest();
+            request.withAlleMarken(false);
+            request.withPerson(
+                    new Person()
+                            .withGeburtsdatum(CalendarConverter.dateToXMLGregorianCalendar(new DateTime(1975, 9, 27, 0, 0, 0, 0).toDate()))
+                            .withGeschlecht("1")
+                            .withId("1")
+                            .withProduktList(new ProduktListType()
+                                    .withProdukt(new Vertragsbaustein()
+                                            .withFranchise(product.getFranchise())
+                                            .withProduktId(product.getProductNumber())
+                                            .withUnfall(product.getUnfall()))))
+                    .withVertrag(new Versicherungsvertrag()
+                            .withGemeindeNummer(customer.getAddress().getMunicipality_nr())
+                            .withMarke("H")
+                            .withMarke("P")
+                            .withMarke("S")
+                            .withMarke("A")
+                            .withPostleitzahl(customer.getAddress().getPostal_code())
+                            .withPostleitzahlZusatz(customer.getAddress().getPostal_code_addition())
+                            .withVertragsbeginn(CalendarConverter.dateToXMLGregorianCalendar(customer.getDateOfBirth())));
+
+            BerechneBesterPreisResponse response = priceService.berechneBesterPreis(request);
+             preis = response.getProduktList().getProdukt().get(0).getPreis();// TODO: 19.07.2016 get one product
+            return preis;
+
+        } catch (BerechneBesterPreisBusinessFaultMessage berechneBesterPreisBusinessFaultMessage) {
+            berechneBesterPreisBusinessFaultMessage.printStackTrace();
+        } catch (BerechneBesterPreisSystemFaultMessage berechneBesterPreisSystemFaultMessage) {
+            berechneBesterPreisSystemFaultMessage.printStackTrace();
+        }
+        return preis;
     }
 
 
@@ -107,7 +187,7 @@ public class CustomerAggregateController {
      * @return
      */
     private ProductResource productToResource(Product product) {
-        return productResourceAssembler.toResource(product);
+        return  productResourceAssembler.toResource(product);
     }
 
 

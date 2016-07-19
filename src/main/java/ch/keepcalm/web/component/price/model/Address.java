@@ -21,6 +21,7 @@ public class Address {
     private String municipality;  // ": "Dübendorf", /* Gemeindename */
     private String municipality_nr;  //": 191, /* Gemeinde-Nr */
     private String postal_code; // ": 8044, /* Postleitzahl */
+    private String postal_code_addition; // ": 00, /* postleitzahlZusatz */
     private String locality; //": "Gockhausen" /* Ort */
 
 
@@ -130,6 +131,14 @@ public class Address {
      */
     public void setLocality(String locality) {
         this.locality = locality;
+    }
+
+    public String getPostal_code_addition() {
+        return postal_code_addition;
+    }
+
+    public void setPostal_code_addition(String postal_code_addition) {
+        this.postal_code_addition = postal_code_addition;
     }
 
     public static final class Builder {
