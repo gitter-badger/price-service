@@ -92,10 +92,10 @@ public class CustomerAggregateController {
                 .slash("products").toUriComponentsBuilder().build().toUriString(), "list_products");
         productListResource.add(productsLink);
 
-        Link createProductsLink = new Link(linkTo(CustomerAggregateController.class)
+        Link createProductLink = new Link(linkTo(CustomerAggregateController.class)
                 .slash(id)
-                .slash("products").toUriComponentsBuilder().build().toUriString(), "create_products");
-        productListResource.add(createProductsLink);
+                .slash("products").toUriComponentsBuilder().build().toUriString(), "create_product");
+        productListResource.add(createProductLink);
 
 
         return productListResource;
