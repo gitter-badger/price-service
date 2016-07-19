@@ -30,7 +30,7 @@ export const priceService = (function () {
 
                 postHelper(links.customers.href, obj)
                     .then(success, fail);
-                
+
                 function success(response) {
                     setLinks(response);
                     resolve(response);
@@ -47,16 +47,15 @@ export const priceService = (function () {
 
     function createProduct(obj) {
         return new Promise(function (resolve, reject) {
-            if (links.products) {
+            if (links.create_products) {
 
-
-                postHelper(links.products.href, obj)
+                postHelper(links.create_products.href, obj)
                     .then(success, fail);
 
                 function success(response) {
                     setLinks(response);
                     resolve(response);
-                    //notifyObservers();
+                    notifyObservers(response);
                 }
 
                 function fail() {
@@ -70,11 +69,13 @@ export const priceService = (function () {
     }
 
     function registerNotification(observer) {
+        console.log(observer.name, 'registered');
         observable.push(observer);
     }
 
-    function notifyObservers() {
-        observable.forEach(obj => obj());
+    function notifyObservers(response) {
+        console.log('notify Observers');
+        observable.forEach(obj => obj(response));
     }
 
 
