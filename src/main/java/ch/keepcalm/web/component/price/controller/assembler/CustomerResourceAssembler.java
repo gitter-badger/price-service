@@ -30,7 +30,7 @@ public class CustomerResourceAssembler extends ResourceAssemblerSupport<Customer
         // POST products http://localhost:8080/api/customers/1/products
         Link createProducts = new Link(linkTo(CustomerAggregateController.class)
                 .slash(customer.getId())
-                .slash("products").toUriComponentsBuilder().build().toUriString(), "create_products");
+                .slash("products").toUriComponentsBuilder().build().toUriString(), "create_product");
         customerResource.add(createProducts);
 
 

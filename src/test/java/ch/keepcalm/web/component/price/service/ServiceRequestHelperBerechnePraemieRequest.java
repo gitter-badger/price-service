@@ -1,6 +1,5 @@
 package ch.keepcalm.web.component.price.service;
 
-import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.BerechneBesterPreisRequest;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.BerechnePraemieRequest;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.Person;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnepraemierequest.PersonListType;
@@ -15,15 +14,11 @@ import org.joda.time.DateTime;
 /**
  * Created by Marcel Widmer  on 25/12/15.
  */
-public class ServiceRequestHelper {
+public class ServiceRequestHelperBerechnePraemieRequest {
 
 
     public static BerechnePraemieRequest berechnePraemieRequest(String testRequestJsonFileName) {
         BerechnePraemieRequest request = new JsonConverter<BerechnePraemieRequest>().convert("/sampleRequest/" + testRequestJsonFileName, BerechnePraemieRequest.class);
-        return request;
-    }
-    public static BerechneBesterPreisRequest berechneBesterPreisRequest(String testRequestJsonFileName) {
-        BerechneBesterPreisRequest request = new JsonConverter<BerechneBesterPreisRequest>().convert("/sampleRequest/" + testRequestJsonFileName, BerechneBesterPreisRequest.class);
         return request;
     }
 
