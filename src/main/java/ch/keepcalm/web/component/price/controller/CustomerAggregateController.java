@@ -19,7 +19,7 @@ import ch.keepcalm.web.component.price.resource.ProductListResource;
 import ch.keepcalm.web.component.price.resource.ProductResource;
 import ch.keepcalm.web.component.price.service.CustomerService;
 import ch.keepcalm.web.component.price.service.PriceService;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
@@ -81,6 +81,22 @@ public class CustomerAggregateController {
         return productToResource(new Product()); // TODO: 15.07.2016 not nice solution
     }
 
+
+    // TODO: 20.07.2016
+    private String convertGender(String value) {
+        switch (value) {
+            case "m":
+                return "1";
+            case "w":
+                return "2";
+            default:
+                return "-1";
+        }
+    }
+
+
+
+
     private Preis bestPrice(Product product, Customer customer) throws Exception {
         // FIXME: 18.07.2016 QuickWin
         Preis preis = null;
@@ -90,9 +106,9 @@ public class CustomerAggregateController {
             request.withAlleMarken(false);
             request.withPerson(
                     new Person()
-                            .withGeburtsdatum(CalendarConverter.dateToXMLGregorianCalendar(new DateTime(1975, 9, 27, 0, 0, 0, 0).toDate()))
-                            .withGeschlecht("1")
-                            .withId("1")
+                            .withGeburtsdatum(CalendarConverter.dateToXMLGregorianCalendar(customer.getDateOfBirth()))
+                            .withGeschlecht(convertGender(customer.getGender()))
+                            .withId(String.valueOf(customer.getId()))
                             .withProduktList(new ProduktListType()
                                     .withProdukt(new Vertragsbaustein()
                                             .withFranchise(product.getFranchise())
@@ -106,7 +122,7 @@ public class CustomerAggregateController {
                             .withMarke("A")
                             .withPostleitzahl(customer.getAddress().getPostal_code())
                             .withPostleitzahlZusatz(customer.getAddress().getPostal_code_addition())
-                            .withVertragsbeginn(CalendarConverter.dateToXMLGregorianCalendar(customer.getDateOfBirth())));
+                            .withVertragsbeginn(CalendarConverter.dateToXMLGregorianCalendar(new LocalDate().plusMonths(1).dayOfMonth().withMinimumValue().toDate())));
 
             BerechneBesterPreisResponse response = priceService.berechneBesterPreis(request);
              preis = response.getProduktList().getProdukt().get(0).getPreis();// TODO: 19.07.2016 get one product
