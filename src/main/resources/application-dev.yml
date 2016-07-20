@@ -13,3 +13,19 @@ spring:
 logging:
   level.: info
   level.org.hibernate: debug
+
+
+
+
+# dummy service for production confguration
+info.product:
+  basis:
+    produktId : PRO_x0BAS__HEL_IG
+    franchise : COD_Franchise_KVG-O_Erwachsener_300_HEL
+    unfall : COD_ausgeschlossen_HEL
+  top:
+    produktId : PRO_Z1TOP__HEL_IG
+    unfall : COD_ausgeschlossen_HEL
+  primeo:
+    produktId : PRO_Z1PRIM_HEL_IG
+    unfall : COD_eingeschlossen_HEL
