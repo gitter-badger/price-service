@@ -2,7 +2,7 @@ import $ from 'jquery';
 
 export const priceService = (function () {
     var links = {},
-        observable = [];
+        priceObservable = [];
 
     (function () {
         return new Promise(function (resolve, reject) {
@@ -24,7 +24,7 @@ export const priceService = (function () {
     return {
         createCustomer: createCustomer,
         createProduct: createProduct,
-        registerNotification: registerNotification
+        registerPriceNotification: registerPriceNotification
     };
 
     function customer() {
@@ -79,9 +79,10 @@ export const priceService = (function () {
                     .then(success, fail);
 
                 function success(response) {
-                    setLinks(response);
+                    //do not navigate into product
+                    //setLinks(response);
                     resolve(response);
-                    notifyObservers(response);
+                    notifyPriceObservers(response);
                 }
 
                 function fail() {
@@ -94,14 +95,12 @@ export const priceService = (function () {
         });
     }
 
-    function registerNotification(observer) {
-        console.log(observer.name, 'registered');
-        observable.push(observer);
+    function registerPriceNotification(observer) {
+        priceObservable.push(observer);
     }
 
-    function notifyObservers(response) {
-        console.log('notify Observers');
-        observable.forEach(obj => obj(response));
+    function notifyPriceObservers(response) {
+        priceObservable.forEach(fu => fu(response));
     }
 
 

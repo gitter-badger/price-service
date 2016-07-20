@@ -7,8 +7,7 @@ export const priceAsset = (function () {
     return {init: init};
 
     function init() {
-        console.log('init price Asset');
-        priceService.registerNotification(onChange);
+        priceService.registerPriceNotification(onChange);
     }
 
 
