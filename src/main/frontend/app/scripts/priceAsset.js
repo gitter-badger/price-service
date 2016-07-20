@@ -13,8 +13,9 @@ export const priceAsset = (function () {
 
 
     function onChange(change) {
-        $('#price-integer').text(Math.floor((Math.random() * 1000) + 1));
-        $('#price-float').text(Math.floor((Math.random() * 19) + 1) * 5);
-        console.log('changed', change, change.price);
+        var price = change.price.toString().split('.');
+        $('#price-integer').text(price[0]);
+        //TODO refactor fill one decimal to two (5 --> 50)
+        $('#price-float').text(price[1] + ((price[1] < 8) ? '0' : ''));
     }
 })();

@@ -9,7 +9,11 @@ export const priceService = (function () {
             $.getJSON('api', {})
                 .done(function (data) {
                     setLinks(data);
-                    resolve(data);
+                    customer()
+                        .then(function (response) {
+                            setLinks(response);
+                            resolve(response);
+                        });
                 })
                 .fail(function () {
                     reject('Failed to get API');
@@ -23,12 +27,34 @@ export const priceService = (function () {
         registerNotification: registerNotification
     };
 
+    function customer() {
+        return new Promise(function (resolve, reject) {
+            if (links.customers) {
+
+                $.getJSON(links.customers.href, {})
+                    .done(success)
+                    .fail(fail);
+
+                function success(response) {
+                    setLinks(response);
+                    resolve(response);
+                }
+
+                function fail() {
+                    reject('Failed to get Customer');
+                }
+            } else {
+                resolve('Clould not get Customer');
+            }
+        });
+    }
+
     function createCustomer(obj) {
         return new Promise(function (resolve, reject) {
 
-            if (links.customers) {
+            if (links.create_customer) {
 
-                postHelper(links.customers.href, obj)
+                postHelper(links.create_customer.href, obj)
                     .then(success, fail);
 
                 function success(response) {
@@ -47,9 +73,9 @@ export const priceService = (function () {
 
     function createProduct(obj) {
         return new Promise(function (resolve, reject) {
-            if (links.create_products) {
+            if (links.create_product) {
 
-                postHelper(links.create_products.href, obj)
+                postHelper(links.create_product.href, obj)
                     .then(success, fail);
 
                 function success(response) {
