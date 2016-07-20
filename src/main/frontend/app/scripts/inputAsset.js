@@ -16,7 +16,7 @@ export const inputAsset = (function () {
         $('#save-personals').on('click', function () {
                 event.preventDefault();
                 var form = $('#input-asset').serializeArray(),
-                    address = new Address(),
+                    address = new Address('Gockhausen', 'Dübendorf', '191', '8044', '00'),
                     customer = new Customer(
                         form.find(obj => obj.name === 'dateOfBirth').value,
                         form.find(obj => obj.name === 'gender').value,
@@ -33,11 +33,10 @@ export const inputAsset = (function () {
         $('#price').on('click', function () {
                 event.preventDefault();
                 var product = {
-                    "productNumber": "2_P0BEPH_HEL_IG",
+                    "productNumber": "PRO_x0BAS__HEL_IG",
                     "description": "Product one",
                     "unfall": "COD_ausgeschlossen_HEL",
-                    "franchise": "COD_Franchise_KVG-O_Erwachsener_1500_HEL",
-                    "drittesKind": "Nein"
+                    "franchise": "COD_Franchise_KVG-O_Erwachsener_300_HEL"
                 };
 
                 priceService.createProduct(product)
