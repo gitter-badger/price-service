@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +100,7 @@ public class CustomerAggregateController {
         if (customer != null) {
             return productToResource(customer.getProducts(), id);
         }
-        return productToResource(new ArrayList<Product>(), 0); // TODO: 15.07.2016 not nice solution
+        return productToResource(new ArrayList<Product>(), 0); // TODO: 15.07.2016 not nice solution  add NOT_FOUND also
     }
 
 
@@ -144,9 +143,10 @@ public class CustomerAggregateController {
 
                 Product product = customer.getProducts().get(productId - 1);
 
-                //Preis preis = getBestPrice(product, customer);   // service call
-                //product.setPrice(preis.getNettoPreis());
-                product.setPrice(new BigDecimal(22.00));
+                Preis preis = getBestPrice(product, customer);   // service call
+                product.setPrice(preis.getNettoPreis());
+                // TODO in junit profile disable real SOAP call
+                // product.setPrice(new BigDecimal(22.00));
 
                 customer.getProducts().add(product);
                 customerService.updateCustmer(customer);

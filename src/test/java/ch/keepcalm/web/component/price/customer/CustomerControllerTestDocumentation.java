@@ -16,6 +16,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
+import org.springframework.restdocs.snippet.Snippet;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -42,6 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = PriceServiceApplication.class)
 @WebAppConfiguration
 public class CustomerControllerTestDocumentation {
+
     @Rule
     public final RestDocumentation restDocumentation = new RestDocumentation(
             "target/generated-snippets"
@@ -49,15 +51,11 @@ public class CustomerControllerTestDocumentation {
 
     @Autowired
     private WebApplicationContext context;
-
     @Autowired
     private CustomerRepository customerRepository;
-
     @Autowired
     private ObjectMapper objectMapper;
-
     private MockMvc mockMvc;
-
     private RestDocumentationResultHandler document;
 
     @Before
@@ -65,72 +63,128 @@ public class CustomerControllerTestDocumentation {
          this.document = document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()));
          this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
                  .apply(documentationConfiguration(this.restDocumentation).uris()
-                         .withScheme("https")
-                         .withHost("price-service.scapp.io")
-                         .withPort(443))
+                         .withScheme("http")
+                         .withHost("http://msswlmp01.ads.hel.kko.ch/")
+                         .withPort(80))
                  .alwaysDo(this.document)
                  .build();
      }
 
+    /**
+     *
+     * @param fields
+     * @return
+     */
+    private Snippet getSnippetCustomer(ConstrainedFields fields) {
+        return requestFields(
+                fields.withPath("firstName").description("The customers' first name"),
+                fields.withPath("lastName").description("The customers' last name"),
+                fields.withPath("dateOfBirth").description("The customers' birthday"),
+                fields.withPath("gender").description("The customers' gender (w/m)"),
+                fields.withPath("address").description("The customers' address")
+        );
+    }
+    /**
+     *
+     * @param fields
+     * @return
+     */
+    private Snippet getSnippetProduct(ConstrainedFields fields) {
+        return requestFields(
+                fields.withPath("productNumber").description("The products' product number"),
+                fields.withPath("description").description("The products' description"),
+                fields.withPath("drittesKind").description("The products' drittes kind (Ja/Nein)"),
+                fields.withPath("unfall").description("The products' unfall (COD_eingeschlossen_HEL7 / COD_ausgeschlossen_HEL)"),
+                fields.withPath("franchise").description("The products' franchise"),
+                fields.withPath("price").description("The products' price"),
+                fields.withPath("doctor").description("The products' doctor object")
+        );
+    }
 
+    /**
+     * Test list all customer resources.
+     * @throws Exception
+     */
     @Test
-    public void listCustomerTest() throws Exception {
-        RestDocumentationResultHandler document = documentPrettyPrintReqResp("list-customers");
-        apiListCustomer(document);
+    public void listCustomer() throws Exception {
+        documentApiListCustomers("list-customers");
     }
 
 
-
-
+    /**
+     * Test crate a customre resource.
+     * @throws Exception
+     */
     @Test
-    public void createCustomerTest() throws Exception {
-        RestDocumentationResultHandler document = documentPrettyPrintReqResp("create-customer");
+    public void createCustomer() throws Exception {
+        documentApiCreateCustomer("create-customer", createCustomer("John" , "Doe", "m"));
+    }
 
+    /**
+     * Test create a product resource.
+     * @throws Exception
+     */
+    @Test
+    public void createProduct() throws Exception {
+        documentApiCreateProduct("create-product", createCustomer("Jane" , "Doe", "w"), createDummyProduct());
+    }
+
+    /**
+     * Test update a product resource with a price.
+     * @throws Exception
+     */
+    @Test
+    public void updateProductPrice() throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp("update-product-price");
         ConstrainedFields fields = new ConstrainedFields(Customer.class);
         this.document.snippets(
-                requestFields(
-                        fields.withPath("firstName").description("The customers' first name"),
-                        fields.withPath("lastName").description("The customers' last name"),
-                        fields.withPath("dateOfBirth").description("The customers' birthday"),
-                        fields.withPath("gender").description("The customers' gender (w/m)"),
-                        fields.withPath("address").description("The customers' address")
-                )
+                getSnippetProduct(fields)
         );
+        Customer customer = createCustomer("Foo", "Bar", "w"); // create a customer
+        customer.addProduct(createDummyProduct()); // add a product to a customer
+        Customer newCustomer = customerRepository.save(customer); // save a customer with product.
+        documentApiUpdateProductPrice("update-product-price",newCustomer, newCustomer.getProducts().get(0)); // get the first product
+    }
 
-        apiCreateCustomer(document, createCustomer("John" , "Doe", "m"));
+    /**
+     * Pretty print request and response
+     *
+     * @param useCase the name of the snippet
+     * @return RestDocumentationResultHandler
+     */
+    private RestDocumentationResultHandler documentPrettyPrintReqResp(String useCase) {
+        return document(useCase,
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()));
     }
 
 
 
-    @Test
-    public void createProductTest() throws Exception {
-        RestDocumentationResultHandler document = documentPrettyPrintReqResp("create-product");
-
-        ConstrainedFields fields = new ConstrainedFields(Customer.class);
-        this.document.snippets(
-                requestFields(
-                        fields.withPath("productNumber").description("The products' product number"),
-                        fields.withPath("description").description("The products' description"),
-                        fields.withPath("drittesKind").description("The products' drittes kind (Ja/Nein)"),
-                        fields.withPath("unfall").description("The products' unfall (COD_eingeschlossen_HEL7 / COD_ausgeschlossen_HEL)"),
-                        fields.withPath("franchise").description("The products' franchise"),
-                        fields.withPath("price").description("The products' price"),
-                        fields.withPath("doctor").description("The products' doctor object")
-                )
-        );
-
-        apiCreateProduct(document, createCustomer("Jane" , "Doe", "w"), createProduct());
-    }
-
-
-    private void apiListCustomer(RestDocumentationResultHandler document) throws Exception {
+    /**
+     *
+     * @param useCase
+     * @throws Exception
+     */
+    private void documentApiListCustomers(String useCase) throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp(useCase);
         this.mockMvc.perform(get("/api/customers")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document);
     }
 
-    private void apiCreateCustomer(RestDocumentationResultHandler document, Customer newCustomer) throws Exception {
+    /**
+     *
+     * @param useCase
+     * @param newCustomer
+     * @throws Exception
+     */
+    private void documentApiCreateCustomer(String useCase, Customer newCustomer) throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp(useCase);
+        ConstrainedFields fields = new ConstrainedFields(Customer.class);
+        this.document.snippets(
+                getSnippetCustomer(fields)
+        );
         this.mockMvc.perform(post("/api/customers")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(newCustomer))
@@ -139,8 +193,21 @@ public class CustomerControllerTestDocumentation {
                 .andDo(document);
     }
 
-    private void apiCreateProduct(RestDocumentationResultHandler document, Customer newCustomer, Product product) throws Exception {
-        this.mockMvc.perform(post("/api/customers/" + newCustomer.getId() + "/products")
+
+    /**
+     *
+     * @param useCase
+     * @param customer
+     * @param product
+     * @throws Exception
+     */
+    private void documentApiCreateProduct(String useCase, Customer customer, Product product) throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp(useCase);
+        ConstrainedFields fields = new ConstrainedFields(Product.class);
+        this.document.snippets(
+                getSnippetProduct(fields)
+        );
+        this.mockMvc.perform(post("/api/customers/" + customer.getId() + "/products")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(product))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -149,6 +216,36 @@ public class CustomerControllerTestDocumentation {
     }
 
 
+    /**
+     *
+     * @param useCase
+     * @param customer
+     * @param product
+     * @throws Exception
+     */
+    private void documentApiUpdateProductPrice(String useCase, Customer customer, Product product) throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp(useCase);
+        ConstrainedFields fields = new ConstrainedFields(Product.class);
+        this.document.snippets(
+                getSnippetProduct(fields)
+        );
+
+        this.mockMvc.perform(patch("/api/customers/" + customer.getId() + "/products/" + product.getId())
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document);
+    }
+
+
+    /**
+     *
+     * @param firstName
+     * @param lastName
+     * @param gender
+     * @return a customer object
+     */
     private Customer createCustomer(String firstName, String lastName, String gender) {
         return Customer.newBuilder()
                 .firstName(firstName)
@@ -164,7 +261,12 @@ public class CustomerControllerTestDocumentation {
                         .build())
                 .build();
     }
-    private Product createProduct(){
+
+    /**
+     *
+     * @return a dummy product
+     */
+    private Product createDummyProduct(){
         return Product.newBuilder()
                 .productNumber("PRO_P0BEPH_HEL_IG")
                 .description("Product one")
@@ -175,105 +277,4 @@ public class CustomerControllerTestDocumentation {
 
     }
 
-
-    @Test
-    public void listProductsTest() throws Exception {
-        RestDocumentationResultHandler document = documentPrettyPrintReqResp("list-products");
-
-        ConstrainedFields fields = new ConstrainedFields(Customer.class);
-        this.document.snippets(
-                requestFields(
-                        fields.withPath("productNumber").description("The products' product number"),
-                        fields.withPath("description").description("The products' description"),
-                        fields.withPath("drittesKind").description("The products' drittes kind (Ja/Nein)"),
-                        fields.withPath("unfall").description("The products' unfall (COD_eingeschlossen_HEL7 / COD_ausgeschlossen_HEL)"),
-                        fields.withPath("franchise").description("The products' franchise"),
-                        fields.withPath("price").description("The products' price"),
-                        fields.withPath("doctor").description("The products' doctor object")
-                )
-        );
-
-        // create a product
-        Product product = Product.newBuilder()
-                .productNumber("PRO_P0BEPH_HEL_IG")
-                .description("Product one")
-                .drittesKind("Nein")
-                .unfall("COD_ausgeschlossen_HEL")
-                .franchise("COD_Franchise_KVG-O_Erwachsener_1500_HEL")
-                .build();
-
-        // first create one customer with one product
-        Customer customer = createCustomer("Foo", "Bar", "w");
-        customer.addProduct(product);
-        Customer newCustomer = customerRepository.save(customer);
-
-
-
-        this.mockMvc.perform(get("/api/customers/" + newCustomer.getId() + "/products")
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(product))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(document);
-    }
-
-
-
-    @Test
-    public void updateProductPriceTest() throws Exception {
-        RestDocumentationResultHandler document = documentPrettyPrintReqResp("update-product-price");
-
-        ConstrainedFields fields = new ConstrainedFields(Customer.class);
-        this.document.snippets(
-                requestFields(
-                        fields.withPath("productNumber").description("The products' product number"),
-                        fields.withPath("description").description("The products' description"),
-                        fields.withPath("drittesKind").description("The products' drittes kind (Ja/Nein)"),
-                        fields.withPath("unfall").description("The products' unfall (COD_eingeschlossen_HEL7 / COD_ausgeschlossen_HEL)"),
-                        fields.withPath("franchise").description("The products' franchise"),
-                        fields.withPath("price").description("The products' price"),
-                        fields.withPath("doctor").description("The products' doctor object")
-                )
-        );
-
-        // create a product
-        Product product = Product.newBuilder()
-                .productNumber("PRO_P0BEPH_HEL_IG")
-                .description("Product one")
-                .drittesKind("Nein")
-                .unfall("COD_ausgeschlossen_HEL")
-                .franchise("COD_Franchise_KVG-O_Erwachsener_1500_HEL")
-                .build();
-
-        // first create one customer with one product
-        Customer customer = createCustomer("Foo", "Bar", "w");
-        customer.addProduct(product);
-        Customer newCustomer = customerRepository.save(customer);
-
-
-
-        this.mockMvc.perform(patch("/api/customers/" + newCustomer.getId() + "/products/" + product.getId())
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(product))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(document);
-    }
-
-
-
-
-
-
-    /**
-     * Pretty print request and response
-     *
-     * @param useCase the name of the snippet
-     * @return RestDocumentationResultHandler
-     */
-    private RestDocumentationResultHandler documentPrettyPrintReqResp(String useCase) {
-        return document(useCase,
-                preprocessRequest(prettyPrint()),
-                preprocessResponse(prettyPrint()));
-    }
 }
