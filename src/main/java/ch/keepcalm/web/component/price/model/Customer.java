@@ -1,5 +1,7 @@
 package ch.keepcalm.web.component.price.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +23,9 @@ public class Customer {
     @Column(name = "customer_id")
     private int id;
 
+    @JsonIgnore // TODO: 21/07/16 jsonIgnore
     private String firstName;
+    @JsonIgnore // TODO: 21/07/16 jsonIgnore
     private String lastName;
 
     private Date dateOfBirth;
@@ -34,7 +38,7 @@ public class Customer {
 
 
     @ManyToMany(targetEntity = Product.class, cascade = CascadeType.ALL)
-    private List <Product> products;
+    private List<Product> products;
 
 
     /**
@@ -150,10 +154,13 @@ public class Customer {
     }
 
     public void addProduct(Product product) {
-        if(products == null)
+        if (products == null) {
             products = new ArrayList<>();
-        this.products.add(product);
+        } else {
+            this.products.add(product);
+        }
     }
+
 
 
     /**

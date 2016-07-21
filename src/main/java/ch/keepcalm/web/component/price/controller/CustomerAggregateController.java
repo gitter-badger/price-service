@@ -18,22 +18,23 @@ import ch.keepcalm.web.component.price.resource.ProductListResource;
 import ch.keepcalm.web.component.price.resource.ProductResource;
 import ch.keepcalm.web.component.price.service.CustomerService;
 import ch.keepcalm.web.component.price.service.PriceService;
+import ch.keepcalm.web.component.price.service.ProductService;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
+import static ch.keepcalm.web.component.price.converter.UiConverter.convertGender;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @RestController
@@ -45,12 +46,15 @@ public class CustomerAggregateController {
     @Autowired
     private CustomerService customerService;
     @Autowired
+    private ProductService productService;
+    @Autowired
     private PriceService priceService;
     @Autowired
     private ProductResourceAssembler productResourceAssembler;
 
     @Autowired
-    public void setCustomerService(CustomerService customerService, ProductResourceAssembler productResourceAssembler, PriceService priceService, Environment environment) {
+    public void setCustomerService(ProductService productService, CustomerService customerService, ProductResourceAssembler productResourceAssembler, PriceService priceService, Environment environment) {
+        this.productService = productService;
         this.customerService = customerService;
         this.productResourceAssembler = productResourceAssembler;
         this.priceService = priceService;
@@ -69,15 +73,15 @@ public class CustomerAggregateController {
             value = "{id}/products",
             method = RequestMethod.POST,
             produces = "application/json; charset=utf-8")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ProductResource addProductToCustomer(@RequestBody Product product, @PathVariable int id) throws Exception {
+    public ResponseEntity addProductToCustomer(@RequestBody Product product, @PathVariable int id) throws Exception {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
             customer.getProducts().add(product);
             customerService.updateCustmer(customer);
-            return productToResource(product);
+            ProductResource productResource = productToResource(product);
+            return new ResponseEntity<ProductResource>(productResource, HttpStatus.CREATED);
         }
-        return productToResource(new Product()); // TODO: 15.07.2016 not nice solution
+        return new ResponseEntity<ProductResource>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
@@ -91,18 +95,17 @@ public class CustomerAggregateController {
             value = "{id}/products",
             method = RequestMethod.GET,
             produces = "application/json; charset=utf-8")
-    @ResponseStatus(HttpStatus.FOUND)
-    public ProductListResource getProductsFromCustomer(@PathVariable int id) {
+     public ResponseEntity getProductsFromCustomer(@PathVariable int id) {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
-            return productToResource(customer.getProducts(), id);
+            ProductListResource productListResource = productToResource(customer.getProducts(), id);
+            return new ResponseEntity<ProductListResource>(productListResource, HttpStatus.FOUND);
         }
-        return productToResource(new ArrayList<Product>(), 0); // TODO: 15.07.2016 not nice solution  add NOT_FOUND also
+        return new ResponseEntity<ProductListResource>(HttpStatus.NOT_FOUND);
     }
 
 
     /**
-     *
      * @param id
      * @param productId
      * @return
@@ -111,19 +114,18 @@ public class CustomerAggregateController {
             value = "{id}/products/{productId}",
             method = RequestMethod.GET,
             produces = "application/json; charset=utf-8")
-    @ResponseStatus(HttpStatus.FOUND)
-    public ProductResource getProductFromCustomer(@PathVariable int id, @PathVariable int productId) {
+    public ResponseEntity getProductFromCustomer(@PathVariable int id, @PathVariable int productId) {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
             if (customer.getProducts() != null) {
-                return productToResource(customer.getProducts().get(productId - 1)); // List start on 0
+                ProductResource productResource = productToResource(customer.getProducts().get(productId - 1));// List start on 0
+                return new ResponseEntity<ProductResource>(productResource, HttpStatus.FOUND);
             }
         }
-        return productToResource(null); // TODO: 15.07.2016 not nice solution
+        return new ResponseEntity<ProductResource>(HttpStatus.NOT_FOUND);
     }
 
     /**
-     *
      * @param id
      * @param productId
      * @return
@@ -132,83 +134,39 @@ public class CustomerAggregateController {
             value = "{id}/products/{productId}",
             method = RequestMethod.PATCH,
             produces = "application/json; charset=utf-8")
-    @ResponseStatus(HttpStatus.OK)
-    public ProductResource updatePricesOnProductFromCustomer(@PathVariable int id, @PathVariable int productId) throws Exception {
+    public ResponseEntity updatePricesOnProductFromCustomer(@PathVariable int id, @PathVariable int productId) throws Exception {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
             if (customer.getProducts() != null) {
 
                 Product product = customer.getProducts().get(productId - 1);
-                // TODO: 21.07.2016 durty hack... for apiDocumentation mock it.
+               // TODO: 21.07.2016 update on JUnit profile a dummy price.
                 if (environment.acceptsProfiles("junit")) {
                     product.setPrice(new BigDecimal(22.00));
-                }else {
+                } else {
                     Preis preis = getBestPrice(product, customer);   // service call
                     product.setPrice(preis.getNettoPreis());
                 }
+                productService.updateProduct(product);
 
-                customer.getProducts().add(product);
+
                 customerService.updateCustmer(customer);
-
-                return productToResource(product); // List start on 0
+                ProductResource productResource = productToResource(product);
+                return new ResponseEntity<ProductResource>(productResource, HttpStatus.OK);
             }
         }
-        return productToResource(null); // TODO: 15.07.2016 not nice solution
+
+        return new ResponseEntity<ProductResource>(HttpStatus.INTERNAL_SERVER_ERROR); // TODO: 21.07.2016  excpetion message ..
     }
 
-
-    /**
-     * @param products
-     * @return
-     */
-    private ProductListResource productToResource(List<Product> products, int id) {
-        ProductListResource productListResource = new ProductListResource();
-
-        List<ProductResource> productResources = productResourceAssembler.toResources(products);
-        productListResource.setProductResourceList(productResources);
-
-        // TODO: 17/07/16 http://localhost:8080/api/customers/1/products
-        Link productsLink = new Link(linkTo(CustomerAggregateController.class)
-                .slash(id)
-                .slash("products").toUriComponentsBuilder().build().toUriString(), "list_products");
-        productListResource.add(productsLink);
-
-        Link createProductLink = new Link(linkTo(CustomerAggregateController.class)
-                .slash(id)
-                .slash("products").toUriComponentsBuilder().build().toUriString(), "create_product");
-        productListResource.add(createProductLink);
-
-
-        return productListResource;
-    }
 
 
     /**
      * @param product
+     * @param customer
      * @return
+     * @throws Exception
      */
-    private ProductResource productToResource(Product product) {
-        return  productResourceAssembler.toResource(product);
-    }
-
-
-
-
-
-    // TODO: 20.07.2016 move it to a helper class or converters
-    private String convertGender(String value) {
-        switch (value) {
-            case "m": // Mann
-                return "1";
-            case "w": // Frau
-                return "2";
-            case "b": // Baby
-                return "3";
-            default:
-                return "-1";
-        }
-    }
-
     private Preis getBestPrice(Product product, Customer customer) throws Exception {
         // FIXME: 18.07.2016 QuickWin
         Preis preis = null;
@@ -245,7 +203,38 @@ public class CustomerAggregateController {
         } catch (BerechneBesterPreisSystemFaultMessage berechneBesterPreisSystemFaultMessage) {
             throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
 
+    /**
+     * @param product
+     * @return
+     */
+    private ProductResource productToResource(Product product) {
+        return productResourceAssembler.toResource(product);
+    }
+
+    /**
+     * @param products
+     * @return
+     */
+    private ProductListResource productToResource(List<Product> products, int id) {
+        ProductListResource productListResource = new ProductListResource();
+
+        List<ProductResource> productResources = productResourceAssembler.toResources(products);
+        productListResource.setProductResourceList(productResources);
+
+        // TODO: 17/07/16 http://localhost:8080/api/customers/1/products
+        Link listProductsLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(id)
+                .slash("products").toUriComponentsBuilder().build().toUriString(), "list_products");
+        productListResource.add(listProductsLink);
+
+        Link createProductLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(id)
+                .slash("products").toUriComponentsBuilder().build().toUriString(), "create_product");
+        productListResource.add(createProductLink);
+
+        return productListResource;
     }
 
 }

@@ -39,7 +39,7 @@ public class PriceServiceIntegrationTest {
 
     @Test
     public void berechnePraemieTest() throws BerechnePraemieSystemFaultMessage, BerechnePraemieBusinessFaultMessage {
-        BerechnePraemieRequest request = ServiceRequestHelperBerechnePraemieRequest.berechnePraemieRequest("priceRequest-PRO_P0BEPH_HEL_IG.json");
+        BerechnePraemieRequest request = ServiceRequestHelper.berechnePraemieRequest("priceRequest-PRO_P0BEPH_HEL_IG.json");
         BerechnePraemieResponse response = priceService.berechnePraemie(request);
         // TODO: 08.07.2016 Check better soulution
         Assert.assertEquals(new BigInteger("288"), response.getPreis().getBruttoPreis().toBigInteger());
@@ -60,7 +60,7 @@ public class PriceServiceIntegrationTest {
 
     @Test
     public void berechneBesterPreisTest() throws BerechneBesterPreisBusinessFaultMessage, BerechneBesterPreisSystemFaultMessage {
-        BerechneBesterPreisRequest request = ServiceRequestHelperBerechneBesterPreisRequest.berechneBesterPreisRequest();
+        BerechneBesterPreisRequest request = ServiceRequestHelper.berechneBesterPreisRequest();
         BerechneBesterPreisResponse response = priceService.berechneBesterPreis(request);
         // TODO: 08.07.2016 Check better soulution
         Assert.assertNotNull("Response shouldn't be null", response.getProduktList().getProdukt());

@@ -8,11 +8,11 @@ import ch.keepcalm.web.component.price.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -45,10 +45,10 @@ public class CustomerController {
             value = "",
             method = RequestMethod.POST,
             produces = "application/json; charset=utf-8")
-    @ResponseStatus(HttpStatus.CREATED)
-    public CustomerResource addCustomer(@RequestBody Customer customer) {
+    public ResponseEntity addCustomer(@RequestBody Customer customer) {
         customerService.saveCustomer(customer);
-        return customerToResource(customerService.getCustomer(customer.getId()));
+        CustomerResource customerResource = customerToResource(customerService.getCustomer(customer.getId()));
+        return new ResponseEntity<CustomerResource>(customerResource, HttpStatus.CREATED);
     }
 
 
@@ -61,8 +61,9 @@ public class CustomerController {
             value = "",
             method = RequestMethod.GET,
             produces = "application/json; charset=utf-8")
-    public CustomerListResource getCustomers() {
-        return customerToResource(customerService.getCustomers());
+    public ResponseEntity getCustomers() {
+        CustomerListResource customerListResource = customerToResource(customerService.getCustomers());
+        return new ResponseEntity<CustomerListResource>(customerListResource, HttpStatus.FOUND);
     }
 
     /**
@@ -74,33 +75,12 @@ public class CustomerController {
     @RequestMapping(value = "{id}",
             method = RequestMethod.GET,
             produces = "application/json; charset=utf-8")
-    @ResponseStatus(HttpStatus.FOUND)
-    public CustomerResource getCustomer(@PathVariable int id) {
-        return customerToResource(customerService.getCustomer(id));
+    public ResponseEntity getCustomer(@PathVariable int id) {
+        CustomerResource customerResource = customerToResource(customerService.getCustomer(id));
+        return new ResponseEntity<CustomerResource>(customerResource, HttpStatus.FOUND);
     }
 
 
-    /**
-     * Add a product to a customer
-     *
-     * @param product
-     * @param id
-     * @return
-     */
-   /* // TODO: 19.07.2016 is now in CustomerAggregateCustomer   @RequestMapping(
-            value = "{id}/products",
-            method = RequestMethod.POST,
-            produces = "application/json; charset=utf-8")
-    @ResponseStatus(HttpStatus.CREATED)
-    public CustomerResource addProductToCustomer(@RequestBody Product product, @PathVariable int id) {
-        Customer customer = customerService.getCustomer(id);
-        if (customer != null) {
-            customer.getProducts().add(product);
-            customerService.updateCustmer(customer);
-            return customerToResource(customerService.getCustomer(customer.getId())); // TODO: 17/07/16 calculate price also
-        }
-        return customerToResource(new Customer()); // TODO: 15.07.2016 not nice solution
-    }*/
 
 
     /**
@@ -110,17 +90,17 @@ public class CustomerController {
      * @return
      */
     private CustomerListResource customerToResource(List<Customer> customers) {
+        // api/customers>;rel="self
         CustomerListResource customerListResource = new CustomerListResource();
         customerListResource.add(linkTo(methodOn(CustomerController.class).getCustomers()).withSelfRel());
-
         List<CustomerResource> customerResources = customerResourceAssembler.toResources(customers);
         customerListResource.setCustomerResourceList(customerResources);
-
+        // api/customers>;rel="create_customer"
         Link createCustomerLink = new Link(linkTo(CustomerController.class).toUriComponentsBuilder().build().toUriString(), "create_customer");
         customerListResource.add(createCustomerLink);
-
-        Link getCustomerLink = new Link(linkTo(CustomerController.class).toUriComponentsBuilder().build().toUriString(), "list_customers");
-        customerListResource.add(getCustomerLink);
+        // api/customers>;rel="list_customers
+        Link listCustomerLink = new Link(linkTo(CustomerController.class).toUriComponentsBuilder().build().toUriString(), "list_customers");
+        customerListResource.add(listCustomerLink);
 
         return customerListResource;
     }
