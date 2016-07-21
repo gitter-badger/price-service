@@ -8,11 +8,13 @@ import {Customer} from './Customer'
 export const inputAsset = (function () {
     let config = {};
 
+    const inputDateRegex = '(^[1-9]|[0][1-9]|[1-2][0-9]|[3][0-1])[-,.]([1-9]|[0][1-9]|1[0-2])[-,.]((19|20)[0-9]{2}$)';
+
     return {init: init};
 
     function init() {
-        registerButtonEvents();
-        main.registerConfigUpdate(onConfigUpdate);
+        registerEvents();
+        main.registerConfigInputUpdate(onConfigUpdate);
     }
 
     function onConfigUpdate(newConfig) {
@@ -21,7 +23,7 @@ export const inputAsset = (function () {
     }
 
 
-    function registerButtonEvents() {
+    function registerEvents() {
         $('#save-personals').on('click', function () {
                 event.preventDefault();
                 let form = $('#input-asset').serializeArray(),
@@ -35,6 +37,7 @@ export const inputAsset = (function () {
                     .then(function (response) {
                         console.log(response);
                     });
+                $(document).trigger(config.key);
             }
         );
 
@@ -59,7 +62,7 @@ export const inputAsset = (function () {
                 inputContainer.data('franchise', $('#franchise').val());
                 inputContainer.data('unfall', $('#unfall').val());
                 inputContainer.data('product-number', $('#product-number').val());
-                main.updateConfig();
+                main.updateInputConfig();
             }
         );
     }

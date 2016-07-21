@@ -1,8 +1,8 @@
 import $ from 'jquery';
 
 export const priceService = (function () {
-    var links = {},
-        priceObservable = [];
+    var links = {}/*,
+     priceObservable = []*/;
 
     (function () {
         return new Promise(function (resolve, reject) {
@@ -23,8 +23,10 @@ export const priceService = (function () {
 
     return {
         createCustomer: createCustomer,
-        createProduct: createProduct,
-        registerPriceNotification: registerPriceNotification
+        createProduct: createProduct
+        /*
+         registerPriceNotification: registerPriceNotification
+         */
     };
 
     function customer() {
@@ -82,7 +84,9 @@ export const priceService = (function () {
                     //do not navigate into product
                     //setLinks(response);
                     resolve(response);
-                    notifyPriceObservers(response);
+                    /*
+                     notifyPriceObservers(response);
+                     */
                 }
 
                 function fail() {
@@ -95,13 +99,14 @@ export const priceService = (function () {
         });
     }
 
-    function registerPriceNotification(observer) {
-        priceObservable.push(observer);
-    }
-
-    function notifyPriceObservers(response) {
-        priceObservable.forEach(fu => fu(response));
-    }
+    /*
+     function registerPriceNotification(observer) {
+     priceObservable.push(observer);
+     }*/
+    /*
+     function notifyPriceObservers(response) {
+     priceObservable.forEach(fu => fu(response));
+     }*/
 
 
     function postHelper(url, payload) {
