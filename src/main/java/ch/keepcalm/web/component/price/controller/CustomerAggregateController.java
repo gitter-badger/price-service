@@ -11,6 +11,7 @@ import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrespons
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.Preis;
 import ch.keepcalm.web.component.price.controller.assembler.ProductResourceAssembler;
 import ch.keepcalm.web.component.price.converter.CalendarConverter;
+import ch.keepcalm.web.component.price.exception.BusinessException;
 import ch.keepcalm.web.component.price.exception.SystemException;
 import ch.keepcalm.web.component.price.model.Customer;
 import ch.keepcalm.web.component.price.model.Product;
@@ -95,7 +96,7 @@ public class CustomerAggregateController {
             value = "{id}/products",
             method = RequestMethod.GET,
             produces = "application/json; charset=utf-8")
-     public ResponseEntity getProductsFromCustomer(@PathVariable int id) {
+    public ResponseEntity getProductsFromCustomer(@PathVariable int id) {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
             ProductListResource productListResource = productToResource(customer.getProducts(), id);
@@ -140,13 +141,15 @@ public class CustomerAggregateController {
             if (customer.getProducts() != null) {
 
                 Product product = customer.getProducts().get(productId - 1);
-               // TODO: 21.07.2016 update on JUnit profile a dummy price.
-                if (environment.acceptsProfiles("junit")) {
-                    product.setPrice(new BigDecimal(22.00));
+                // TODO: 21.07.2016 update on JUnit profile a dummy price.
+               if (environment.acceptsProfiles("junit")) {
+                    product.setPrice(new BigDecimal(00.00));
                 } else {
                     Preis preis = getBestPrice(product, customer);   // service call
                     product.setPrice(preis.getNettoPreis());
                 }
+                Preis preis = getBestPrice(product, customer);   // service call
+                product.setPrice(preis.getNettoPreis());
                 productService.updateProduct(product);
 
 
@@ -158,7 +161,6 @@ public class CustomerAggregateController {
 
         return new ResponseEntity<ProductResource>(HttpStatus.INTERNAL_SERVER_ERROR); // TODO: 21.07.2016  excpetion message ..
     }
-
 
 
     /**
@@ -199,9 +201,9 @@ public class CustomerAggregateController {
             return preis;
 
         } catch (BerechneBesterPreisBusinessFaultMessage berechneBesterPreisBusinessFaultMessage) {
-            throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new BusinessException("Business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (BerechneBesterPreisSystemFaultMessage berechneBesterPreisSystemFaultMessage) {
-            throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new SystemException("System exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
