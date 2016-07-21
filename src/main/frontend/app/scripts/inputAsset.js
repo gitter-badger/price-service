@@ -37,6 +37,8 @@ export const inputAsset = (function () {
                     .then(function (response) {
                         console.log(response);
                     });
+
+
                 $(document).trigger(config.key);
             }
         );

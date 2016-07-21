@@ -5,7 +5,6 @@ import {priceAsset} from './priceAsset';
 
 export const main = (function () {
     let configInput = {},
-        configPrice = {},
         configInputObservable = [];
 
     $(function () {
@@ -19,7 +18,6 @@ export const main = (function () {
 
         priceContainer.load('/app/views/priceAsset.html', function () {
             priceAsset.init();
-            updatePriceConfig();
         });
     });
 
@@ -43,15 +41,6 @@ export const main = (function () {
         notifyConfigInputObservers(configInput);
     }
 
-
-    function updatePriceConfig() {
-        let priceContainer = $('#price-container');
-
-        const CONTAINER_DATA = priceContainer.data();
-        for (const OBJ in CONTAINER_DATA) {
-            configPrice[OBJ] = CONTAINER_DATA[OBJ];
-        }
-    }
 
     function notifyConfigInputObservers(config) {
         configInputObservable.forEach(fu=>fu(config));
