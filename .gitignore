@@ -33,7 +33,7 @@ rebel.xml
 
 
 #Deployment
-src/main/resources/static/docs
+src/main/resources/static/doc
 src/main/resources/static/app
 src/main/resources/static/index.html
 .dev
