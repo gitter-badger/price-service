@@ -34,7 +34,7 @@ public class Customer {
 
 
     @ManyToMany(targetEntity = Product.class, cascade = CascadeType.ALL)
-    private List <Product> products;
+    private List<Product> products;
 
 
     /**
@@ -150,10 +150,13 @@ public class Customer {
     }
 
     public void addProduct(Product product) {
-        if(products == null)
+        if (products == null) {
             products = new ArrayList<>();
-        this.products.add(product);
+        } else {
+            this.products.add(product);
+        }
     }
+
 
 
     /**

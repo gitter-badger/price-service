@@ -41,7 +41,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Created by stevenheyninck on 29/10/15.
+ * Created by Marcel Widmer
+ *
  */
 @ActiveProfiles(profiles = {"junit"})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -89,6 +90,7 @@ public class CustomerControllerTestDocumentation {
                 fields.withPath("address").description("The customers' address")
         );
     }
+
     /**
      *
      * @param fields
@@ -125,8 +127,6 @@ public class CustomerControllerTestDocumentation {
         // reset db
         customerRepository.delete(customer1);
         customerRepository.delete(customer2);
-
-
     }
 
 

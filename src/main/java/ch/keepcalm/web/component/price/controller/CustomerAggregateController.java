@@ -18,6 +18,7 @@ import ch.keepcalm.web.component.price.resource.ProductListResource;
 import ch.keepcalm.web.component.price.resource.ProductResource;
 import ch.keepcalm.web.component.price.service.CustomerService;
 import ch.keepcalm.web.component.price.service.PriceService;
+import ch.keepcalm.web.component.price.service.ProductService;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -45,12 +46,15 @@ public class CustomerAggregateController {
     @Autowired
     private CustomerService customerService;
     @Autowired
+    private ProductService productService;
+    @Autowired
     private PriceService priceService;
     @Autowired
     private ProductResourceAssembler productResourceAssembler;
 
     @Autowired
-    public void setCustomerService(CustomerService customerService, ProductResourceAssembler productResourceAssembler, PriceService priceService, Environment environment) {
+    public void setCustomerService(ProductService productService, CustomerService customerService, ProductResourceAssembler productResourceAssembler, PriceService priceService, Environment environment) {
+        this.productService = productService;
         this.customerService = customerService;
         this.productResourceAssembler = productResourceAssembler;
         this.priceService = priceService;
@@ -136,9 +140,16 @@ public class CustomerAggregateController {
             if (customer.getProducts() != null) {
 
                 Product product = customer.getProducts().get(productId - 1);
-                updatePriceOnProduct(customer, product); // TODO: 21.07.2016 update on JUnit profile a dummy price.
+               // TODO: 21.07.2016 update on JUnit profile a dummy price.
+                if (environment.acceptsProfiles("junit")) {
+                    product.setPrice(new BigDecimal(22.00));
+                } else {
+                    Preis preis = getBestPrice(product, customer);   // service call
+                    product.setPrice(preis.getNettoPreis());
+                }
+                productService.updateProduct(product);
 
-                customer.getProducts().add(product);
+
                 customerService.updateCustmer(customer);
                 ProductResource productResource = productToResource(product);
                 return new ResponseEntity<ProductResource>(productResource, HttpStatus.OK);
@@ -148,21 +159,6 @@ public class CustomerAggregateController {
         return new ResponseEntity<ProductResource>(HttpStatus.INTERNAL_SERVER_ERROR); // TODO: 21.07.2016  excpetion message ..
     }
 
-    /**
-     * @param customer
-     * @param product
-     * @throws Exception
-     */
-    private void updatePriceOnProduct(Customer customer, Product product) throws Exception {
-        // TODO: 21.07.2016 durty hack... for apiDocumentation mock it.
-        if (environment.acceptsProfiles("junit")) {
-            product.setPrice(new BigDecimal(22.00));
-        } else {
-            Preis preis = getBestPrice(product, customer);   // service call
-            product.setPrice(preis.getNettoPreis());
-        }
-
-    }
 
 
     /**
