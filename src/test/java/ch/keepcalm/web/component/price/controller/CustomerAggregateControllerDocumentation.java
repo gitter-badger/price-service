@@ -29,6 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.fail;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -77,11 +78,15 @@ public class CustomerAggregateControllerDocumentation {
 
 
     @Test
-    public void entryPoint() throws Exception {
-        this.mockMvc.perform(
-                get("/api").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(document("entry-point"));
+    public void entryPoint()  {
+        try {
+            this.mockMvc.perform(
+                    get("/api").accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andDo(document("entry-point"));
+        } catch (Exception e) {
+            fail();
+        }
     }
 
 

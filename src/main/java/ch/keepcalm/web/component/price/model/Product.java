@@ -34,7 +34,7 @@ public class Product {
     private String unfall;
     private String franchise;
     private String drittesKind;
-    private BigDecimal price = new BigDecimal(0.00);
+    private BigDecimal price;
 
     @JsonIgnore // TODO: 21/07/16 jsonIgnore 
     @ManyToOne(cascade = CascadeType.ALL)
