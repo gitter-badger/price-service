@@ -77,6 +77,7 @@ public class CustomerAggregateController {
     public ResponseEntity addProductToCustomer(@RequestBody Product product, @PathVariable int id) throws Exception {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
+            product.setPrice(new BigDecimal(00.00)); // TODO: 22/07/16 default value 
             customer.getProducts().add(product);
             customerService.updateCustmer(customer);
             ProductResource productResource = productToResource(product);
