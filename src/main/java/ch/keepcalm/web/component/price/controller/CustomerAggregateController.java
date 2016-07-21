@@ -9,7 +9,6 @@ import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.Vertragsbaustein;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.BerechneBesterPreisResponse;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.Preis;
-import ch.keepcalm.web.component.price.controller.assembler.CustomerResourceAssembler;
 import ch.keepcalm.web.component.price.controller.assembler.ProductResourceAssembler;
 import ch.keepcalm.web.component.price.converter.CalendarConverter;
 import ch.keepcalm.web.component.price.exception.SystemException;
@@ -21,6 +20,7 @@ import ch.keepcalm.web.component.price.service.CustomerService;
 import ch.keepcalm.web.component.price.service.PriceService;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,20 +41,20 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 public class CustomerAggregateController {
 
     @Autowired
+    Environment environment;
+    @Autowired
     private CustomerService customerService;
     @Autowired
     private PriceService priceService;
     @Autowired
-    private CustomerResourceAssembler customerResourceAssembler;
-    @Autowired
     private ProductResourceAssembler productResourceAssembler;
 
     @Autowired
-    public void setCustomerService(CustomerService customerService, CustomerResourceAssembler customerResourceAssembler, ProductResourceAssembler productResourceAssembler, PriceService priceService) {
+    public void setCustomerService(CustomerService customerService, ProductResourceAssembler productResourceAssembler, PriceService priceService, Environment environment) {
         this.customerService = customerService;
-        this.customerResourceAssembler = customerResourceAssembler;
         this.productResourceAssembler = productResourceAssembler;
         this.priceService = priceService;
+        this.environment = environment;
     }
 
 
@@ -72,10 +73,6 @@ public class CustomerAggregateController {
     public ProductResource addProductToCustomer(@RequestBody Product product, @PathVariable int id) throws Exception {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
-
-          /*  Preis preis = getBestPrice(product, customer);// TODO: 17/07/16 calculate price
-            product.setPrice(preis.getNettoPreis());*/
-
             customer.getProducts().add(product);
             customerService.updateCustmer(customer);
             return productToResource(product);
@@ -142,11 +139,13 @@ public class CustomerAggregateController {
             if (customer.getProducts() != null) {
 
                 Product product = customer.getProducts().get(productId - 1);
-
-                Preis preis = getBestPrice(product, customer);   // service call
-                product.setPrice(preis.getNettoPreis());
-                // TODO in junit profile disable real SOAP call
-                // product.setPrice(new BigDecimal(22.00));
+                // TODO: 21.07.2016 durty hack... for apiDocumentation mock it.
+                if (environment.acceptsProfiles("junit")) {
+                    product.setPrice(new BigDecimal(22.00));
+                }else {
+                    Preis preis = getBestPrice(product, customer);   // service call
+                    product.setPrice(preis.getNettoPreis());
+                }
 
                 customer.getProducts().add(product);
                 customerService.updateCustmer(customer);
