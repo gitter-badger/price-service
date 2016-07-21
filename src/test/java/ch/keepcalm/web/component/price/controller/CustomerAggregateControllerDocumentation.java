@@ -127,6 +127,35 @@ public class CustomerAggregateControllerDocumentation {
     }
 
     @Test
+    public void listCustomers() throws Exception {
+        Address address = Address.newAddress()
+                .locality("Gockhausen")
+                .municipality("Dübendorf")
+                .municipality_nr("191")
+                .postal_code("8044")
+                .postal_code_addition("00")
+                .build();
+
+        Customer newCustomer = Customer.newBuilder()
+                .id(1)
+                .gender("m")
+                .dateOfBirth(new DateTime(1975, 9, 27, 0, 0, 0, 0).toDateTime().toDate())
+                .address(address)
+                .build();
+
+        customerRepository.save(newCustomer);
+
+
+        // documentation call
+        this.mockMvc.perform(
+                get("/api/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isFound())
+                .andDo(document);
+    }
+
+
+    @Test
     public void createProduct() throws Exception {
         RestDocumentationResultHandler document = documentPrettyPrintReqResp("create-product");
         ConstrainedFields fields = new ConstrainedFields(Product.class);
