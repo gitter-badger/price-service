@@ -95,6 +95,54 @@ include::{snippets}/create-product/http-response.adoc[]
 
 
 
+[[resource-product-list]]
+=== List product
+A `GET` request lists all of the service's products.
+
+==== Request structure
+
+include::{snippets}/list-product/request-fields.adoc[]
+
+==== Example request curl
+
+include::{snippets}/list-product/curl-request.adoc[]
+
+==== Example request HTTP
+
+include::{snippets}/list-product/http-request.adoc[]
+
+==== Example response
+
+include::{snippets}/list-product/http-response.adoc[]
+
+
+
+
+[[resource-product-list]]
+=== Get product price
+A `PATCH` request upadte the product with a price.
+
+==== Request structure
+
+include::{snippets}/update-product-price/request-fields.adoc[]
+
+==== Example request curl
+
+include::{snippets}/lupdate-product-price/curl-request.adoc[]
+
+==== Example request HTTP
+
+include::{snippets}/update-product-price/http-request.adoc[]
+
+==== Example response
+
+include::{snippets}/update-product-price/http-response.adoc[]
+
+
+
+
+
+
 
 
 [architecture]

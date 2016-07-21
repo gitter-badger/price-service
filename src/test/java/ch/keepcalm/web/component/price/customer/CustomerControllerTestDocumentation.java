@@ -8,7 +8,6 @@ import ch.keepcalm.web.component.price.repository.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.DateTime;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +30,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -74,16 +74,16 @@ public class CustomerControllerTestDocumentation {
 
 
     @Test
-    public void listCustomer() throws Exception {
-        RestDocumentationResultHandler document = documentPrettyPrintReqResp("list-customer");
-        this.mockMvc.perform(get("/api/customers")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(document);
+    public void listCustomerTest() throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp("list-customers");
+        apiListCustomer(document);
     }
 
+
+
+
     @Test
-    public void createCustomer() throws Exception {
+    public void createCustomerTest() throws Exception {
         RestDocumentationResultHandler document = documentPrettyPrintReqResp("create-customer");
 
         ConstrainedFields fields = new ConstrainedFields(Customer.class);
@@ -97,20 +97,13 @@ public class CustomerControllerTestDocumentation {
                 )
         );
 
-        Customer newCustomer = getCustomer("John" , "Doe", "m");
-
-        this.mockMvc.perform(post("/api/customers")
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(newCustomer))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andDo(document);
+        apiCreateCustomer(document, createCustomer("John" , "Doe", "m"));
     }
 
-    // TODO: 20.07.2016 Mock SPF Service  
-    @Ignore
+
+
     @Test
-    public void createProduct() throws Exception {
+    public void createProductTest() throws Exception {
         RestDocumentationResultHandler document = documentPrettyPrintReqResp("create-product");
 
         ConstrainedFields fields = new ConstrainedFields(Customer.class);
@@ -126,16 +119,27 @@ public class CustomerControllerTestDocumentation {
                 )
         );
 
-        // first create one customer
-        Customer newCustomer = customerRepository.save(getCustomer("Foo", "Bar", "w"));
-        Product product = Product.newBuilder()
-                .productNumber("PRO_P0BEPH_HEL_IG")
-                .description("Product one")
-                .drittesKind("Nein")
-                .unfall("COD_ausgeschlossen_HEL")
-                .franchise("COD_Franchise_KVG-O_Erwachsener_1500_HEL")
-                .build();
+        apiCreateProduct(document, createCustomer("Jane" , "Doe", "w"), createProduct());
+    }
 
+
+    private void apiListCustomer(RestDocumentationResultHandler document) throws Exception {
+        this.mockMvc.perform(get("/api/customers")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document);
+    }
+
+    private void apiCreateCustomer(RestDocumentationResultHandler document, Customer newCustomer) throws Exception {
+        this.mockMvc.perform(post("/api/customers")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newCustomer))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andDo(document);
+    }
+
+    private void apiCreateProduct(RestDocumentationResultHandler document, Customer newCustomer, Product product) throws Exception {
         this.mockMvc.perform(post("/api/customers/" + newCustomer.getId() + "/products")
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(product))
@@ -144,25 +148,121 @@ public class CustomerControllerTestDocumentation {
                 .andDo(document);
     }
 
-    /**
-     *
-     * @return a customer
-     */
-    private Customer getCustomer(String firstName, String lastName, String gender) {
+
+    private Customer createCustomer(String firstName, String lastName, String gender) {
         return Customer.newBuilder()
-                    .firstName(firstName)
-                    .lastName(lastName)
-                    .gender(gender)
-                    .dateOfBirth(new DateTime(1975, 9, 27, 0, 0, 0, 0).toDateTime().toDate())
-                    .address(Address.newAddress()
-                            .locality("Gockhausen")
-                            .municipality("Dübendorf")
-                            .postal_code("8044")
-                            .municipality_nr("191")
-                            .postal_code_addition("00")
-                            .build())
-                    .build();
+                .firstName(firstName)
+                .lastName(lastName)
+                .gender(gender)
+                .dateOfBirth(new DateTime(1975, 9, 27, 0, 0, 0, 0).toDateTime().toDate())
+                .address(Address.newAddress()
+                        .locality("Gockhausen")
+                        .municipality("Dübendorf")
+                        .postal_code("8044")
+                        .municipality_nr("191")
+                        .postal_code_addition("00")
+                        .build())
+                .build();
     }
+    private Product createProduct(){
+        return Product.newBuilder()
+                .productNumber("PRO_P0BEPH_HEL_IG")
+                .description("Product one")
+                .drittesKind("Nein")
+                .unfall("COD_ausgeschlossen_HEL")
+                .franchise("COD_Franchise_KVG-O_Erwachsener_1500_HEL")
+                .build();
+
+    }
+
+
+    @Test
+    public void listProductsTest() throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp("list-products");
+
+        ConstrainedFields fields = new ConstrainedFields(Customer.class);
+        this.document.snippets(
+                requestFields(
+                        fields.withPath("productNumber").description("The products' product number"),
+                        fields.withPath("description").description("The products' description"),
+                        fields.withPath("drittesKind").description("The products' drittes kind (Ja/Nein)"),
+                        fields.withPath("unfall").description("The products' unfall (COD_eingeschlossen_HEL7 / COD_ausgeschlossen_HEL)"),
+                        fields.withPath("franchise").description("The products' franchise"),
+                        fields.withPath("price").description("The products' price"),
+                        fields.withPath("doctor").description("The products' doctor object")
+                )
+        );
+
+        // create a product
+        Product product = Product.newBuilder()
+                .productNumber("PRO_P0BEPH_HEL_IG")
+                .description("Product one")
+                .drittesKind("Nein")
+                .unfall("COD_ausgeschlossen_HEL")
+                .franchise("COD_Franchise_KVG-O_Erwachsener_1500_HEL")
+                .build();
+
+        // first create one customer with one product
+        Customer customer = createCustomer("Foo", "Bar", "w");
+        customer.addProduct(product);
+        Customer newCustomer = customerRepository.save(customer);
+
+
+
+        this.mockMvc.perform(get("/api/customers/" + newCustomer.getId() + "/products")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document);
+    }
+
+
+
+    @Test
+    public void updateProductPriceTest() throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp("update-product-price");
+
+        ConstrainedFields fields = new ConstrainedFields(Customer.class);
+        this.document.snippets(
+                requestFields(
+                        fields.withPath("productNumber").description("The products' product number"),
+                        fields.withPath("description").description("The products' description"),
+                        fields.withPath("drittesKind").description("The products' drittes kind (Ja/Nein)"),
+                        fields.withPath("unfall").description("The products' unfall (COD_eingeschlossen_HEL7 / COD_ausgeschlossen_HEL)"),
+                        fields.withPath("franchise").description("The products' franchise"),
+                        fields.withPath("price").description("The products' price"),
+                        fields.withPath("doctor").description("The products' doctor object")
+                )
+        );
+
+        // create a product
+        Product product = Product.newBuilder()
+                .productNumber("PRO_P0BEPH_HEL_IG")
+                .description("Product one")
+                .drittesKind("Nein")
+                .unfall("COD_ausgeschlossen_HEL")
+                .franchise("COD_Franchise_KVG-O_Erwachsener_1500_HEL")
+                .build();
+
+        // first create one customer with one product
+        Customer customer = createCustomer("Foo", "Bar", "w");
+        customer.addProduct(product);
+        Customer newCustomer = customerRepository.save(customer);
+
+
+
+        this.mockMvc.perform(patch("/api/customers/" + newCustomer.getId() + "/products/" + product.getId())
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(document);
+    }
+
+
+
+
 
 
     /**
