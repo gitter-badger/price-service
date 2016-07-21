@@ -1,6 +1,5 @@
-package ch.keepcalm.web.component.price.controller;
+package ch.keepcalm.web.component.price;
 
-import ch.keepcalm.web.component.price.PriceServiceApplication;
 import ch.keepcalm.web.component.price.model.Address;
 import ch.keepcalm.web.component.price.model.Customer;
 import ch.keepcalm.web.component.price.model.Product;
@@ -40,15 +39,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 /**
- * Created by Marcel Widmer
- *
+ * Created by stevenheyninck on 29/10/15.
  */
 @ActiveProfiles(profiles = {"junit"})
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = PriceServiceApplication.class)
 @WebAppConfiguration
-public class CustomerControllerTestDocumentation {
+/**
+ * Created by hkesq on 21.07.2016.
+ */
+public class OldCustomerControllerTestDocumentation {
 
     @Rule
     public final RestDocumentation restDocumentation = new RestDocumentation(
@@ -65,19 +67,18 @@ public class CustomerControllerTestDocumentation {
     private RestDocumentationResultHandler document;
 
     @Before
-     public void setUp() {
-         this.document = document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()));
-         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
-                 .apply(documentationConfiguration(this.restDocumentation).uris()
-                         .withScheme("http")
-                         .withHost("http://msswlmp01.ads.hel.kko.ch/")
-                         .withPort(80))
-                 .alwaysDo(this.document)
-                 .build();
-     }
+    public void setUp() {
+        this.document = document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()));
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
+                .apply(documentationConfiguration(this.restDocumentation).uris()
+                        .withScheme("http")
+                        .withHost("http://msswlmp01.ads.hel.kko.ch/")
+                        .withPort(80))
+                .alwaysDo(this.document)
+                .build();
+    }
 
     /**
-     *
      * @param fields
      * @return
      */
@@ -92,7 +93,6 @@ public class CustomerControllerTestDocumentation {
     }
 
     /**
-     *
      * @param fields
      * @return
      */
@@ -110,88 +110,51 @@ public class CustomerControllerTestDocumentation {
 
     /**
      * Test list all customer resources.
+     *
      * @throws Exception
      */
     @Test
     public void listCustomer() throws Exception {
-        // setup db
-        Customer customer1 = createCustomer("Foo", "Bar", "w"); // create a customer
-        customer1.addProduct(createDummyProduct()); // add a product to a customer
-        customerRepository.save(customer1); // save a customer with product.
-        Customer customer2 = createCustomer("Jone", "Doe", "m");
-        customerRepository.save(customer2);
-
-        // call API
         documentApiListCustomers("list-customers");
-
-        // reset db
-        customerRepository.delete(customer1);
-        customerRepository.delete(customer2);
     }
 
 
     /**
      * Test crate a customre resource.
+     *
      * @throws Exception
      */
     @Test
     public void createCustomer() throws Exception {
-        documentApiCreateCustomer("create-customer", createCustomer("John" , "Doe", "m"));
+        documentApiCreateCustomer("create-customer", createCustomer("John", "Doe", "m"));
     }
 
     /**
      * Test create a product resource.
+     *
      * @throws Exception
      */
     @Test
     public void createProduct() throws Exception {
-        // setup db
-        Customer customer = createCustomer("Foo", "Bar", "w"); // create a customer
-        customer.addProduct(createDummyProduct()); // add a product to a customer
-        customerRepository.save(customer); // save a customer with product.
-
-        // call API
-        documentApiCreateProduct("create-product", customer, createDummyProduct());
-
-        // reset db
-        customerRepository.delete(customer);
+        documentApiCreateProduct("create-product", createCustomer("Jane", "Doe", "w"), createDummyProduct());
     }
 
     /**
      * Test update a product resource with a price.
+     *
      * @throws Exception
      */
     @Test
     public void updateProductPrice() throws Exception {
-
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp("update-product-price");
+        ConstrainedFields fields = new ConstrainedFields(Customer.class);
+        this.document.snippets(
+                getSnippetProduct(fields)
+        );
         Customer customer = createCustomer("Foo", "Bar", "w"); // create a customer
         customer.addProduct(createDummyProduct()); // add a product to a customer
-        // create customer with product
-        this.mockMvc.perform(post("/api/customers")
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(customer))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andDo(document);
-
-       /* ResultActions resultActions = this.mockMvc.perform(get("/api/customers/1")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isFound());
-
-        MockHttpServletResponse response = resultActions.andReturn().getResponse();
-        System.out.println(response.getContentAsString());*/
-        // setup db
-   /*     Customer customer = createCustomer("Foo", "Bar", "w"); // create a customer
-        customer.addProduct(createDummyProduct()); // add a product to a customer
-        customerRepository.save(customer); // save a customer with product.
-        Customer theCustomer = customerRepository.getOne(customer.getId());
-        Product product = theCustomer.getProducts().get(0);*/
-
-        // call API
-        documentApiUpdateProductPrice("update-product-price",1, 1); // get the first product
-
-        // reset db
-        customerRepository.delete(customer);
+        Customer newCustomer = customerRepository.save(customer); // save a customer with product.
+        documentApiUpdateProductPrice("update-product-price", newCustomer, newCustomer.getProducts().get(0)); // get the first product
     }
 
     /**
@@ -207,21 +170,19 @@ public class CustomerControllerTestDocumentation {
     }
 
 
-
     /**
-     *
      * @param useCase
      * @throws Exception
      */
     private void documentApiListCustomers(String useCase) throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp(useCase);
         this.mockMvc.perform(get("/api/customers")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andDo(document);
     }
 
-     /**
-     *
+    /**
      * @param useCase
      * @param newCustomer
      * @throws Exception
@@ -242,7 +203,6 @@ public class CustomerControllerTestDocumentation {
 
 
     /**
-     *
      * @param useCase
      * @param customer
      * @param product
@@ -263,17 +223,29 @@ public class CustomerControllerTestDocumentation {
     }
 
 
+    /**
+     * @param useCase
+     * @param customer
+     * @param product
+     * @throws Exception
+     */
+    private void documentApiUpdateProductPrice(String useCase, Customer customer, Product product) throws Exception {
+        RestDocumentationResultHandler document = documentPrettyPrintReqResp(useCase);
+        ConstrainedFields fields = new ConstrainedFields(Product.class);
+        this.document.snippets(
+                getSnippetProduct(fields)
+        );
 
-    private void documentApiUpdateProductPrice(String useCase, int customerId , int productId) throws Exception {
-        this.mockMvc.perform(patch("/api/customers/" + customerId + "/products/" + productId)
+        this.mockMvc.perform(patch("/api/customers/" + customer.getId() + "/products/" + product.getId())
                 .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(product))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document);
     }
 
+
     /**
-     *
      * @param firstName
      * @param lastName
      * @param gender
@@ -296,10 +268,9 @@ public class CustomerControllerTestDocumentation {
     }
 
     /**
-     *
      * @return a dummy product
      */
-    private Product createDummyProduct(){
+    private Product createDummyProduct() {
         return Product.newBuilder()
                 .productNumber("PRO_P0BEPH_HEL_IG")
                 .description("Product one")
@@ -326,5 +297,5 @@ public class CustomerControllerTestDocumentation {
                             .descriptionsForProperty(path), ". ")));
         }
     }
-}
 
+}
