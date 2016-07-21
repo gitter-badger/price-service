@@ -8,6 +8,7 @@ import ch.keepcalm.web.component.price.repository.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.joda.time.DateTime;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -156,6 +157,7 @@ public class CustomerControllerTestDocumentation {
      * Test crate a customre resource.
      * @throws Exception
      */
+    @Ignore
     @Test
     public void createCustomer() throws Exception {
         documentApiCreateCustomer("create-customer", createCustomer("John" , "Doe", "m"));
@@ -165,6 +167,7 @@ public class CustomerControllerTestDocumentation {
      * Test create a product resource.
      * @throws Exception
      */
+    @Ignore
     @Test
     public void createProduct() throws Exception {
         // setup db
@@ -183,6 +186,7 @@ public class CustomerControllerTestDocumentation {
      * Test update a product resource with a price.
      * @throws Exception
      */
+    @Ignore
     @Test
     public void updateProductPrice() throws Exception {
 
