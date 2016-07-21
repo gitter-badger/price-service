@@ -1,5 +1,7 @@
 package ch.keepcalm.web.component.price.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +36,7 @@ public class Product {
     private String drittesKind;
     private BigDecimal price;
 
+    @JsonIgnore // TODO: 21/07/16 jsonIgnore 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;

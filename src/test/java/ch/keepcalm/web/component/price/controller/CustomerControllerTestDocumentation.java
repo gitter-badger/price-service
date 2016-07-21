@@ -108,6 +108,28 @@ public class CustomerControllerTestDocumentation {
         );
     }
 
+
+
+    @Test
+     public void myTest() throws Exception {
+       /* RestDocumentationResultHandler document = documentPrettyPrintReqResp(useCase);
+        ConstrainedFields fields = new ConstrainedFields(Customer.class);
+        this.document.snippets(
+                getSnippetCustomer(fields)
+        );
+        this.mockMvc.perform(post("/api/customers")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newCustomer))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andDo(document);*/
+
+        /* this.mockMvc.perform(get("/api/").accept(MediaType.APPLICATION_JSON))
+                 .andExpect(status().isOk())
+                 .andDo(document("index", links(
+                         linkWithRel("customers").description("Link to the bravo resource"))));*/
+     }
+
     /**
      * Test list all customer resources.
      * @throws Exception

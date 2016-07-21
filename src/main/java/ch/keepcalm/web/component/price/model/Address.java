@@ -1,5 +1,7 @@
 package ch.keepcalm.web.component.price.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +19,7 @@ public class Address {
     @Column(name="address_id")
     private int id;
 
+    @JsonIgnore // TODO: 21/07/16 jsonIgnore
     private String street;
     private String municipality;  // ": "Dübendorf", /* Gemeindename */
     private String municipality_nr;  //": 191, /* Gemeinde-Nr */

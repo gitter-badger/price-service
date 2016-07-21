@@ -1,5 +1,7 @@
 package ch.keepcalm.web.component.price.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +23,9 @@ public class Customer {
     @Column(name = "customer_id")
     private int id;
 
+    @JsonIgnore // TODO: 21/07/16 jsonIgnore
     private String firstName;
+    @JsonIgnore // TODO: 21/07/16 jsonIgnore
     private String lastName;
 
     private Date dateOfBirth;
