@@ -19,22 +19,22 @@ public class CustomerResourceAssembler extends ResourceAssemblerSupport<Customer
 
     @Override
     public CustomerResource toResource(Customer customer) {
+        // api/customers/1; rel="self
         CustomerResource customerResource = createResourceWithId(customer.getId(), customer);
-
-        // GET products http://localhost:8080/api/customers/1/products
+        // GET products http://localhost:8080/api/customers/1/products; rel="list_products"
         Link listProducts = new Link(linkTo(CustomerAggregateController.class)
                 .slash(customer.getId())
                 .slash("products").toUriComponentsBuilder().build().toUriString(), "list_products");
         customerResource.add(listProducts);
 
-        // POST products http://localhost:8080/api/customers/1/products
+        // POST products http://localhost:8080/api/customers/1/products; rel="create_product"
         Link createProducts = new Link(linkTo(CustomerAggregateController.class)
                 .slash(customer.getId())
                 .slash("products").toUriComponentsBuilder().build().toUriString(), "create_product");
         customerResource.add(createProducts);
 
 
-        // POST products http://localhost:8080/api/customers/1/deeplink
+        // POST products http://localhost:8080/api/customers/1/deeplink; rel="create_deeplink"
         Link deeplink = new Link(linkTo(CustomerAggregateController.class)
                 .slash(customer.getId())
                 .slash("deeplink").toUriComponentsBuilder().build().toUriString(), "create_deeplink");

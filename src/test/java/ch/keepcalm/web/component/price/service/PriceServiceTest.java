@@ -50,7 +50,7 @@ public class PriceServiceTest {
     @Test
     public void price() throws Exception {
         // setup
-        BerechnePraemieRequest request = ServiceRequestHelperBerechnePraemieRequest.berechnePraemieRequest();
+        BerechnePraemieRequest request = ServiceRequestHelper.berechnePraemieRequest();
 
         BerechnePraemieResponse response = new BerechnePraemieResponse();
         Preis preis = new Preis();
@@ -69,7 +69,7 @@ public class PriceServiceTest {
     @Test
     public void bestPrice() throws Exception {
         // setup
-        BerechneBesterPreisRequest request = ServiceRequestHelperBerechneBesterPreisRequest.berechneBesterPreisRequest();
+        BerechneBesterPreisRequest request = ServiceRequestHelper.berechneBesterPreisRequest();
 
         BerechneBesterPreisResponse response = new BerechneBesterPreisResponse();
         Preis preis = new Preis();
@@ -118,7 +118,7 @@ public class PriceServiceTest {
     @Test(expected = ch.helsana.services.spezialfunktionen.tarif.v2.BerechnePraemieBusinessFaultMessage.class)
     public void priceBusinessException() throws Exception {
         // setup
-        BerechnePraemieRequest request = ServiceRequestHelperBerechnePraemieRequest.berechnePraemieRequest();
+        BerechnePraemieRequest request = ServiceRequestHelper.berechnePraemieRequest();
         TarifPortType mockService = mock(TarifPortType.class); //http://mockito.org/
         // set Mock in Service
         ReflectionTestUtils.setField(priceService, PriceService.class, "tarifPortType", mockService, TarifPortType.class);

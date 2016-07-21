@@ -1,4 +1,4 @@
-package ch.keepcalm.web.component.price.customer;
+package ch.keepcalm.web.component.price.controller;
 
 import ch.keepcalm.web.component.price.PriceServiceApplication;
 import ch.keepcalm.web.component.price.model.Address;
@@ -15,13 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentation;
+import org.springframework.restdocs.constraints.ConstraintDescriptions;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
+import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.snippet.Snippet;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -29,7 +32,9 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -107,7 +112,21 @@ public class CustomerControllerTestDocumentation {
      */
     @Test
     public void listCustomer() throws Exception {
+        // setup db
+        Customer customer1 = createCustomer("Foo", "Bar", "w"); // create a customer
+        customer1.addProduct(createDummyProduct()); // add a product to a customer
+        customerRepository.save(customer1); // save a customer with product.
+        Customer customer2 = createCustomer("Jone", "Doe", "m");
+        customerRepository.save(customer2);
+
+        // call API
         documentApiListCustomers("list-customers");
+
+        // reset db
+        customerRepository.delete(customer1);
+        customerRepository.delete(customer2);
+
+
     }
 
 
@@ -126,7 +145,16 @@ public class CustomerControllerTestDocumentation {
      */
     @Test
     public void createProduct() throws Exception {
-        documentApiCreateProduct("create-product", createCustomer("Jane" , "Doe", "w"), createDummyProduct());
+        // setup db
+        Customer customer = createCustomer("Foo", "Bar", "w"); // create a customer
+        customer.addProduct(createDummyProduct()); // add a product to a customer
+        customerRepository.save(customer); // save a customer with product.
+
+        // call API
+        documentApiCreateProduct("create-product", customer, createDummyProduct());
+
+        // reset db
+        customerRepository.delete(customer);
     }
 
     /**
@@ -135,15 +163,16 @@ public class CustomerControllerTestDocumentation {
      */
     @Test
     public void updateProductPrice() throws Exception {
-        RestDocumentationResultHandler document = documentPrettyPrintReqResp("update-product-price");
-        ConstrainedFields fields = new ConstrainedFields(Customer.class);
-        this.document.snippets(
-                getSnippetProduct(fields)
-        );
+        // setup db
         Customer customer = createCustomer("Foo", "Bar", "w"); // create a customer
         customer.addProduct(createDummyProduct()); // add a product to a customer
         Customer newCustomer = customerRepository.save(customer); // save a customer with product.
+
+        // call API
         documentApiUpdateProductPrice("update-product-price",newCustomer, newCustomer.getProducts().get(0)); // get the first product
+
+        // reset db
+        customerRepository.delete(customer);
     }
 
     /**
@@ -166,14 +195,13 @@ public class CustomerControllerTestDocumentation {
      * @throws Exception
      */
     private void documentApiListCustomers(String useCase) throws Exception {
-        RestDocumentationResultHandler document = documentPrettyPrintReqResp(useCase);
         this.mockMvc.perform(get("/api/customers")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isFound())
                 .andDo(document);
     }
 
-    /**
+     /**
      *
      * @param useCase
      * @param newCustomer
@@ -238,7 +266,6 @@ public class CustomerControllerTestDocumentation {
                 .andDo(document);
     }
 
-
     /**
      *
      * @param firstName
@@ -277,4 +304,21 @@ public class CustomerControllerTestDocumentation {
 
     }
 
+    /**
+     * ConstrainedFields class
+     */
+    class ConstrainedFields {
+        private final ConstraintDescriptions constraintDescriptions;
+
+        ConstrainedFields(Class<?> input) {
+            this.constraintDescriptions = new ConstraintDescriptions(input);
+        }
+
+        public FieldDescriptor withPath(String path) {
+            return fieldWithPath(path).attributes(key("constraints").value(StringUtils
+                    .collectionToDelimitedString(this.constraintDescriptions
+                            .descriptionsForProperty(path), ". ")));
+        }
+    }
 }
+
