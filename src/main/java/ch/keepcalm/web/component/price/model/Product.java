@@ -26,15 +26,15 @@ public class Product {
     @Column(name = "product_id")
     private int id;
 
-    @Size(min = 1, max = 36)
-    private String productNumber;
     @Size(min = 2, max = 30)
     private String description;
 
+    @Size(min = 1, max = 36)
+    private String productNumber;
     private String unfall;
     private String franchise;
     private String drittesKind;
-    private BigDecimal price;
+    private BigDecimal price = new BigDecimal(0.00);
 
     @JsonIgnore // TODO: 21/07/16 jsonIgnore 
     @ManyToOne(cascade = CascadeType.ALL)
