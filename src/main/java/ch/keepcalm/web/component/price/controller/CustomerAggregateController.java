@@ -9,7 +9,6 @@ import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisrequest.Vertragsbaustein;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.BerechneBesterPreisResponse;
 import ch.helsana.services.spezialfunktionen.tarif.v2.berechnebesterpreisresponse.Preis;
-import ch.keepcalm.web.component.price.controller.assembler.CustomerResourceAssembler;
 import ch.keepcalm.web.component.price.controller.assembler.ProductResourceAssembler;
 import ch.keepcalm.web.component.price.converter.CalendarConverter;
 import ch.keepcalm.web.component.price.exception.SystemException;
@@ -21,6 +20,7 @@ import ch.keepcalm.web.component.price.service.CustomerService;
 import ch.keepcalm.web.component.price.service.PriceService;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,20 +41,20 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 public class CustomerAggregateController {
 
     @Autowired
+    Environment environment;
+    @Autowired
     private CustomerService customerService;
     @Autowired
     private PriceService priceService;
     @Autowired
-    private CustomerResourceAssembler customerResourceAssembler;
-    @Autowired
     private ProductResourceAssembler productResourceAssembler;
 
     @Autowired
-    public void setCustomerService(CustomerService customerService, CustomerResourceAssembler customerResourceAssembler, ProductResourceAssembler productResourceAssembler, PriceService priceService) {
+    public void setCustomerService(CustomerService customerService, ProductResourceAssembler productResourceAssembler, PriceService priceService, Environment environment) {
         this.customerService = customerService;
-        this.customerResourceAssembler = customerResourceAssembler;
         this.productResourceAssembler = productResourceAssembler;
         this.priceService = priceService;
+        this.environment = environment;
     }
 
 
@@ -72,70 +73,12 @@ public class CustomerAggregateController {
     public ProductResource addProductToCustomer(@RequestBody Product product, @PathVariable int id) throws Exception {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
-            Preis preis = bestPrice(product, customer);// TODO: 17/07/16 calculate price
-            product.setPrice(preis.getNettoPreis());
             customer.getProducts().add(product);
             customerService.updateCustmer(customer);
             return productToResource(product);
         }
         return productToResource(new Product()); // TODO: 15.07.2016 not nice solution
     }
-
-
-    // TODO: 20.07.2016
-    private String convertGender(String value) {
-        switch (value) {
-            case "m":
-                return "1";
-            case "w":
-                return "2";
-            default:
-                return "-1";
-        }
-    }
-
-
-
-
-    private Preis bestPrice(Product product, Customer customer) throws Exception {
-        // FIXME: 18.07.2016 QuickWin
-        Preis preis = null;
-        try {
-            // TODO: 19.07.2016 dummy impl
-            BerechneBesterPreisRequest request = new BerechneBesterPreisRequest();
-            request.withAlleMarken(false);
-            request.withPerson(
-                    new Person()
-                            .withGeburtsdatum(CalendarConverter.dateToXMLGregorianCalendar(customer.getDateOfBirth()))
-                            .withGeschlecht(convertGender(customer.getGender()))
-                            .withId(String.valueOf(customer.getId()))
-                            .withProduktList(new ProduktListType()
-                                    .withProdukt(new Vertragsbaustein()
-                                            .withFranchise(product.getFranchise())
-                                            .withProduktId(product.getProductNumber())
-                                            .withUnfall(product.getUnfall()))))
-                    .withVertrag(new Versicherungsvertrag()
-                            .withGemeindeNummer(customer.getAddress().getMunicipality_nr())
-                            .withMarke("H")
-                            .withMarke("P")
-                            .withMarke("S")
-                            .withMarke("A")
-                            .withPostleitzahl(customer.getAddress().getPostal_code())
-                            .withPostleitzahlZusatz(customer.getAddress().getPostal_code_addition())
-                            .withVertragsbeginn(CalendarConverter.dateToXMLGregorianCalendar(new LocalDate().plusMonths(1).dayOfMonth().withMinimumValue().toDate())));
-
-            BerechneBesterPreisResponse response = priceService.berechneBesterPreis(request);
-             preis = response.getProduktList().getProdukt().get(0).getPreis();// TODO: 19.07.2016 get one product
-            return preis;
-
-        } catch (BerechneBesterPreisBusinessFaultMessage berechneBesterPreisBusinessFaultMessage) {
-            throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (BerechneBesterPreisSystemFaultMessage berechneBesterPreisSystemFaultMessage) {
-            throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
-         }
-
-    }
-
 
 
     /**
@@ -154,10 +97,16 @@ public class CustomerAggregateController {
         if (customer != null) {
             return productToResource(customer.getProducts(), id);
         }
-        return productToResource(new ArrayList<Product>(), 0); // TODO: 15.07.2016 not nice solution
+        return productToResource(new ArrayList<Product>(), 0); // TODO: 15.07.2016 not nice solution  add NOT_FOUND also
     }
 
 
+    /**
+     *
+     * @param id
+     * @param productId
+     * @return
+     */
     @RequestMapping(
             value = "{id}/products/{productId}",
             method = RequestMethod.GET,
@@ -168,6 +117,40 @@ public class CustomerAggregateController {
         if (customer != null) {
             if (customer.getProducts() != null) {
                 return productToResource(customer.getProducts().get(productId - 1)); // List start on 0
+            }
+        }
+        return productToResource(null); // TODO: 15.07.2016 not nice solution
+    }
+
+    /**
+     *
+     * @param id
+     * @param productId
+     * @return
+     */
+    @RequestMapping(
+            value = "{id}/products/{productId}",
+            method = RequestMethod.PATCH,
+            produces = "application/json; charset=utf-8")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductResource updatePricesOnProductFromCustomer(@PathVariable int id, @PathVariable int productId) throws Exception {
+        Customer customer = customerService.getCustomer(id);
+        if (customer != null) {
+            if (customer.getProducts() != null) {
+
+                Product product = customer.getProducts().get(productId - 1);
+                // TODO: 21.07.2016 durty hack... for apiDocumentation mock it.
+                if (environment.acceptsProfiles("junit")) {
+                    product.setPrice(new BigDecimal(22.00));
+                }else {
+                    Preis preis = getBestPrice(product, customer);   // service call
+                    product.setPrice(preis.getNettoPreis());
+                }
+
+                customer.getProducts().add(product);
+                customerService.updateCustmer(customer);
+
+                return productToResource(product); // List start on 0
             }
         }
         return productToResource(null); // TODO: 15.07.2016 not nice solution
@@ -208,5 +191,61 @@ public class CustomerAggregateController {
         return  productResourceAssembler.toResource(product);
     }
 
+
+
+
+
+    // TODO: 20.07.2016 move it to a helper class or converters
+    private String convertGender(String value) {
+        switch (value) {
+            case "m": // Mann
+                return "1";
+            case "w": // Frau
+                return "2";
+            case "b": // Baby
+                return "3";
+            default:
+                return "-1";
+        }
+    }
+
+    private Preis getBestPrice(Product product, Customer customer) throws Exception {
+        // FIXME: 18.07.2016 QuickWin
+        Preis preis = null;
+        try {
+            // TODO: 19.07.2016 dummy impl
+            BerechneBesterPreisRequest request = new BerechneBesterPreisRequest();
+            request.withAlleMarken(false);
+            request.withPerson(
+                    new Person()
+                            .withGeburtsdatum(CalendarConverter.dateToXMLGregorianCalendar(customer.getDateOfBirth()))
+                            .withGeschlecht(convertGender(customer.getGender()))
+                            .withId(String.valueOf(customer.getId()))
+                            .withProduktList(new ProduktListType()
+                                    .withProdukt(new Vertragsbaustein()
+                                            .withFranchise(product.getFranchise())
+                                            .withProduktId(product.getProductNumber())
+                                            .withUnfall(product.getUnfall()))))
+                    .withVertrag(new Versicherungsvertrag()
+                            .withGemeindeNummer(customer.getAddress().getMunicipality_nr())
+                            .withMarke("H")
+                            .withMarke("P")
+                            .withMarke("S")
+                            .withMarke("A")
+                            .withPostleitzahl(customer.getAddress().getPostal_code())
+                            .withPostleitzahlZusatz(customer.getAddress().getPostal_code_addition())
+                            .withVertragsbeginn(CalendarConverter.dateToXMLGregorianCalendar(new LocalDate().plusMonths(1).dayOfMonth().withMinimumValue().toDate())));
+
+            BerechneBesterPreisResponse response = priceService.berechneBesterPreis(request);
+            preis = response.getProduktList().getProdukt().get(0).getPreis();// TODO: 19.07.2016 get one product
+            return preis;
+
+        } catch (BerechneBesterPreisBusinessFaultMessage berechneBesterPreisBusinessFaultMessage) {
+            throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (BerechneBesterPreisSystemFaultMessage berechneBesterPreisSystemFaultMessage) {
+            throw new SystemException("System business exception : ", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 
 }
