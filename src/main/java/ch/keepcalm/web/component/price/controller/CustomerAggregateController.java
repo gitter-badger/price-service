@@ -148,8 +148,7 @@ public class CustomerAggregateController {
                     Preis preis = getBestPrice(product, customer);   // service call
                     product.setPrice(preis.getNettoPreis());
                 }
-                Preis preis = getBestPrice(product, customer);   // service call
-                product.setPrice(preis.getNettoPreis());
+
                 productService.updateProduct(product);
 
 
