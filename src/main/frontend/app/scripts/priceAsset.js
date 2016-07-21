@@ -29,12 +29,30 @@ export const priceAsset = (function () {
 
     function registerEvents() {
         $(document).on(configPrice.key, function (e) {
-            /*  var price = change.price.toString().split('.');
-             $('#price-integer').text(price[0]);
-             //TODO refactor fill one decimal to two (5 --> 50)
-             $('#price-float').text(price[1] + ((price[1] < 8) ? '0' : ''));*/
-            alert("something");
+            addProduct();
         });
     }
 
+    function addProduct() {
+        const PRODUCT = {
+            "productNumber": configPrice.productNumber,
+            "unfall": configPrice.unfall,
+            "franchise": configPrice.franchise
+        };
+
+        priceService.createProduct(PRODUCT)
+            .then(function (response) {
+                console.log(response);
+                updatePrice(response)
+            });
+    }
+
+    function updatePrice(response) {
+        if (response && typeof response.price !== 'undefined') {
+            var price = response.price.toString().split('.');
+            $('#price-integer').text(price[0]);
+            //TODO refactor fill one decimal to two (5 --> 50)
+            $('#price-float').text(price[1] + ((price[1] < 8) ? '0' : ''));
+        }
+    }
 })();

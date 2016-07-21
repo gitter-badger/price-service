@@ -24,9 +24,6 @@ export const priceService = (function () {
     return {
         createCustomer: createCustomer,
         createProduct: createProduct
-        /*
-         registerPriceNotification: registerPriceNotification
-         */
     };
 
     function customer() {
@@ -84,9 +81,6 @@ export const priceService = (function () {
                     //do not navigate into product
                     //setLinks(response);
                     resolve(response);
-                    /*
-                     notifyPriceObservers(response);
-                     */
                 }
 
                 function fail() {
@@ -98,15 +92,6 @@ export const priceService = (function () {
             }
         });
     }
-
-    /*
-     function registerPriceNotification(observer) {
-     priceObservable.push(observer);
-     }*/
-    /*
-     function notifyPriceObservers(response) {
-     priceObservable.forEach(fu => fu(response));
-     }*/
 
 
     function postHelper(url, payload) {

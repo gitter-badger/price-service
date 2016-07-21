@@ -36,35 +36,8 @@ export const inputAsset = (function () {
                 priceService.createCustomer(customer)
                     .then(function (response) {
                         console.log(response);
+                        $(document).trigger(config.key);
                     });
-
-
-                $(document).trigger(config.key);
-            }
-        );
-
-
-        //temp
-        $('#add-product').on('click', function () {
-                const PRODUCT = {
-                    "productNumber": config.productNumber,
-                    "unfall": config.unfall,
-                    "franchise": config.franchise
-                };
-
-                priceService.createProduct(PRODUCT)
-                    .then(function (response) {
-                        console.log(response);
-                    });
-            }
-        );
-        $('#update-config').on('click', function () {
-                console.log('franchise', $('#franchise'), $('#franchise').val());
-                let inputContainer = $('#input-container');
-                inputContainer.data('franchise', $('#franchise').val());
-                inputContainer.data('unfall', $('#unfall').val());
-                inputContainer.data('product-number', $('#product-number').val());
-                main.updateInputConfig();
             }
         );
     }
