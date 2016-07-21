@@ -34,6 +34,12 @@ public class CustomerResourceAssembler extends ResourceAssemblerSupport<Customer
         customerResource.add(createProducts);
 
 
+        // POST products http://localhost:8080/api/customers/1/deeplink
+        Link deeplink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(customer.getId())
+                .slash("deeplink").toUriComponentsBuilder().build().toUriString(), "create_deeplink");
+        customerResource.add(deeplink);
+
         customerResource.setCustomer(customer);
         return customerResource;
     }
