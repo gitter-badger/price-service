@@ -77,7 +77,7 @@ public class CustomerController {
             produces = "application/json; charset=utf-8")
     public ResponseEntity getCustomer(@PathVariable int id) {
         CustomerResource customerResource = customerToResource(customerService.getCustomer(id));
-        return new ResponseEntity<CustomerResource>(customerResource, HttpStatus.FOUND);
+        return new ResponseEntity<CustomerResource>(customerResource, HttpStatus.OK);
     }
 
 
