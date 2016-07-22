@@ -9,13 +9,18 @@ module.exports = function (gulp, data, util, taskName) {
     });
 
     gulp.task(taskName + ':Dev', function () {
-        return gulp.src('./app/**/*.scss')
+        var input = gulp.src('./app/**/inputAsset.scss')
             .pipe(sass().on('error', sass.logError))
             .pipe(gulp.dest(data.path.DEV + 'app'));
+
+        var price = gulp.src('./app/**/priceAsset.scss')
+            .pipe(sass().on('error', sass.logError))
+            .pipe(gulp.dest(data.path.DEV + 'app'));
+        return Promise.all([price, input])
     });
 
     gulp.task(taskName + ':Prod', function () {
-        return gulp.src('./app/**/*.scss')
+        return gulp.src('./app/**/inputAsset.scss')
             .pipe(sass().on('error', sass.logError))
             .pipe(gulp.dest(data.path.PROD + 'app'));
     });
