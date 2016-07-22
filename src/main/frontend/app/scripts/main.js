@@ -1,13 +1,9 @@
-
 import {inputAsset} from './inputAsset';
-import {priceAsset} from './priceAsset';
 
 
 export const main = (function () {
 
     //critical has to be tested!
-    let priceContainer = $('script').last().parent();
-
     let configInput = {},
         configInputObservable = [];
 
@@ -16,10 +12,6 @@ export const main = (function () {
         inputContainer.load('/app/views/inputAsset.html', function () {
             inputAsset.init();
             updateInputConfig();
-        });
-
-        priceContainer.load('/app/views/priceAsset.html', function () {
-            priceAsset.init();
         });
     });
 

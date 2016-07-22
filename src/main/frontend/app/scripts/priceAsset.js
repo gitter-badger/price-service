@@ -1,4 +1,5 @@
 import {priceService} from './priceService'
+import {main} from './mainPrice'
 
 export const priceAsset = (function () {
 
@@ -13,7 +14,7 @@ export const priceAsset = (function () {
 
 
     function updatePriceConfig() {
-        let priceContainer = $('#price-container');
+        let priceContainer = $('#' + main.getContainerId());
 
         const CONTAINER_DATA = priceContainer.data();
         for (const OBJ in CONTAINER_DATA) {
@@ -23,6 +24,10 @@ export const priceAsset = (function () {
 
 
     function registerEvents() {
+        $(document).on(configPrice.key + 'Customer', function (e) {
+            console.log(e);
+        });
+
         $(document).on(configPrice.key, function (e) {
             addProduct();
         });
@@ -44,10 +49,12 @@ export const priceAsset = (function () {
 
     function updatePrice(response) {
         if (response && typeof response.price !== 'undefined') {
-            var price = response.price.toString().split('.');
-            $('#price-integer').text(price[0]);
+            let priceContainer = $('#' + main.getContainerId()),
+                price = response.price.toString().split('.');
+
+            priceContainer.find('[data-price-integer]').text(price[0]);
             //TODO refactor fill one decimal to two (5 --> 50)
-            $('#price-float').text(price[1] + ((price[1] < 8) ? '0' : ''));
+            priceContainer.find('[data-price-float]').text(price[1] + ((price[1] < 8) ? '0' : ''));
         }
     }
 })();
