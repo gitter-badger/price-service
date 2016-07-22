@@ -12,6 +12,7 @@ export const inputAsset = (function () {
 
     function init() {
         registerEvents();
+        makeRadioButtonUnique();
         mainInput.registerConfigInputUpdate(onConfigUpdate);
     }
 
@@ -19,11 +20,20 @@ export const inputAsset = (function () {
         configInput = newConfig;
     }
 
+    function makeRadioButtonUnique() {
+        let container = $('#' + mainInput.getContainerId());
+        let genderButtons = container.find('[data-input-gender]'),
+            randomGenderGroup = Math.random().toString(36).substring(7);
+        genderButtons.attr('name', randomGenderGroup);
+        console.log(container);
+    }
+
 
     function registerEvents() {
-        $('#save-personals').on('click', function () {
+        let container = $('#' + mainInput.getContainerId());
+        container.find('[data-input-save]').on('click', function () {
                 event.preventDefault();
-                let inputAsset = $('#' + mainInput.getContainerId()).find('[data-input-form]');
+                let inputAsset = container.find('[data-input-form]');
                 let form = inputAsset.serializeArray(),
                     address = new Address('Gockhausen', 'Dübendorf', '191', '8044', '00'),
                     customer = new Customer(
