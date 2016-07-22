@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 import {priceService} from './priceService'
 
 export const priceAsset = (function () {

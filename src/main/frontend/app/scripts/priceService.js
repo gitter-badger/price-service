@@ -1,8 +1,6 @@
-import $ from 'jquery';
 
 export const priceService = (function () {
-    var links = {}/*,
-     priceObservable = []*/;
+    var links = {};
 
     (function () {
         return new Promise(function (resolve, reject) {

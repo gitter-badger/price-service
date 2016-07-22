@@ -1,4 +1,4 @@
-import $ from 'jquery';
+
 import {inputAsset} from './inputAsset';
 import {priceAsset} from './priceAsset';
 
@@ -13,7 +13,6 @@ export const main = (function () {
 
     $(function () {
         let inputContainer = $('#input-container');
-        console.log(priceContainer);
         inputContainer.load('/app/views/inputAsset.html', function () {
             inputAsset.init();
             updateInputConfig();

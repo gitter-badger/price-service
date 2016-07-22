@@ -1,4 +1,3 @@
-import $ from 'jquery';
 
 import {main} from './main'
 import {priceService} from './priceService'
