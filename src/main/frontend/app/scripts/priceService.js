@@ -1,74 +1,14 @@
-
 export const priceService = (function () {
     var links = {};
 
-    (function () {
-        return new Promise(function (resolve, reject) {
-            $.getJSON('api', {})
-                .done(function (data) {
-                    setLinks(data);
-                    customer()
-                        .then(function (response) {
-                            setLinks(response);
-                            resolve(response);
-                        });
-                })
-                .fail(function () {
-                    reject('Failed to get API');
-                })
-        });
-    })();
-
     return {
-        createCustomer: createCustomer,
-        createProduct: createProduct
+        createProduct: createProduct,
+        setLinks: setLinks
     };
 
-    function customer() {
-        return new Promise(function (resolve, reject) {
-            if (links.customers) {
-
-                $.getJSON(links.customers.href, {})
-                    .done(success)
-                    .fail(fail);
-
-                function success(response) {
-                    setLinks(response);
-                    resolve(response);
-                }
-
-                function fail() {
-                    reject('Failed to get Customer');
-                }
-            } else {
-                resolve('Clould not get Customer');
-            }
-        });
-    }
-
-    function createCustomer(obj) {
-        return new Promise(function (resolve, reject) {
-
-            if (links.create_customer) {
-
-                postHelper(links.create_customer.href, obj)
-                    .then(success, fail);
-
-                function success(response) {
-                    setLinks(response);
-                    resolve(response);
-                }
-
-                function fail() {
-                    reject('Failed to create Customer');
-                }
-            } else {
-                resolve('Clould not create Customer');
-            }
-        });
-    }
 
     function createProduct(obj) {
+        console.log(obj);
         return new Promise(function (resolve, reject) {
             if (links.create_product) {
 

@@ -1,6 +1,5 @@
-
 import {main} from './main'
-import {priceService} from './priceService'
+import {inputService} from './inputService'
 import {Address} from './Address'
 import {Customer} from './Customer'
 
@@ -32,10 +31,10 @@ export const inputAsset = (function () {
                         form.find(obj => obj.name === 'gender').value,
                         address);
 
-                priceService.createCustomer(customer)
+                inputService.createCustomer(customer)
                     .then(function (response) {
                         console.log(response);
-                        $(document).trigger(config.key);
+                        $(document).trigger(config.key, [response]);
                     });
             }
         );

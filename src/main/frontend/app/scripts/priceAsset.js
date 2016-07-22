@@ -24,11 +24,9 @@ export const priceAsset = (function () {
 
 
     function registerEvents() {
-        $(document).on(configPrice.key + 'Customer', function (e) {
-            console.log(e);
-        });
-
-        $(document).on(configPrice.key, function (e) {
+        $(document).on(configPrice.key, function (e, param) {
+            priceService.setLinks(param);
+            console.log(e, param);
             addProduct();
         });
     }

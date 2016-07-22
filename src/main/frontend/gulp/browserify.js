@@ -24,11 +24,21 @@ module.exports = function (gulp, data, util, taskName) {
 
 
     gulp.task(taskName + ':Prod', function () {
-        return browserify({debug: true})
+        var price = browserify({debug: true})
             .transform("babelify", {presets: ["es2015"]})
             .require(data.path.FRONTEND + "app/scripts/main.js", {entry: true})
             .bundle()
-            .pipe(source('bundle.js'))
+            .pipe(source('bundleInput.js'))
             .pipe(gulp.dest(data.path.PROD + 'app/scripts'));
+
+        var input = browserify({debug: true})
+            .transform("babelify", {presets: ["es2015"]})
+            .require(data.path.FRONTEND + "app/scripts/mainPrice.js", {entry: true})
+            .bundle()
+            .pipe(source('bundlePrice.js'))
+            .pipe(gulp.dest(data.path.PROD + 'app/scripts'));
+
+        return Promise.all([input, price]);
+
     });
 };
