@@ -77,7 +77,7 @@ public class CustomerAggregateController {
     public ResponseEntity addProductToCustomer(@RequestBody Product product, @PathVariable int id) throws Exception {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
-            product.setPrice(new BigDecimal(00.00)); // TODO: 22/07/16 default value 
+            product.setPrice(new BigDecimal(00.00)); // TODO: 22/07/16 default value
             customer.getProducts().add(product);
             customerService.updateCustmer(customer);
             ProductResource productResource = productToResource(product);
@@ -142,12 +142,9 @@ public class CustomerAggregateController {
             if (customer.getProducts() != null) {
 
                 Product product = customer.getProducts().get(productId - 1);
-                // TODO: 21.07.2016 update on JUnit profile a dummy price.
-               if (environment.acceptsProfiles("junit")) {
-                    product.setPrice(new BigDecimal(00.00));
-                } else {
-                    Preis preis = getBestPrice(product, customer);   // service call
-                    product.setPrice(preis.getNettoPreis());
+               if (!environment.acceptsProfiles("junit")) {
+                   Preis preis = getBestPrice(product, customer);   // service call
+                   product.setPrice(preis.getNettoPreis());
                 }
 
                 productService.updateProduct(product);
