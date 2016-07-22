@@ -33,10 +33,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import static ch.keepcalm.web.component.price.converter.UiConverter.convertGender;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/api/customers", produces = "application/hal+json")
@@ -88,6 +90,39 @@ public class CustomerAggregateController {
     }
 
 
+
+
+    @RequestMapping(
+            value = "products",
+            method = RequestMethod.GET,
+            produces = "application/json; charset=utf-8")
+    public ResponseEntity getProducts() {
+        ProductListResource productListResource = productsToResources(productService.getProducts());
+        return new ResponseEntity<ProductListResource>(productListResource, HttpStatus.FOUND);
+    }
+
+    private ProductListResource productsToResources(List<Product> products) {
+        ProductListResource productListResource = new ProductListResource();
+        productListResource.add(linkTo(methodOn(CustomerAggregateController.class).getProducts()).withSelfRel());
+        List<ProductResource> productResources = productResourceAssembler.toResources(products);
+        productListResource.setProductResourceList(productResources);
+        return productListResource;
+    }
+
+    @RequestMapping(value = "products/{id}", method = RequestMethod.GET)
+    public ResponseEntity getProduct(@PathVariable int id) {
+        ProductResource productResource = productToResource(productService.getProductById(id));
+        return new ResponseEntity<ProductResource>(productResource, HttpStatus.FOUND);
+    }
+
+
+
+
+
+
+
+
+
     /**
      * Get all products form customer
      *
@@ -101,11 +136,21 @@ public class CustomerAggregateController {
     public ResponseEntity getProductsFromCustomer(@PathVariable int id) {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
-            ProductListResource productListResource = productToResource(customer.getProducts(), id);
-            return new ResponseEntity<ProductListResource>(productListResource, HttpStatus.FOUND);
+
+            ProductListResource productListResource = new ProductListResource();
+            List<ProductResource> productResourceList = new ArrayList<>();
+            for (Product product : customer.getProducts()) {
+                ProductResource productResource = productToResource(product, customer);
+                productResourceList.add(productResource);
+            }
+            productListResource.setProductResourceList(productResourceList);
+            ProductListResource productList = productListToResource(productListResource, id);
+
+            return new ResponseEntity<ProductListResource>(productList, HttpStatus.FOUND);
         }
         return new ResponseEntity<ProductListResource>(HttpStatus.NOT_FOUND);
     }
+
 
 
     /**
@@ -214,21 +259,65 @@ public class CustomerAggregateController {
 
     }
 
-    private ProductResource productToResource(Product product, Customer customer) {
+    /*private ProductResource productToResource(Product product, Customer customer) {
         ProductResource productResource = new ProductResource();
         productResource.setProduct(product);
 
-      /*  Link selfLink = new Link(linkTo(CustomerAggregateController.class)
+        Link selfLink = new Link(linkTo(CustomerAggregateController.class)
                 .slash(id)
                 .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "self");
-        productResource.add(selfLink)*/;
+        productResource.add(selfLink);
 
         //getProductFromCustomer
-      /*  Link linkToMethod = linkBuilderFactory.linkTo(parameter.getMethod(), new Object[0]).withSelfRel();
-        UriComponents fromUriString = UriComponentsBuilder.fromUriString(linkToMethod.getHref()).build();*/
+        Link linkToMethod = linkBuilderFactory.linkTo(parameter.getMethod(), new Object[0]).withSelfRel();
+        UriComponents fromUriString = UriComponentsBuilder.fromUriString(linkToMethod.getHref()).build();
 
-       /* Link selfLink1 =(linkTo(methodOn(CustomerAggregateController.class).getProductFromCustomer(id, product.getId())).withSelfRel());
-        productResource.add(selfLink1);*/
+        Link selfLink1 =(linkTo(methodOn(CustomerAggregateController.class).getProductFromCustomer(id, product.getId())).withSelfRel());
+        productResource.add(selfLink1);
+
+        Link selfLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(customer.getId())
+                .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "self");
+        productResource.add(selfLink);
+
+
+        // TODO: 17/07/16 http://localhost:8080/api/customers/1/products/1
+        Link updateProductPriceLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(customer.getId())
+                .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "update_price");
+        productResource.add(updateProductPriceLink);
+        return productResource;
+    }
+*/
+
+
+   /* private ProductListResource productToResource(List<Product> products, int id) {
+        ProductListResource productListResource = new ProductListResource();
+
+        List<ProductResource> productResources = productResourceAssembler.toResources(products);
+        productListResource.setProductResourceList(productResources);
+
+        // TODO: 17/07/16 http://localhost:8080/api/customers/1/products
+        Link listProductsLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(id)
+                .slash("products").toUriComponentsBuilder().build().toUriString(), "list_products");
+        productListResource.add(listProductsLink);
+
+        Link createProductLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(id)
+                .slash("products").toUriComponentsBuilder().build().toUriString(), "create_product");
+        productListResource.add(createProductLink);
+
+        return productListResource;
+    }*/
+
+
+
+
+
+    private ProductResource productToResource(Product product, Customer customer) {
+        ProductResource productResource = new ProductResource();
+        productResource.setProduct(product);
 
         Link selfLink = new Link(linkTo(CustomerAggregateController.class)
                 .slash(customer.getId())
@@ -245,15 +334,8 @@ public class CustomerAggregateController {
     }
 
 
-    /**
-     * @param products
-     * @return
-     */
-    private ProductListResource productToResource(List<Product> products, int id) {
-        ProductListResource productListResource = new ProductListResource();
 
-        List<ProductResource> productResources = productResourceAssembler.toResources(products);
-        productListResource.setProductResourceList(productResources);
+    private ProductListResource productListToResource(ProductListResource productListResource, int id) {
 
         // TODO: 17/07/16 http://localhost:8080/api/customers/1/products
         Link listProductsLink = new Link(linkTo(CustomerAggregateController.class)
