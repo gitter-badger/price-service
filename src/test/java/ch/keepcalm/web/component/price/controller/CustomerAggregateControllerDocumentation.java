@@ -150,7 +150,7 @@ public class CustomerAggregateControllerDocumentation {
         this.mockMvc.perform(
                 get("/api/customers")
                         .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isFound())
+        ).andExpect(status().isOk())
                 .andDo(document);
     }
 
