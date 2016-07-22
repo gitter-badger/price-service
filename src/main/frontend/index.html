@@ -1,4 +1,5 @@
 <html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <head>
     <link href="app/styles/all.css" type="text/css" rel="stylesheet"/>
@@ -11,17 +12,43 @@
 <body>
 
 <!-- define Config over DataAttibutes consider uppercase key is not allowed-->
-<div id="input-container"
-     data-key="hel"></div>
+<div data-key="hel">
+    <script src="app/scripts/bundleInput.js"></script>
+</div>
 
-<div id="price-container"
-     data-franchise="COD_Franchise_KVG-O_Erwachsener_2500_HEL"
+
+<div data-franchise="COD_Franchise_KVG-O_Erwachsener_300_HEL"
      data-unfall="COD_ausgeschlossen_HEL"
      data-product-number="PRO_x0BAS__HEL_IG"
      data-key="hel">
+    <script src="app/scripts/bundlePrice.js"></script>
 </div>
 
-<script src="app/scripts/bundle.js"></script>
+<div data-franchise="COD_Franchise_KVG-O_Erwachsener_2500_HEL"
+     data-unfall="COD_ausgeschlossen_HEL"
+     data-product-number="PRO_x0BAS__HEL_IG"
+     data-key="hel">
+    <script src="app/scripts/bundlePrice.js"></script>
+</div>
+
+
+<div data-key="hel2">
+    <script src="app/scripts/bundleInput.js"></script>
+</div>
+
+<div data-franchise="COD_Franchise_KVG-O_Erwachsener_1500_HEL"
+     data-unfall="COD_ausgeschlossen_HEL"
+     data-product-number="PRO_x0BAS__HEL_IG"
+     data-key="hel2">
+    <script src="app/scripts/bundlePrice.js"></script>
+</div>
+
+<div data-franchise="COD_Franchise_KVG-O_Erwachsener_2500_HEL"
+     data-unfall="COD_ausgeschlossen_HEL"
+     data-product-number="PRO_x0BAS__HEL_IG"
+     data-key="hel2">
+    <script src="app/scripts/bundlePrice.js"></script>
+</div>
 
 </body>
 </html>

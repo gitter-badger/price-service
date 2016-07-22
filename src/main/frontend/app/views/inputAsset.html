@@ -1,4 +1,4 @@
-<form id="input-asset" class="form" #calcPremiums="ngForm">
+<form data-input-form="input-asset" class="form" #calcPremiums="ngForm">
     <h2 e2e-id="title">Prämienrechner</h2>
     <fieldset class="fieldset">
         <div>
@@ -10,10 +10,12 @@
             <span class="line-height-3">Geschlecht:</span>
             <aside class="input input--gender">
 
-                <input id="gender-female" class="input__radio" type="radio" name="gender" value='w'>
+                <input data-input-gender="input-asset" id="gender-female" class="input__radio" type="radio"
+                       name="gender" value='w'>
                 <label class="input--gender__label input--left icon icon-female"
                        title='male' for="gender-female"></label>
-                <input id="gender-male" class="input__radio" type="radio" name="gender" value='m'>
+                <input data-input-gender="input-asset" id="gender-male" class="input__radio" type="radio" name="gender"
+                       value='m'>
                 <label class="input--gender__label input--right icon icon-male"
                        title='female' for="gender-male"></label>
             </aside>
@@ -26,7 +28,7 @@
                 <input name="plz" type="hidden">
             </span>
         </div>
-        <input id="save-personals" class="btn btn--form btn--clear-left" value='Starten' type="submit">
+        <input data-input-save="input-asset" class="btn btn--form btn--clear-left" value='Starten' type="submit">
     </fieldset>
 </form>
 

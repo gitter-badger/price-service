@@ -1,6 +1,5 @@
-import $ from 'jquery';
-
 import {priceService} from './priceService'
+import {mainPrice} from './mainPrice'
 
 export const priceAsset = (function () {
 
@@ -11,14 +10,11 @@ export const priceAsset = (function () {
     function init() {
         updatePriceConfig();
         registerEvents();
-        /*
-         priceService.registerPriceNotification(onChange);
-         */
     }
 
 
     function updatePriceConfig() {
-        let priceContainer = $('#price-container');
+        let priceContainer = $('#' + mainPrice.getContainerId());
 
         const CONTAINER_DATA = priceContainer.data();
         for (const OBJ in CONTAINER_DATA) {
@@ -28,7 +24,8 @@ export const priceAsset = (function () {
 
 
     function registerEvents() {
-        $(document).on(configPrice.key, function (e) {
+        $(document).on(configPrice.key, function (e, param) {
+            priceService.setLinks(param);
             addProduct();
         });
     }
@@ -42,17 +39,18 @@ export const priceAsset = (function () {
 
         priceService.createProduct(PRODUCT)
             .then(function (response) {
-                console.log(response);
                 updatePrice(response)
             });
     }
 
     function updatePrice(response) {
         if (response && typeof response.price !== 'undefined') {
-            var price = response.price.toString().split('.');
-            $('#price-integer').text(price[0]);
+            let priceContainer = $('#' + mainPrice.getContainerId()),
+                price = response.price.toString().split('.');
+
+            priceContainer.find('[data-price-integer]').text(price[0]);
             //TODO refactor fill one decimal to two (5 --> 50)
-            $('#price-float').text(price[1] + ((price[1] < 8) ? '0' : ''));
+            priceContainer.find('[data-price-float]').text(price[1] + ((price[1] < 8) ? '0' : ''));
         }
     }
 })();

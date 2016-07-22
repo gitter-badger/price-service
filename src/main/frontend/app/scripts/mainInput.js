@@ -1,27 +1,25 @@
-import $ from 'jquery';
 import {inputAsset} from './inputAsset';
-import {priceAsset} from './priceAsset';
 
 
-export const main = (function () {
+export const mainInput = (function () {
+
     let configInput = {},
-        configInputObservable = [];
+        configInputObservable = [],
+        // has to be tested!
+        inputContainer = $('script').last().parent(),
+        containerId = undefined;
 
     $(function () {
-        let inputContainer = $('#input-container');
-        let priceContainer = $('#price-container');
-
+        containerId = Math.random().toString(36).substring(7);
+        inputContainer.attr('id', containerId);
         inputContainer.load('/app/views/inputAsset.html', function () {
             inputAsset.init();
             updateInputConfig();
         });
-
-        priceContainer.load('/app/views/priceAsset.html', function () {
-            priceAsset.init();
-        });
     });
 
     return {
+        getContainerId: getContainerId,
         config: configInput,
         registerConfigInputUpdate: registerConfigInputUpdate,
         updateInputConfig: updateInputConfig
@@ -32,7 +30,7 @@ export const main = (function () {
     }
 
     function updateInputConfig() {
-        let inputContainer = $('#input-container');
+        let inputContainer = $('#' + containerId);
 
         const CONTAINER_DATA = inputContainer.data();
         for (const OBJ in CONTAINER_DATA) {
@@ -44,5 +42,9 @@ export const main = (function () {
 
     function notifyConfigInputObservers(config) {
         configInputObservable.forEach(fu=>fu(config));
+    }
+
+    function getContainerId() {
+        return containerId;
     }
 })();
