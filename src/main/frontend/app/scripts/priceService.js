@@ -8,7 +8,6 @@ export const priceService = (function () {
 
 
     function createProduct(obj) {
-        console.log(obj);
         return new Promise(function (resolve, reject) {
             if (links.create_product) {
 

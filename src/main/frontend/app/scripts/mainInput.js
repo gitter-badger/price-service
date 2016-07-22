@@ -3,12 +3,15 @@ import {inputAsset} from './inputAsset';
 
 export const mainInput = (function () {
 
-    //critical has to be tested!
     let configInput = {},
-        configInputObservable = [];
+        configInputObservable = [],
+        // has to be tested!
+        inputContainer = $('script').last().parent(),
+        containerId = undefined;
 
     $(function () {
-        let inputContainer = $('#input-container');
+        containerId = Math.random().toString(36).substring(7);
+        inputContainer.attr('id', containerId);
         inputContainer.load('/app/views/inputAsset.html', function () {
             inputAsset.init();
             updateInputConfig();
@@ -16,6 +19,7 @@ export const mainInput = (function () {
     });
 
     return {
+        getContainerId: getContainerId,
         config: configInput,
         registerConfigInputUpdate: registerConfigInputUpdate,
         updateInputConfig: updateInputConfig
@@ -26,7 +30,7 @@ export const mainInput = (function () {
     }
 
     function updateInputConfig() {
-        let inputContainer = $('#input-container');
+        let inputContainer = $('#' + containerId);
 
         const CONTAINER_DATA = inputContainer.data();
         for (const OBJ in CONTAINER_DATA) {
@@ -38,5 +42,9 @@ export const mainInput = (function () {
 
     function notifyConfigInputObservers(config) {
         configInputObservable.forEach(fu=>fu(config));
+    }
+
+    function getContainerId() {
+        return containerId;
     }
 })();

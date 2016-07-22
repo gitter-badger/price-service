@@ -26,7 +26,6 @@ export const priceAsset = (function () {
     function registerEvents() {
         $(document).on(configPrice.key, function (e, param) {
             priceService.setLinks(param);
-            console.log(e, param);
             addProduct();
         });
     }

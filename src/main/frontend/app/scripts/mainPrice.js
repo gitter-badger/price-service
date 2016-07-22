@@ -3,9 +3,7 @@ import {priceAsset} from './priceAsset';
 
 export const mainPrice = (function () {
 
-    //critical has to be tested!
-    $(this).attr('class', 'test');
-
+    // has to be tested!
     let priceContainer = $('script').last().parent(),
         containerId = undefined;
 

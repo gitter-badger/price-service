@@ -4,7 +4,7 @@ import {Address} from './Address'
 import {Customer} from './Customer'
 
 export const inputAsset = (function () {
-    let config = {};
+    let configInput = {};
 
     const inputDateRegex = '(^[1-9]|[0][1-9]|[1-2][0-9]|[3][0-1])[-,.]([1-9]|[0][1-9]|1[0-2])[-,.]((19|20)[0-9]{2}$)';
 
@@ -16,14 +16,15 @@ export const inputAsset = (function () {
     }
 
     function onConfigUpdate(newConfig) {
-        config = newConfig;
+        configInput = newConfig;
     }
 
 
     function registerEvents() {
         $('#save-personals').on('click', function () {
                 event.preventDefault();
-                let form = $('#input-asset').serializeArray(),
+                let inputAsset = $('#' + mainInput.getContainerId()).find('[data-input-form]');
+                let form = inputAsset.serializeArray(),
                     address = new Address('Gockhausen', 'Dübendorf', '191', '8044', '00'),
                     customer = new Customer(
                         form.find(obj => obj.name === 'dateOfBirth').value,
@@ -32,8 +33,7 @@ export const inputAsset = (function () {
 
                 inputService.createCustomer(customer)
                     .then(function (response) {
-                        console.log(response);
-                        $(document).trigger(config.key, [response]);
+                        $(document).trigger(configInput.key, [response]);
                     });
             }
         );
