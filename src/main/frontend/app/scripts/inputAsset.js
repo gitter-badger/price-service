@@ -11,8 +11,8 @@ export const inputAsset = (function () {
     return {init: init};
 
     function init() {
-        registerEvents();
         makeRadioButtonUnique();
+        registerEvents();
         mainInput.registerConfigInputUpdate(onConfigUpdate);
     }
 
@@ -23,9 +23,16 @@ export const inputAsset = (function () {
     function makeRadioButtonUnique() {
         let container = $('#' + mainInput.getContainerId());
         let genderButtons = container.find('[data-input-gender]'),
-            randomGenderGroup = Math.random().toString(36).substring(7);
+            randomGenderGroup = Math.random().toString(36).substring(7) + '-input-gender';
         genderButtons.attr('name', randomGenderGroup);
-        console.log(container);
+
+        for (let i = 0; i < genderButtons.length; i++) {
+            let btn = genderButtons.eq(i),
+                btnId = Math.random().toString(36).substring(7);
+            btn.attr('name', randomGenderGroup);
+            btn.attr('id', btnId);
+            btn.next().attr('for', btnId)
+        }
     }
 
 
@@ -38,7 +45,7 @@ export const inputAsset = (function () {
                     address = new Address('Gockhausen', 'Dübendorf', '191', '8044', '00'),
                     customer = new Customer(
                         form.find(obj => obj.name === 'dateOfBirth').value,
-                        form.find(obj => obj.name === 'gender').value,
+                        form.find(obj => obj.name.includes('input-gender')).value,
                         address);
 
                 inputService.createCustomer(customer)
