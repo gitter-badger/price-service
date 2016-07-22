@@ -1,7 +1,7 @@
 import {priceAsset} from './priceAsset';
 
 
-export const main = (function () {
+export const mainPrice = (function () {
 
     //critical has to be tested!
     $(this).attr('class', 'test');

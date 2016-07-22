@@ -1,7 +1,7 @@
 import {inputAsset} from './inputAsset';
 
 
-export const main = (function () {
+export const mainInput = (function () {
 
     //critical has to be tested!
     let configInput = {},

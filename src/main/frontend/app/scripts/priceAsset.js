@@ -1,5 +1,5 @@
 import {priceService} from './priceService'
-import {main} from './mainPrice'
+import {mainPrice} from './mainPrice'
 
 export const priceAsset = (function () {
 
@@ -14,7 +14,7 @@ export const priceAsset = (function () {
 
 
     function updatePriceConfig() {
-        let priceContainer = $('#' + main.getContainerId());
+        let priceContainer = $('#' + mainPrice.getContainerId());
 
         const CONTAINER_DATA = priceContainer.data();
         for (const OBJ in CONTAINER_DATA) {
@@ -40,14 +40,13 @@ export const priceAsset = (function () {
 
         priceService.createProduct(PRODUCT)
             .then(function (response) {
-                console.log(response);
                 updatePrice(response)
             });
     }
 
     function updatePrice(response) {
         if (response && typeof response.price !== 'undefined') {
-            let priceContainer = $('#' + main.getContainerId()),
+            let priceContainer = $('#' + mainPrice.getContainerId()),
                 price = response.price.toString().split('.');
 
             priceContainer.find('[data-price-integer]').text(price[0]);

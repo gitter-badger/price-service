@@ -1,4 +1,4 @@
-import {main} from './main'
+import {mainInput} from './mainInput'
 import {inputService} from './inputService'
 import {Address} from './Address'
 import {Customer} from './Customer'
@@ -12,12 +12,11 @@ export const inputAsset = (function () {
 
     function init() {
         registerEvents();
-        main.registerConfigInputUpdate(onConfigUpdate);
+        mainInput.registerConfigInputUpdate(onConfigUpdate);
     }
 
     function onConfigUpdate(newConfig) {
         config = newConfig;
-        console.log(config);
     }
 
 
