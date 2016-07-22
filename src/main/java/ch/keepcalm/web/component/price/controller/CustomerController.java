@@ -63,7 +63,7 @@ public class CustomerController {
             produces = "application/json; charset=utf-8")
     public ResponseEntity getCustomers() {
         CustomerListResource customerListResource = customerToResource(customerService.getCustomers());
-        return new ResponseEntity<CustomerListResource>(customerListResource, HttpStatus.FOUND);
+        return new ResponseEntity<CustomerListResource>(customerListResource, HttpStatus.OK);
     }
 
     /**
@@ -79,8 +79,6 @@ public class CustomerController {
         CustomerResource customerResource = customerToResource(customerService.getCustomer(id));
         return new ResponseEntity<CustomerResource>(customerResource, HttpStatus.FOUND);
     }
-
-
 
 
     /**
