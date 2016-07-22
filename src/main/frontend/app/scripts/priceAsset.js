@@ -39,18 +39,24 @@ export const priceAsset = (function () {
 
         priceService.createProduct(PRODUCT)
             .then(function (response) {
-                updatePrice(response)
+                priceService.setLinks(response);
+                priceService.getPrice()
+                    .then(function (priceRes) {
+                        console.log(priceRes);
+                        updatePrice(priceRes);
+                    });
             });
     }
 
     function updatePrice(response) {
         if (response && typeof response.price !== 'undefined') {
             let priceContainer = $('#' + mainPrice.getContainerId()),
-                price = response.price.toString().split('.');
+                price = response.price.toString().split('.'),
+                priceFloat = priceContainer.find('[data-price-float]');
 
             priceContainer.find('[data-price-integer]').text(price[0]);
             //TODO refactor fill one decimal to two (5 --> 50)
-            priceContainer.find('[data-price-float]').text(price[1] + ((price[1] < 8) ? '0' : ''));
+            (price.length > 1) ? priceFloat.text(price[1] + ((price[1] < 8) ? '0' : '')) : '00';
         }
     }
 })();

@@ -81,8 +81,6 @@ public class CustomerController {
     }
 
 
-
-
     /**
      * Create a list of customer resource
      *
