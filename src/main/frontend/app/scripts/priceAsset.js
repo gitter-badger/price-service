@@ -11,9 +11,6 @@ export const priceAsset = (function () {
     function init() {
         updatePriceConfig();
         registerEvents();
-        /*
-         priceService.registerPriceNotification(onChange);
-         */
     }
 
 

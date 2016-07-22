@@ -4,13 +4,16 @@ import {priceAsset} from './priceAsset';
 
 
 export const main = (function () {
+
+    //critical has to be tested!
+    let priceContainer = $('script').last().parent();
+
     let configInput = {},
         configInputObservable = [];
 
     $(function () {
         let inputContainer = $('#input-container');
-        let priceContainer = $('#price-container');
-
+        console.log(priceContainer);
         inputContainer.load('/app/views/inputAsset.html', function () {
             inputAsset.init();
             updateInputConfig();
