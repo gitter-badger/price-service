@@ -78,9 +78,10 @@ public class CustomerAggregateController {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
             product.setPrice(new BigDecimal(00.00)); // TODO: 22/07/16 default value
-            customer.getProducts().add(product);
+            Product savedProduct = productService.saveProduct(product);
+            customer.getProducts().add(savedProduct);
             customerService.updateCustmer(customer);
-            ProductResource productResource = productToResource(product);
+            ProductResource productResource = productToResource(savedProduct, customer);
             return new ResponseEntity<ProductResource>(productResource, HttpStatus.CREATED);
         }
         return new ResponseEntity<ProductResource>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -210,7 +211,39 @@ public class CustomerAggregateController {
      */
     private ProductResource productToResource(Product product) {
         return productResourceAssembler.toResource(product);
+
     }
+
+    private ProductResource productToResource(Product product, Customer customer) {
+        ProductResource productResource = new ProductResource();
+        productResource.setProduct(product);
+
+      /*  Link selfLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(id)
+                .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "self");
+        productResource.add(selfLink)*/;
+
+        //getProductFromCustomer
+      /*  Link linkToMethod = linkBuilderFactory.linkTo(parameter.getMethod(), new Object[0]).withSelfRel();
+        UriComponents fromUriString = UriComponentsBuilder.fromUriString(linkToMethod.getHref()).build();*/
+
+       /* Link selfLink1 =(linkTo(methodOn(CustomerAggregateController.class).getProductFromCustomer(id, product.getId())).withSelfRel());
+        productResource.add(selfLink1);*/
+
+        Link selfLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(customer.getId())
+                .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "self");
+        productResource.add(selfLink);
+
+
+        // TODO: 17/07/16 http://localhost:8080/api/customers/1/products/1
+        Link updateProductPriceLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(customer.getId())
+                .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "update_price");
+        productResource.add(updateProductPriceLink);
+        return productResource;
+    }
+
 
     /**
      * @param products
