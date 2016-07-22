@@ -3,6 +3,7 @@ export const priceService = (function () {
 
     return {
         createProduct: createProduct,
+        getPrice: getPrice,
         setLinks: setLinks
     };
 
@@ -26,6 +27,29 @@ export const priceService = (function () {
 
             } else {
                 resolve('could not create Product');
+            }
+        });
+    }
+
+    function getPrice() {
+        return new Promise(function (resolve, reject) {
+            if (links.update_price) {
+
+                postHelper(links.update_price.href, obj)
+                    .then(success, fail);
+
+                function success(response) {
+                    //do not navigate into product
+                    //setLinks(response);
+                    resolve(response);
+                }
+
+                function fail() {
+                    reject('Failed to get Product');
+                }
+
+            } else {
+                resolve('could not get Price Product');
             }
         });
     }

@@ -26,7 +26,7 @@ module.exports = function (gulp, data, util, taskName) {
 
 
     gulp.task(taskName + ':Prod', function () {
-        var input = browserify({debug: false})
+        var input = browserify({debug: true})
             .transform('babelify', {presets: ['es2015']})
             .require(data.path.FRONTEND + 'app/scripts/mainInput.js', {entry: true})
             .bundle()
@@ -35,7 +35,7 @@ module.exports = function (gulp, data, util, taskName) {
             .pipe(uglify())
             .pipe(gulp.dest(data.path.PROD + 'app/scripts'));
 
-        var price = browserify({debug: false})
+        var price = browserify({debug: true})
             .transform('babelify', {presets: ['es2015']})
             .require(data.path.FRONTEND + 'app/scripts/mainPrice.js', {entry: true})
             .bundle()
