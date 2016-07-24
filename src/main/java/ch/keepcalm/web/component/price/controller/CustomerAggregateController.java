@@ -90,8 +90,6 @@ public class CustomerAggregateController {
     }
 
 
-
-
     @RequestMapping(
             value = "products",
             method = RequestMethod.GET,
@@ -114,13 +112,6 @@ public class CustomerAggregateController {
         ProductResource productResource = productToResource(productService.getProductById(id));
         return new ResponseEntity<ProductResource>(productResource, HttpStatus.FOUND);
     }
-
-
-
-
-
-
-
 
 
     /**
@@ -150,7 +141,6 @@ public class CustomerAggregateController {
         }
         return new ResponseEntity<ProductListResource>(HttpStatus.NOT_FOUND);
     }
-
 
 
     /**
@@ -184,21 +174,24 @@ public class CustomerAggregateController {
             produces = "application/json; charset=utf-8")
     public ResponseEntity updatePricesOnProductFromCustomer(@PathVariable int id, @PathVariable int productId) throws Exception {
         Customer customer = customerService.getCustomer(id);
+        ProductResource productResource = null;
         if (customer != null) {
             if (customer.getProducts() != null) {
 
-                Product product = customer.getProducts().get(productId - 1);
-               if (!environment.acceptsProfiles("junit")) {
-                   Preis preis = getBestPrice(product, customer);   // service call
-                   product.setPrice(preis.getNettoPreis());
+                // TODO: 24/07/16 customer find productById in database
+                //Product product = customer.getProducts().get(productId-1);
+                for (Product product : customer.getProducts()) {
+                    if (product.getId() == productId) {
+                        if (!environment.acceptsProfiles("junit")) {
+                            Preis preis = getBestPrice(product, customer);   // service call
+                            product.setPrice(preis.getNettoPreis());
+                        }
+                        productService.updateProduct(product);
+                        customerService.updateCustmer(customer);
+                        productResource = productToResource(product);
+                    }
+                    return new ResponseEntity<ProductResource>(productResource, HttpStatus.OK);
                 }
-
-                productService.updateProduct(product);
-
-
-                customerService.updateCustmer(customer);
-                ProductResource productResource = productToResource(product);
-                return new ResponseEntity<ProductResource>(productResource, HttpStatus.OK);
             }
         }
 
@@ -312,9 +305,6 @@ public class CustomerAggregateController {
     }*/
 
 
-
-
-
     private ProductResource productToResource(Product product, Customer customer) {
         ProductResource productResource = new ProductResource();
         productResource.setProduct(product);
@@ -332,7 +322,6 @@ public class CustomerAggregateController {
         productResource.add(updateProductPriceLink);
         return productResource;
     }
-
 
 
     private ProductListResource productListToResource(ProductListResource productListResource, int id) {
