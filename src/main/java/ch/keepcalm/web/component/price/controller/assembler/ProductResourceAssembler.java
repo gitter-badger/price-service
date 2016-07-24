@@ -1,20 +1,16 @@
 package ch.keepcalm.web.component.price.controller.assembler;
 
-import ch.keepcalm.web.component.price.controller.CustomerAggregateController;
-import ch.keepcalm.web.component.price.controller.CustomerController;
+import ch.keepcalm.web.component.price.controller.ProductController;
 import ch.keepcalm.web.component.price.model.Product;
 import ch.keepcalm.web.component.price.resource.ProductResource;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @Component
 public class ProductResourceAssembler extends ResourceAssemblerSupport<Product, ProductResource> {
 
     public ProductResourceAssembler() {
-        super(CustomerController.class, ProductResource.class);
+        super(ProductController.class, ProductResource.class);
     }
 
     @Override
@@ -24,15 +20,15 @@ public class ProductResourceAssembler extends ResourceAssemblerSupport<Product, 
         ProductResource productResource = instantiateResource(product);
         productResource.setProduct(product);
 
-        Link selfLink = new Link(linkTo(CustomerAggregateController.class)
+        /*Link selfLink = new Link(linkTo(CustomerAggregateController.class)
                 .slash(product.getId()) // // TODO: 24/07/16 customer Id 
                 .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "self");
         productResource.add(selfLink);
-
-        Link updateProductPriceLink = new Link(linkTo(CustomerAggregateController.class)
+*/
+      /*  Link updateProductPriceLink = new Link(linkTo(ProductController.class)
                 .slash(product.getId()) // // TODO: 24/07/16 customer ID 
                 .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "update_price");
-        productResource.add(updateProductPriceLink);
+        productResource.add(updateProductPriceLink);*/
 /*
 
         // api/customers/1/products/1
