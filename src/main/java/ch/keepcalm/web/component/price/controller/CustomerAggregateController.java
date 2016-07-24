@@ -158,11 +158,20 @@ public class CustomerAggregateController {
             if (customer.getProducts() != null) {
                 for (Product product : customer.getProducts()) {
                     if (product.getId() == productId) {
-                        ProductResource productResource = productToResource(product);
 
+                        ProductResource productResource = productToResource(product);
+                        // TODO: 25/07/16 HATOAS LINKS
+                        Link selfLink = new Link(linkTo(CustomerAggregateController.class)
+                                .slash(id)
+                                .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "self");
+                        productResource.add(selfLink);
+
+                        Link updateProductPriceLink = new Link(linkTo(CustomerAggregateController.class)
+                                .slash(id)
+                                .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "update_price");
+                        productResource.add(updateProductPriceLink);
 
                         return new ResponseEntity<ProductResource>(productResource, HttpStatus.FOUND);
-
                     }
                 }
             }
@@ -184,9 +193,6 @@ public class CustomerAggregateController {
         ProductResource productResource = null;
         if (customer != null) {
             if (customer.getProducts() != null) {
-
-                // TODO: 24/07/16 customer find productById in database
-                //Product product = customer.getProducts().get(productId-1);
                 for (Product product : customer.getProducts()) {
                     if (product.getId() == productId) {
                         if (!environment.acceptsProfiles("junit")) {
@@ -259,70 +265,23 @@ public class CustomerAggregateController {
 
     }
 
-    /*private ProductResource productToResource(Product product, Customer customer) {
-        ProductResource productResource = new ProductResource();
-        productResource.setProduct(product);
 
-        Link selfLink = new Link(linkTo(CustomerAggregateController.class)
-                .slash(id)
-                .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "self");
-        productResource.add(selfLink);
-
-        //getProductFromCustomer
-        Link linkToMethod = linkBuilderFactory.linkTo(parameter.getMethod(), new Object[0]).withSelfRel();
-        UriComponents fromUriString = UriComponentsBuilder.fromUriString(linkToMethod.getHref()).build();
-
-        Link selfLink1 =(linkTo(methodOn(CustomerAggregateController.class).getProductFromCustomer(id, product.getId())).withSelfRel());
-        productResource.add(selfLink1);
-
-        Link selfLink = new Link(linkTo(CustomerAggregateController.class)
-                .slash(customer.getId())
-                .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "self");
-        productResource.add(selfLink);
-
-
-        // TODO: 17/07/16 http://localhost:8080/api/customers/1/products/1
-        Link updateProductPriceLink = new Link(linkTo(CustomerAggregateController.class)
-                .slash(customer.getId())
-                .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "update_price");
-        productResource.add(updateProductPriceLink);
-        return productResource;
-    }
-*/
-
-
-   /* private ProductListResource productToResource(List<Product> products, int id) {
-        ProductListResource productListResource = new ProductListResource();
-
-        List<ProductResource> productResources = productResourceAssembler.toResources(products);
-        productListResource.setProductResourceList(productResources);
-
-        // TODO: 17/07/16 http://localhost:8080/api/customers/1/products
-        Link listProductsLink = new Link(linkTo(CustomerAggregateController.class)
-                .slash(id)
-                .slash("products").toUriComponentsBuilder().build().toUriString(), "list_products");
-        productListResource.add(listProductsLink);
-
-        Link createProductLink = new Link(linkTo(CustomerAggregateController.class)
-                .slash(id)
-                .slash("products").toUriComponentsBuilder().build().toUriString(), "create_product");
-        productListResource.add(createProductLink);
-
-        return productListResource;
-    }*/
-
-
+    /**
+     *
+     * @param product
+     * @param customer
+     * @return
+     */
     private ProductResource productToResource(Product product, Customer customer) {
         ProductResource productResource = new ProductResource();
         productResource.setProduct(product);
 
+        // TODO: 25/07/16 HATOAS LINKS
         Link selfLink = new Link(linkTo(CustomerAggregateController.class)
                 .slash(customer.getId())
                 .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "self");
         productResource.add(selfLink);
 
-
-        // TODO: 17/07/16 http://localhost:8080/api/customers/1/products/1
         Link updateProductPriceLink = new Link(linkTo(CustomerAggregateController.class)
                 .slash(customer.getId())
                 .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "update_price");
@@ -331,9 +290,14 @@ public class CustomerAggregateController {
     }
 
 
+    /**
+     *
+     * @param productListResource
+     * @param id
+     * @return
+     */
     private ProductListResource productListToResource(ProductListResource productListResource, int id) {
-
-        // TODO: 17/07/16 http://localhost:8080/api/customers/1/products
+        // TODO: 25/07/16 HATOAS LINKS
         Link listProductsLink = new Link(linkTo(CustomerAggregateController.class)
                 .slash(id)
                 .slash("products").toUriComponentsBuilder().build().toUriString(), "list_products");
@@ -343,6 +307,12 @@ public class CustomerAggregateController {
                 .slash(id)
                 .slash("products").toUriComponentsBuilder().build().toUriString(), "create_product");
         productListResource.add(createProductLink);
+
+
+        Link updateProductPriceLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(id)
+                .slash("products").toUriComponentsBuilder().build().toUriString(), "update_prices");
+        productListResource.add(updateProductPriceLink);
 
         return productListResource;
     }
