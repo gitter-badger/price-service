@@ -156,8 +156,15 @@ public class CustomerAggregateController {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
             if (customer.getProducts() != null) {
-                ProductResource productResource = productToResource(customer.getProducts().get(productId - 1));// List start on 0
-                return new ResponseEntity<ProductResource>(productResource, HttpStatus.FOUND);
+                for (Product product : customer.getProducts()) {
+                    if (product.getId() == productId) {
+                        ProductResource productResource = productToResource(product);
+
+
+                        return new ResponseEntity<ProductResource>(productResource, HttpStatus.FOUND);
+
+                    }
+                }
             }
         }
         return new ResponseEntity<ProductResource>(HttpStatus.NOT_FOUND);
