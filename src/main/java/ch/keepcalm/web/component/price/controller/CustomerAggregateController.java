@@ -202,8 +202,8 @@ public class CustomerAggregateController {
                         productService.updateProduct(product);
                         customerService.updateCustmer(customer);
                         productResource = productToResource(product);
+                        return new ResponseEntity<ProductResource>(productResource, HttpStatus.OK);
                     }
-                    return new ResponseEntity<ProductResource>(productResource, HttpStatus.OK);
                 }
             }
         }
