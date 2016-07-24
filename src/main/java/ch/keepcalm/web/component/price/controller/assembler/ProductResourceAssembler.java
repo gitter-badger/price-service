@@ -20,10 +20,17 @@ public class ProductResourceAssembler extends ResourceAssemblerSupport<Product, 
     @Override
     public ProductResource toResource(Product product) {
         // api/customer/5>;rel="self" // TODO: 22/07/16 missing products/{id} 
-        ProductResource productResource = createResourceWithId(product.getId(), product);
+        //ProductResource productResource = createResourceWithId(product.getId(), product);
+        ProductResource productResource = instantiateResource(product);
         productResource.setProduct(product);
+
+        Link selfLink = new Link(linkTo(CustomerAggregateController.class)
+                .slash(product.getId()) // // TODO: 24/07/16 customer Id 
+                .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "self");
+        productResource.add(selfLink);
+
         Link updateProductPriceLink = new Link(linkTo(CustomerAggregateController.class)
-                .slash(product.getId())
+                .slash(product.getId()) // // TODO: 24/07/16 customer ID 
                 .slash("products").slash(product.getId()).toUriComponentsBuilder().build().toUriString(), "update_price");
         productResource.add(updateProductPriceLink);
 /*
