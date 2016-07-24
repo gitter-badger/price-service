@@ -145,6 +145,15 @@ public class CustomerAggregateControllerDocumentation {
 
         customerRepository.save(newCustomer);
 
+        Customer newCustomer2 = Customer.newBuilder()
+                .id(2)
+                .gender("W")
+                .dateOfBirth(new DateTime(1988, 2, 2, 0, 0, 0, 0).toDateTime().toDate())
+                .address(address)
+                .build();
+
+        customerRepository.save(newCustomer2);
+
 
         // documentation call
         this.mockMvc.perform(
