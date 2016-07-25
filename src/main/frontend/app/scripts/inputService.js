@@ -8,7 +8,6 @@ export const inputService = (function () {
                     setLinks(data);
                     customer()
                         .then(function (response) {
-                            setLinks(response);
                             resolve(response);
                         });
                 })
