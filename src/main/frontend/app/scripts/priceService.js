@@ -35,7 +35,7 @@ export const priceService = (function () {
         return new Promise(function (resolve, reject) {
             if (links.update_price) {
 
-                postHelper(links.update_price.href, obj)
+                patchHelper(links.update_price.href, {})
                     .then(success, fail);
 
                 function success(response) {
@@ -54,10 +54,18 @@ export const priceService = (function () {
         });
     }
 
-
     function postHelper(url, payload) {
         return $.ajax({
             method: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: url,
+            data: JSON.stringify(payload)
+        })
+    }
+
+    function patchHelper(url, payload) {
+        return $.ajax({
+            method: 'PATCH',
             contentType: 'application/json; charset=utf-8',
             url: url,
             data: JSON.stringify(payload)
