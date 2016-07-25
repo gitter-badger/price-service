@@ -20,6 +20,7 @@ export const priceAsset = (function () {
         for (const OBJ in CONTAINER_DATA) {
             configPrice[OBJ] = CONTAINER_DATA[OBJ];
         }
+        console.log('Config', mainPrice.getContainerId(), configPrice);
     }
 
 

@@ -6,8 +6,6 @@ import {Customer} from './Customer'
 export const inputAsset = (function () {
     let configInput = {};
 
-    const inputDateRegex = '(^[1-9]|[0][1-9]|[1-2][0-9]|[3][0-1])[-,.]([1-9]|[0][1-9]|1[0-2])[-,.]((19|20)[0-9]{2}$)';
-
     return {init: init};
 
     function init() {
@@ -18,6 +16,7 @@ export const inputAsset = (function () {
 
     function onConfigUpdate(newConfig) {
         configInput = newConfig;
+        console.log('Config', mainInput.getContainerId(), configInput);
     }
 
     function makeRadioButtonUnique() {
