@@ -8,16 +8,9 @@ Contain variables
 Contain typography
 */
 @import "base/typography";
-/*section:Layout
----
-Contains padding, margin, form
-*/
-@import "layout/_forms";
+
 /*section:Elements
 ---
 Contain buttons, checkbox, lists
 */
-@import "elements/buttons";
-@import "elements/inputs";
-@import "elements/icons";
 @import "elements/price";

@@ -1,7 +1,9 @@
 module.exports = function (gulp, data, util, taskName) {
     var browserify = require('browserify'),
         babelify = require('babelify'),
-        source = require('vinyl-source-stream');
+        source = require('vinyl-source-stream'),
+        uglify = require('gulp-uglify'),
+        buffer = require('vinyl-buffer');
 
     gulp.task(taskName + ':Dev', function () {
 
@@ -29,6 +31,8 @@ module.exports = function (gulp, data, util, taskName) {
             .require(data.path.FRONTEND + 'app/scripts/mainInput.js', {entry: true})
             .bundle()
             .pipe(source('bundleInput.js'))
+            .pipe(buffer())
+            .pipe(uglify())
             .pipe(gulp.dest(data.path.PROD + 'app/scripts'));
 
         var price = browserify({debug: true})
@@ -36,6 +40,8 @@ module.exports = function (gulp, data, util, taskName) {
             .require(data.path.FRONTEND + 'app/scripts/mainPrice.js', {entry: true})
             .bundle()
             .pipe(source('bundlePrice.js'))
+            .pipe(buffer())
+            .pipe(uglify())
             .pipe(gulp.dest(data.path.PROD + 'app/scripts'));
 
         return Promise.all([input, price]);
