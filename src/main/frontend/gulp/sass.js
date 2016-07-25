@@ -20,8 +20,14 @@ module.exports = function (gulp, data, util, taskName) {
     });
 
     gulp.task(taskName + ':Prod', function () {
-        return gulp.src('./app/**/inputAsset.scss')
+        var input = gulp.src('./app/**/inputAsset.scss')
             .pipe(sass().on('error', sass.logError))
             .pipe(gulp.dest(data.path.PROD + 'app'));
+
+        var price = gulp.src('./app/**/priceAsset.scss')
+            .pipe(sass().on('error', sass.logError))
+            .pipe(gulp.dest(data.path.PROD + 'app'));
+
+        return Promise.all([price, input])
     });
 };
