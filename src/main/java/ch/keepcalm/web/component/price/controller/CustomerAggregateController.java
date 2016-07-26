@@ -103,7 +103,7 @@ public class CustomerAggregateController {
         ProductListResource productListResource = new ProductListResource();
         productListResource.add(linkTo(methodOn(CustomerAggregateController.class).getProducts()).withSelfRel());
         List<ProductResource> productResources = productResourceAssembler.toResources(products);
-        productListResource.setProductResourceList(productResources);
+        productListResource.setProductResources(productResources);
         return productListResource;
     }
 
@@ -134,7 +134,7 @@ public class CustomerAggregateController {
                 ProductResource productResource = productToResource(product, customer);
                 productResourceList.add(productResource);
             }
-            productListResource.setProductResourceList(productResourceList);
+            productListResource.setProductResources(productResourceList);
             ProductListResource productList = productListToResource(productListResource, id);
 
             return new ResponseEntity<ProductListResource>(productList, HttpStatus.FOUND);

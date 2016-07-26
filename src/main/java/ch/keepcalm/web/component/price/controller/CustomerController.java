@@ -92,7 +92,7 @@ public class CustomerController {
         CustomerListResource customerListResource = new CustomerListResource();
         customerListResource.add(linkTo(methodOn(CustomerController.class).getCustomers()).withSelfRel());
         List<CustomerResource> customerResources = customerResourceAssembler.toResources(customers);
-        customerListResource.setCustomerResourceList(customerResources);
+        customerListResource.setCustomerResources(customerResources);
         // api/customers>;rel="create_customer"
         Link createCustomerLink = new Link(linkTo(CustomerController.class).toUriComponentsBuilder().build().toUriString(), "create_customer");
         customerListResource.add(createCustomerLink);

@@ -8,13 +8,13 @@ import java.util.List;
 public class ProductListResource extends ResourceSupport {
 
     @JsonUnwrapped
-    private List<ProductResource> productResourceList;
+    private List<ProductResource> productResources;
 
-    public List<ProductResource> getProductResourceList() {
-        return productResourceList;
+    public List<ProductResource> getProductResources() {
+        return productResources;
     }
 
-    public void setProductResourceList(List<ProductResource> productResourceList) {
-        this.productResourceList = productResourceList;
+    public void setProductResources(List<ProductResource> productResources) {
+        this.productResources = productResources;
     }
 }

@@ -8,13 +8,13 @@ import java.util.List;
 public class CustomerListResource extends ResourceSupport {
 
     @JsonUnwrapped
-    private List<CustomerResource> customerResourceList;
+    private List<CustomerResource> customerResources;
 
-    public List<CustomerResource> getCustomerResourceList() {
-        return customerResourceList;
+    public List<CustomerResource> getCustomerResources() {
+        return customerResources;
     }
 
-    public void setCustomerResourceList(List<CustomerResource> customerResourceList) {
-        this.customerResourceList = customerResourceList;
+    public void setCustomerResources(List<CustomerResource> customerResources) {
+        this.customerResources = customerResources;
     }
 }
