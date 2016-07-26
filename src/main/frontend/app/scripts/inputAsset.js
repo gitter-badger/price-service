@@ -18,7 +18,6 @@ export const inputAsset = (function () {
         makeRadioButtonUnique();
         registerEvents();
         mainInput.registerConfigInputUpdate(onConfigUpdate);
-        renderView();
     }
 
     function onConfigUpdate(newConfig) {
@@ -61,25 +60,23 @@ export const inputAsset = (function () {
         );
 
         container.find('[data-input-zip]').on('keyup', function (event, next) {
-                console.log($(this).val());
-                zipService.getZip($(this).val().toString())
+                let value = $(this).val().toString();
+                if (value.length > 1) {
+                    zipService.getZip(value)
+                        .then(data=> {
+                            if (data && data.results) {
+                                renderView(data.results);
+                            }
+                        })
+                }
+                else {
+                    renderView([]);
+                }
             }
         );
     }
 
-    function renderView() {
-        let results =
-                [{"formatted_string": "Rüti GL", "locality": "Rüti GL"}, {
-                    "formatted_string": "Rüti ZH",
-                    "locality": "Rüti ZH"
-                }, {"formatted_string": "Rüti b. Büren", "locality": "Rüti b. Büren"}, {
-                    "formatted_string": "Rüti b. Lyssach",
-                    "locality": "Rüti b. Lyssach"
-                }, {"formatted_string": "Rüti b. Riggisberg", "locality": "Rüti b. Riggisberg"}, {
-                    "formatted_string": "Rütihof",
-                    "locality": "Rütihof"
-                }]
-            ;
+    function renderView(results) {
 
         let container = $('#' + mainInput.getContainerId());
 

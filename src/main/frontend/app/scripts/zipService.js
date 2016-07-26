@@ -26,28 +26,26 @@ export const zipService = (function () {
             method: 'getPlzOrt',
             searchStr: encodeURIComponent(searchStr),
             searchType: searchType,
-            maxNrOfResults: maxNrOfResults || 6,
+            maxNrOfResults: maxNrOfResults || 7,
             isPremiumRelevant: isPremiumRelevant,
             returnPostalCodeAndLocality: returnPostalCodeAndLocality
         };
 
         return new Promise(function (resolve, reject) {
-            if (searchStr.length >= 2) {
-                $.ajax({
-                    crossDomain: true,
-                    dataType: "json",
-                    url: defaults.service.url,
-                    data: data
-                })
-                    .then(success, failed);
+            $.ajax({
+                crossDomain: true,
+                dataType: "json",
+                url: defaults.service.url,
+                data: data
+            })
+                .then(success, failed);
 
-                function success(response) {
-                    resolve(response);
-                }
+            function success(response) {
+                resolve(response);
+            }
 
-                function failed() {
-                    reject('failed to get ZIP');
-                }
+            function failed() {
+                reject('failed to get ZIP');
             }
         });
     }
