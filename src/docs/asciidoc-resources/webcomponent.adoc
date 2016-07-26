@@ -1,5 +1,6 @@
-=== UI Component
+== UI Component
 UI component workflow.
 
 [.thumb]
 image:../images/WebComponents.png[scaledwidth=30%]
+
