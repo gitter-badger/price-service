@@ -2,6 +2,7 @@ import {mainInput} from './mainInput'
 import {inputService} from './inputService'
 import {Address} from './Address'
 import {Customer} from './Customer'
+import {zipService} from "./zipService";
 
 export const inputAsset = (function () {
     let configInput = {};
@@ -52,6 +53,12 @@ export const inputAsset = (function () {
                     .then(function (response) {
                         $(document).trigger(configInput.key, [response]);
                     });
+            }
+        );
+
+        container.find('[data-input-zip]').first().on('keyup', function (event, next) {
+                console.log($(this).val());
+                zipService.getZip($(this).val().toString())
             }
         );
     }
