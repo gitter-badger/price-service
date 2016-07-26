@@ -137,7 +137,7 @@ public class CustomerAggregateController {
             productListResource.setProductResources(productResourceList);
             ProductListResource productList = productListToResource(productListResource, id);
 
-            return new ResponseEntity<ProductListResource>(productList, HttpStatus.FOUND);
+            return new ResponseEntity<ProductListResource>(productList, HttpStatus.OK);
         }
         return new ResponseEntity<ProductListResource>(HttpStatus.NOT_FOUND);
     }

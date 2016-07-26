@@ -5,6 +5,7 @@ Marcel Widmer <marzelwidmer@gmail.com>
 :source-highlighter: highlightjs
 :toc: left
 :toclevels: 4
+:leveloffset: 1
 :sectlinks:
 :revnumber: {project-version}
 :revdate: {localdate}
@@ -24,109 +25,10 @@ include::http-verbs.adoc[]
 == HTTP status codes
 include::http-status-codes.adoc[]
 
+
 [[resources]]
 = Resources
-[[resources-entry]]
-==  API Entry Point
-The price-service api entry point.
-
-
-=== Listing entry point.
-A `GET` request lists the api entry point.
-
-==== Example request curl
-include::{snippets}/entry-point/curl-request.adoc[]
-
-==== Example request HTTP
-include::{snippets}/entry-point/http-request.adoc[]
-
-==== Example response
-include::{snippets}/entry-point/http-response.adoc[]
-
-
-
-
-[[resources-customers]]
-== Customers
-The Customer resource is used to create, modify and list customer.
-
-
-[[resource-customer-create]]
-=== Creating customer
-A `POST` request creates a new customer.
-
-==== Request structure
-include::{snippets}/create-customer/request-fields.adoc[]
-
-==== Example request curl
-include::{snippets}/create-customer/curl-request.adoc[]
-
-==== Example request HTTP
-include::{snippets}/create-customer/http-request.adoc[]
-
-==== Example response
-include::{snippets}/create-customer/http-response.adoc[]
-
-
-
-
-
-
-
-[[resource-customer-list]]
-=== Listing customers
-A `GET` request lists all of the service's customers.
-
-==== Example request curl
-include::{snippets}/list-customers/curl-request.adoc[]
-
-==== Example request HTTP
-include::{snippets}/list-customers/http-request.adoc[]
-
-==== Example response
-include::{snippets}/list-customers/http-response.adoc[]
-
-
-
-
-
-
-[[resource-product-create]]
-=== Creating product
-A `POST` request creates a new product to a customer.
-
-==== Request structure
-include::{snippets}/create-product/request-fields.adoc[]
-
-==== Example request curl
-include::{snippets}/create-product/curl-request.adoc[]
-
-==== Example request HTTP
-include::{snippets}/create-product/http-request.adoc[]
-
-==== Example response
-include::{snippets}/create-product/http-response.adoc[]
-
-
-
-[[resource-product-list]]
-=== Update Product Price
-A `PATCH` request upadte the product with a price.
-
-==== Request structure
-include::{snippets}/update-product-price/request-fields.adoc[]
-
-==== Example request curl
-include::{snippets}/update-product-price/curl-request.adoc[]
-
-==== Example request HTTP
-include::{snippets}/update-product-price/http-request.adoc[]
-
-==== Example response
-include::{snippets}/update-product-price/http-response.adoc[]
-
-
-
+include::resources.adoc[]
 
 
 
