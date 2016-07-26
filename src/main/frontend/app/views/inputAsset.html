@@ -24,6 +24,16 @@
         <input data-input-zip="input-asset" class="input" name="zip" type="text" maxlength="444"
                placeholder="PLZ (Wohnort)"
                required>
+        <div class="dropdown">
+            <script data-input-selection-template="input-asset" type="text/x-handlebars-template">
+                <ul>
+                    {{#results}}
+                    <li>{{locality}}</li>
+                    {{/results}}
+                </ul>
+            </script>
+            <div data-input-selection="input-asset"></div>
+        </div>
         <div>
             <span>
                 <input name="plz" type="hidden">

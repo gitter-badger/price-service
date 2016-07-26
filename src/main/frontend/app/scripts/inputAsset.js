@@ -1,3 +1,6 @@
+import Handlebars from 'handlebars';
+
+
 import {mainInput} from './mainInput'
 import {inputService} from './inputService'
 import {Address} from './Address'
@@ -15,6 +18,7 @@ export const inputAsset = (function () {
         makeRadioButtonUnique();
         registerEvents();
         mainInput.registerConfigInputUpdate(onConfigUpdate);
+        renderView();
     }
 
     function onConfigUpdate(newConfig) {
@@ -56,10 +60,36 @@ export const inputAsset = (function () {
             }
         );
 
-        container.find('[data-input-zip]').first().on('keyup', function (event, next) {
+        container.find('[data-input-zip]').on('keyup', function (event, next) {
                 console.log($(this).val());
                 zipService.getZip($(this).val().toString())
             }
         );
+    }
+
+    function renderView() {
+        let results =
+                [{"formatted_string": "Rüti GL", "locality": "Rüti GL"}, {
+                    "formatted_string": "Rüti ZH",
+                    "locality": "Rüti ZH"
+                }, {"formatted_string": "Rüti b. Büren", "locality": "Rüti b. Büren"}, {
+                    "formatted_string": "Rüti b. Lyssach",
+                    "locality": "Rüti b. Lyssach"
+                }, {"formatted_string": "Rüti b. Riggisberg", "locality": "Rüti b. Riggisberg"}, {
+                    "formatted_string": "Rütihof",
+                    "locality": "Rütihof"
+                }]
+            ;
+
+        let container = $('#' + mainInput.getContainerId());
+
+        var source = container.find('[data-input-selection-template]').html();
+        console.log(source);
+        var template = Handlebars.compile(source);
+
+        console.log(container.find('[data-input-selection]'));
+        container.find('[data-input-selection]').html(template({
+            results: results
+        }));
     }
 })();
