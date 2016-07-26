@@ -172,6 +172,12 @@ http://localhost:8080/manage
 include::releaseNotes.adoc[]
 
 
+
+= UI Component
+[.thumb]
+image:../images/WebComponent.png[scaledwidth=30%]
+
+
 == Attributes
 .Built-in
 asciidoctor-version:: {asciidoctor-version}
