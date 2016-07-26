@@ -82,8 +82,8 @@ export const inputAsset = (function () {
 
         let container = $('#' + mainInput.getContainerId());
 
-        var source = container.find('[data-input-selection-template]').html();
-        var template = Handlebars.compile(source);
+        let source = container.find('[data-input-selection-template]').html();
+        let template = Handlebars.compile(source);
         container.find('[data-input-selection]').html(template({
             results: results
         }));
