@@ -8,9 +8,12 @@ import {Customer} from './Customer'
 import {zipService} from "./zipService";
 
 export const inputAsset = (function () {
-    let configInput = {};
+    let configInput = {},
+        actualSelection = [],
+        selectedLocation = new Address();
 
     const inputDateRegex = '(^[1-9]|[0][1-9]|[1-2][0-9]|[3][0-1])[-,.]([1-9]|[0][1-9]|1[0-2])[-,.]((19|20)[0-9]{2}$)';
+
 
     return {init: init};
 
@@ -46,11 +49,10 @@ export const inputAsset = (function () {
                 event.preventDefault();
                 let inputAsset = container.find('[data-input-form]');
                 let form = inputAsset.serializeArray(),
-                    address = new Address('Gockhausen', 'Dübendorf', '191', '8044', '00'),
                     customer = new Customer(
                         form.find(obj => obj.name === 'dateOfBirth').value,
                         form.find(obj => obj.name.includes('input-gender')).value,
-                        address);
+                        selectedLocation);
 
                 inputService.createCustomer(customer)
                     .then(function (response) {
@@ -59,10 +61,10 @@ export const inputAsset = (function () {
             }
         );
 
-        container.find('[data-input-zip]').on('keyup', function (event, next) {
+        container.find('[data-input-zip]').on('keyup', function () {
                 let value = $(this).val().toString();
                 if (value.length > 1) {
-                    zipService.getZip(value)
+                    zipService.getZip(value, '1')
                         .then(data=> {
                             if (data && data.results) {
                                 renderView(data.results);
@@ -81,12 +83,21 @@ export const inputAsset = (function () {
         let container = $('#' + mainInput.getContainerId());
 
         var source = container.find('[data-input-selection-template]').html();
-        console.log(source);
         var template = Handlebars.compile(source);
-
-        console.log(container.find('[data-input-selection]'));
         container.find('[data-input-selection]').html(template({
             results: results
         }));
+        actualSelection = results;
+        registerSelectionEvents();
+    }
+
+    function registerSelectionEvents() {
+        let container = $('#' + mainInput.getContainerId());
+        container.find('[data-input-selection-item]').on('click', function () {
+            let selection = actualSelection[$(this).data().item];
+            selectedLocation = new Address(selection.locality, selection.municipality, selection.municipality_nr.toString(), selection.postal_code.toString());
+            container.find('[data-input-zip]').val($(this).text());
+            renderView([]);
+        });
     }
 })();

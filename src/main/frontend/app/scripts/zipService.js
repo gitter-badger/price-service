@@ -17,7 +17,6 @@ export const zipService = (function () {
      * @searchStr beliebiger search string (PLZ, Ort)
      * @searchType0 = kein spezifischer searchType, es wird das PLZ-Verzeichnis der Schweiz durchsucht; weitere searchTypes siehe im Header oder den Docs (https://alma-wiki.hel.kko.ch/display/WEB/PLZ-Ort-Suche)
      * @maxNrOfResults maximale Anzahl an Resultaten, welche retourniert werden
-     * @minLengthOfSearchString Mindestlänge des Suchstrings, um überhaupt eine Suche auszulösen
      * @isPremiumRelevant ob die Abfrage prämienrelevant sein soll oder nicht; true: Gemeinden und Gemeinde-Nummern sind im Resultset enthalten; hat nur Einfluss, wenn searchType 0 ist
      * @returnPostalCodeAndLocality true: es werden PLZ UND Ort retourniert; false: retourniert nur Orte, vorausgesetzt der Suchstring ist nicht numerisch; hat nur Einfluss, wenn searchType 0 ist; wird ignoriert, wenn isPremiumRelevant true ist
      */
