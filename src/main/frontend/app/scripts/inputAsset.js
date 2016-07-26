@@ -96,7 +96,7 @@ export const inputAsset = (function () {
         container.find('[data-input-selection-item]').on('click', function () {
             let selection = actualSelection[$(this).data().item];
             selectedLocation = new Address(selection.locality, selection.municipality, selection.municipality_nr.toString(), selection.postal_code.toString());
-            container.find('[data-input-zip]').val($(this).text());
+            container.find('[data-input-zip]').val($(this).text().trim());
             renderView([]);
         });
     }
