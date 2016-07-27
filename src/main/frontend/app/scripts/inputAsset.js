@@ -51,6 +51,7 @@ export const inputAsset = (function () {
                 inputService.createCustomer(customer)
                     .then(function (response) {
                         $(document).trigger(configInput.key, [response]);
+                        mainInput.detachView();
                     });
             }
         );

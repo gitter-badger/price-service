@@ -46,10 +46,11 @@ to a `<label>`:
 
 .icon--cross {
   margin-bottom: -15px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-right: -25px;
   margin-top: 5px;
   text-align: end;
+  color: $helsana-pastel;
 
   &:before {
     content: "\e905";
