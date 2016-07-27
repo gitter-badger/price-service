@@ -4,7 +4,6 @@ import {inputAsset} from './inputAsset';
 export const mainInput = (function () {
 
     let configInput = {},
-        configInputObservable = [],
         // has to be tested!
         inputContainer = $('script').last().parent(),
         containerId = undefined;
@@ -33,13 +32,8 @@ export const mainInput = (function () {
 
     return {
         getContainerId: getContainerId,
-        config: configInput,
-        registerConfigInputUpdate: registerConfigInputUpdate,
+        configInput: configInput,
     };
-
-    function registerConfigInputUpdate(observer) {
-        configInputObservable.push(observer)
-    }
 
     function updateInputConfig() {
         let inputContainer = $('#' + containerId);
@@ -48,12 +42,6 @@ export const mainInput = (function () {
         for (const OBJ in CONTAINER_DATA) {
             configInput[OBJ] = CONTAINER_DATA[OBJ];
         }
-        notifyConfigInputObservers(configInput);
-    }
-
-
-    function notifyConfigInputObservers(config) {
-        configInputObservable.forEach(fu=>fu(config));
     }
 
     function getContainerId() {
@@ -63,7 +51,6 @@ export const mainInput = (function () {
     function loadView() {
         $('#' + getContainerId()).load('/app/views/inputAsset.html', function () {
             inputAsset.init();
-            updateInputConfig();
         });
     }
 })();

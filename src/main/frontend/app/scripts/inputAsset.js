@@ -12,18 +12,14 @@ export const inputAsset = (function () {
         actualSelection = [],
         selectedLocation = new Address();
 
-    const inputDateRegex = '(^[1-9]|[0][1-9]|[1-2][0-9]|[3][0-1])[-,.]([1-9]|[0][1-9]|1[0-2])[-,.]((19|20)[0-9]{2}$)';
+    // birthday validation const inputDateRegex = '(^[1-9]|[0][1-9]|[1-2][0-9]|[3][0-1])[-,.]([1-9]|[0][1-9]|1[0-2])[-,.]((19|20)[0-9]{2}$)';
 
     return {init: init};
 
     function init() {
         makeRadioButtonUnique();
         registerEvents();
-        mainInput.registerConfigInputUpdate(onConfigUpdate);
-    }
-
-    function onConfigUpdate(newConfig) {
-        configInput = newConfig;
+        configInput = mainInput.configInput;
     }
 
     function makeRadioButtonUnique() {
