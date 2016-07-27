@@ -14,7 +14,6 @@ export const inputAsset = (function () {
 
     const inputDateRegex = '(^[1-9]|[0][1-9]|[1-2][0-9]|[3][0-1])[-,.]([1-9]|[0][1-9]|1[0-2])[-,.]((19|20)[0-9]{2}$)';
 
-
     return {init: init};
 
     function init() {
@@ -45,6 +44,7 @@ export const inputAsset = (function () {
 
     function registerEvents() {
         let container = $('#' + mainInput.getContainerId());
+
         container.find('[data-input-save]').on('click', function () {
                 event.preventDefault();
                 let inputAsset = container.find('[data-input-form]');
@@ -67,18 +67,18 @@ export const inputAsset = (function () {
                     zipService.getZip(value, '1')
                         .then(data=> {
                             if (data && data.results) {
-                                renderView(data.results);
+                                renderZipDropdown(data.results);
                             }
                         })
                 }
                 else {
-                    renderView([]);
+                    renderZipDropdown([]);
                 }
             }
         );
     }
 
-    function renderView(results) {
+    function renderZipDropdown(results) {
 
         let container = $('#' + mainInput.getContainerId());
 
@@ -88,16 +88,16 @@ export const inputAsset = (function () {
             results: results
         }));
         actualSelection = results;
-        registerSelectionEvents();
+        registerDropdownEvents();
     }
 
-    function registerSelectionEvents() {
+    function registerDropdownEvents() {
         let container = $('#' + mainInput.getContainerId());
         container.find('[data-input-selection-item]').on('click', function () {
             let selection = actualSelection[$(this).data().item];
             selectedLocation = new Address(selection.locality, selection.municipality, selection.municipality_nr.toString(), selection.postal_code.toString());
             container.find('[data-input-zip]').val($(this).text().trim());
-            renderView([]);
+            renderZipDropdown([]);
         });
     }
 })();
