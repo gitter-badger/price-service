@@ -1,51 +1,56 @@
 <div class="modal">
-    <form data-input-form="input-asset" class="form" #calcPremiums="ngForm">
-        <h2 e2e-id="title">Prämienrechner</h2>
-        <fieldset class="fieldset">
-            <div>
+    <main class="container">
+        <div class="icon icon--cross"></div>
+        <h4 e2e-id="title">Für welche Person möchten Sie die Präme berechnen?</h4>
+        <form data-input-form="input-asset" class="form" #calcPremiums="ngForm">
+            <fieldset class="fieldset">
+                <div>
             <span>
                 <input class="input" name="dateOfBirth" type="text" placeholder="Geburtsdatum" required>
             </span>
-            </div>
-            <div>
-                <span class="line-height-3">Geschlecht:</span>
-                <aside class="input input--gender">
+                </div>
+                <div>
+                    <span class="line-height-3">Geschlecht:</span>
+                    <aside class="input input--gender">
 
-                    <input data-input-gender="input-asset" id="gender-female" class="input__radio" type="radio"
-                           name="gender" value='w'>
-                    <label class="input--gender__label input--left icon icon-female"
-                           title='male' for="gender-female"></label>
-                    <input data-input-gender="input-asset" id="gender-male" class="input__radio" type="radio"
-                           name="gender"
-                           value='m'>
-                    <label class="input--gender__label input--right icon icon-male"
-                           title='female' for="gender-male"></label>
-                </aside>
+                        <input data-input-gender="input-asset" class="input__radio" type="radio"
+                               name="gender" value='w'>
+                        <label class="input--gender__label input--left icon icon--female"
+                               title='male'></label>
+                        <input data-input-gender="input-asset" class="input__radio" type="radio"
+                               name="gender"
+                               value='m'>
+                        <label class="input--gender__label input--right icon icon--male"
+                               title='female'></label>
+                    </aside>
 
-            </div>
-            <input data-input-zip="input-asset" class="input" name="zip" type="text" maxlength="444"
-                   placeholder="PLZ (Wohnort)" autocomplete="off"
-                   required>
-            <div class="dropdown">
-                <script data-input-selection-template="input-asset" type="text/x-handlebars-template">
-                    {{#if results.length}}
-                    <ul class="list">
-                        {{#results}}
-                        <li data-input-selection-item="input-asset" data-item="{{@index}}" class="list__item">
-                            {{formatted_string}}
-                        </li>
-                        {{/results}}
-                    </ul>
-                    {{/if}}
-                </script>
-                <div data-input-selection="input-asset"></div>
-            </div>
-            <div>
+                </div>
+                <input data-input-zip="input-asset" class="input" name="zip" type="text" maxlength="444"
+                       placeholder="PLZ (Wohnort)" autocomplete="off"
+                       required>
+                <div class="dropdown">
+                    <script data-input-selection-template="input-asset" type="text/x-handlebars-template">
+                        {{#if results.length}}
+                        <ul class="list">
+                            {{#results}}
+                            <li data-input-selection-item="input-asset" data-item="{{@index}}" class="list__item">
+                                {{formatted_string}}
+                            </li>
+                            {{/results}}
+                        </ul>
+                        {{/if}}
+                    </script>
+                    <div data-input-selection="input-asset"></div>
+                </div>
+                <div>
             <span>
                 <input name="plz" type="hidden">
             </span>
-            </div>
-            <input data-input-save="input-asset" class="btn btn--form btn--clear-left" value='Starten' type="submit">
-        </fieldset>
-    </form>
+                </div>
+                <button data-input-save="input-asset" class="btn btn--form">Prämie anzeigen</button>
+                <button data-input-back="input-asset" class="btn btn--inverted" type="button">Zurück</button>
+
+            </fieldset>
+        </form>
+    </main>
 </div>

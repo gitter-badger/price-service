@@ -1,0 +1,22 @@
+/*---
+title:   Container
+section: Element
+---
+
+Link styles can be applied to a block-element:
+
+```example:html
+<main class="container">
+    <h2>Title</h2>
+    <span>some text</span>
+</main>
+```
+*/
+
+.container {
+  margin: auto;
+  background-color: $snow;
+  padding: 8px 35px 16px 35px;
+  width: $form-width;
+  color: $dunkelgrau3;
+}

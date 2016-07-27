@@ -12,9 +12,8 @@ Button styles can be applied to any element. Typically you'll want to use
 </div>
 ```
 ```example:html
-<div style="padding-right: 20px;  background-color: darkgray;">
-  <button class="btn btn--form btn--clear-left">Click</button>
-  <label>Text</label>
+<div style="padding-left: 20px;  background-color: darkgray;">
+  <button class="btn btn--inverted">Click</button>
 </div>
 ```
 */
@@ -22,15 +21,15 @@ Button styles can be applied to any element. Typically you'll want to use
 .btn {
   cursor: pointer;
   color: $snow;
-  width: 87px;
-  background: transparent;
-  border: 1px solid;
+  background: $helsana;
+  border: none;
   line-height: 2rem;
   border-radius: 3px;
   margin: 7px 0 7px 0;
 
-  &--clear-left {
-    float: right;
+  &--inverted {
+    background: $snow;
+    color: $helsana;
   }
 
   &--form {

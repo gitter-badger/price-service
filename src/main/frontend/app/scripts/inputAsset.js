@@ -12,8 +12,6 @@ export const inputAsset = (function () {
         actualSelection = [],
         selectedLocation = new Address();
 
-    // birthday validation const inputDateRegex = '(^[1-9]|[0][1-9]|[1-2][0-9]|[3][0-1])[-,.]([1-9]|[0][1-9]|1[0-2])[-,.]((19|20)[0-9]{2}$)';
-
     return {init: init};
 
     function init() {

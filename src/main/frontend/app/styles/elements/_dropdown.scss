@@ -17,7 +17,7 @@ to a `<div></div>` element
 ```
 */
 .dropdown {
-  width: 197px;
+  width: $form-width;
   background-color: $snow;
   position: absolute;
   margin-top: -10px;

@@ -38,13 +38,12 @@ to a `<input type="radio" name="gender">` element
 
   &--gender {
     float: right;
-    width: 89px;
+    width: 85px;
     padding-left: 0;
     background-color: $helsana-pastel;
 
     &__label {
       font-size: 1.5rem;
-      border: 1px solid $snow;
       float: left;
       width: 42px;
       text-align: center;
