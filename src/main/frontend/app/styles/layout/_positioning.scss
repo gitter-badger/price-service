@@ -1,0 +1,13 @@
+.push {
+  &--left {
+    float: left;
+  }
+
+  &--right {
+    float: right;
+  }
+
+  &--both {
+    clear: both;
+  }
+}

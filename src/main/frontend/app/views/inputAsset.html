@@ -4,27 +4,27 @@
         <h4 e2e-id="title">Für welche Person möchten Sie die Präme berechnen?</h4>
         <form data-input-form="input-asset" class="form" #calcPremiums="ngForm">
             <fieldset class="fieldset">
-                <div>
-            <span>
-                <input class="input" name="dateOfBirth" type="text" placeholder="Geburtsdatum" required>
-            </span>
-                </div>
-                <div>
-                    <span class="line-height-3">Geschlecht:</span>
+                <aside class="push--left">
+                    <div class="font--small">Geburtstag</div>
+                    <input class="input input--date-of-birth" name="dateOfBirth" type="text" placeholder="Geburtsdatum"
+                           required>
+                </aside>
+                <aside class="push--right">
+                    <div class="font--small">Geschlecht:</div>
                     <aside class="input input--gender">
 
                         <input data-input-gender="input-asset" class="input__radio" type="radio"
                                name="gender" value='w'>
-                        <label class="input--gender__label input--left icon icon--female"
+                        <label class="input--gender__label input--left icon icon--woman"
                                title='male'></label>
                         <input data-input-gender="input-asset" class="input__radio" type="radio"
                                name="gender"
                                value='m'>
-                        <label class="input--gender__label input--right icon icon--male"
+                        <label class="input--gender__label input--right icon icon--man"
                                title='female'></label>
                     </aside>
-
-                </div>
+                </aside>
+                <div class="push--both font--small">PLZ / Wohnort</div>
                 <input data-input-zip="input-asset" class="input" name="zip" type="text" maxlength="444"
                        placeholder="PLZ (Wohnort)" autocomplete="off"
                        required>

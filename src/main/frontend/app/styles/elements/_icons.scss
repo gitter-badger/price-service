@@ -7,10 +7,19 @@ Button styles can be applied to any element. Typically you'll want to use
 to a `<label>`:
 
 ```example:html
-<label class="icon icon--female"></button>
+<label class="icon icon--boy"></button>
 ```
 ```example:html
-<label class="icon icon--male"></button>
+<label class="icon icon--girl"></button>
+```
+```example:html
+<label class="icon icon--woman"></button>
+```
+```example:html
+<label class="icon icon--man"></button>
+```
+```example:html
+<label class="icon icon--cross"></button>
 ```
 */
 
@@ -19,12 +28,20 @@ to a `<label>`:
   cursor: pointer;
 }
 
-.icon--male:before {
-  content: "\e900";
+.icon--boy:before {
+  content: "\e904";
 }
 
-.icon--female:before {
+.icon--girl:before {
   content: "\e901";
+}
+
+.icon--man:before {
+  content: "\e904";
+}
+
+.icon--woman:before {
+  content: "\e903";
 }
 
 .icon--cross {
@@ -35,6 +52,6 @@ to a `<label>`:
   text-align: end;
 
   &:before {
-    content: "\e901";
+    content: "\e905";
   }
 }

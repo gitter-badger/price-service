@@ -34,7 +34,12 @@ to a `<input type="radio" name="gender">` element
   line-height: 2rem;
   padding-left: 5px;
   width: 100%;
-  margin: 7px 0 7px 0;
+  margin: 7px 0 30px 0;
+
+  &--date-of-birth {
+    float: left;
+    width: 120px;
+  }
 
   &--gender {
     float: right;

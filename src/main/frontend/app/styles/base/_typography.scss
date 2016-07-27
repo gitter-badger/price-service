@@ -8,7 +8,7 @@ Typography styles can be applied to any element. Typically you'll want to use
 
 ```example:html
 <div style="background-color: darkgray;">
-  <label class="line-height-3">Text</label>
+  <label class="font--small">Text</label>
 </div>
 ```
 */
@@ -39,8 +39,8 @@ Typography styles can be applied to any element. Typically you'll want to use
   font-family: Akkurat-Light;
 }
 
-.line-height {
-  &-3 {
-    line-height: 3rem;
+.font {
+  &--small {
+    font-size: 0.7rem
   }
 }
