@@ -3,7 +3,7 @@
 === WebService JAXWS
 [source,java]
 ----
-include::{sourcedir}/ch/helsana/web/component/service/price/config/WebServiceJAXWSConfig.java[tags=WebServiceJAXWSConfig,indent=0]
+include::{sourcedir}/ch/keepcalm/web/component/price/config/WebServiceJAXWSConfig.java[tags=WebServiceJAXWSConfig,indent=0]
 ----
 
 == Service
@@ -11,18 +11,18 @@ include::{sourcedir}/ch/helsana/web/component/service/price/config/WebServiceJAX
 Extend ProtType class
 [source,java]
 ----
-include::{sourcedir}/ch/helsana/web/component/service/price/service/PriceService.java[tags=PriceService,indent=0]
+include::{sourcedir}/ch/keepcalm/web/component/price/service/PriceService.java[tags=PriceService,indent=0]
 ----
 
 Define PortType
 [source,java]
 ----
-include::{sourcedir}/ch/helsana/web/component/service/price/service/PriceService.java[tags=portType,indent=0]
+include::{sourcedir}/ch/keepcalm/web/component/price/service/PriceService.java[tags=portType,indent=0]
 ----
 
 Implement PortType method
 [source,java]
 ----
-include::{sourcedir}/ch/helsana/web/component/service/price/service/PriceService.java[tags=implementPortTypeMethod,indent=0]
+include::{sourcedir}/ch/keepcalm/web/component/price/service/PriceService.java[tags=implementPortTypeMethod,indent=0]
 ----
 
