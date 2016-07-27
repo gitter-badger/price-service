@@ -1,10 +1,16 @@
+import Handlebars from 'handlebars';
+
+
 import {mainInput} from './mainInput'
 import {inputService} from './inputService'
 import {Address} from './Address'
 import {Customer} from './Customer'
+import {zipService} from "./zipService";
 
 export const inputAsset = (function () {
-    let configInput = {};
+    let configInput = {},
+        actualSelection = [],
+        selectedLocation = new Address();
 
     const inputDateRegex = '(^[1-9]|[0][1-9]|[1-2][0-9]|[3][0-1])[-,.]([1-9]|[0][1-9]|1[0-2])[-,.]((19|20)[0-9]{2}$)';
 
@@ -38,15 +44,15 @@ export const inputAsset = (function () {
 
     function registerEvents() {
         let container = $('#' + mainInput.getContainerId());
+
         container.find('[data-input-save]').on('click', function () {
                 event.preventDefault();
                 let inputAsset = container.find('[data-input-form]');
                 let form = inputAsset.serializeArray(),
-                    address = new Address('Gockhausen', 'Dübendorf', '191', '8044', '00'),
                     customer = new Customer(
                         form.find(obj => obj.name === 'dateOfBirth').value,
                         form.find(obj => obj.name.includes('input-gender')).value,
-                        address);
+                        selectedLocation);
 
                 inputService.createCustomer(customer)
                     .then(function (response) {
@@ -54,5 +60,44 @@ export const inputAsset = (function () {
                     });
             }
         );
+
+        container.find('[data-input-zip]').on('keyup', function () {
+                let value = $(this).val().toString();
+                if (value.length > 1) {
+                    zipService.getZip(value, '1')
+                        .then(data=> {
+                            if (data && data.results) {
+                                renderZipDropdown(data.results);
+                            }
+                        })
+                }
+                else {
+                    renderZipDropdown([]);
+                }
+            }
+        );
+    }
+
+    function renderZipDropdown(results) {
+
+        let container = $('#' + mainInput.getContainerId());
+
+        let source = container.find('[data-input-selection-template]').html();
+        let template = Handlebars.compile(source);
+        container.find('[data-input-selection]').html(template({
+            results: results
+        }));
+        actualSelection = results;
+        registerDropdownEvents();
+    }
+
+    function registerDropdownEvents() {
+        let container = $('#' + mainInput.getContainerId());
+        container.find('[data-input-selection-item]').on('click', function () {
+            let selection = actualSelection[$(this).data().item];
+            selectedLocation = new Address(selection.locality, selection.municipality, selection.municipality_nr.toString(), selection.postal_code.toString());
+            container.find('[data-input-zip]').val($(this).text().trim());
+            renderZipDropdown([]);
+        });
     }
 })();

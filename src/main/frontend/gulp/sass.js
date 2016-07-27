@@ -3,7 +3,7 @@ module.exports = function (gulp, data, util, taskName) {
     var sass = require('gulp-sass');
 
     gulp.task(taskName + ':Styleguide', function () {
-        return gulp.src('./app/styles/all.scss')
+        return gulp.src('./app/styles/inputAsset.scss')
             .pipe(sass().on('error', sass.logError))
             .pipe(gulp.dest(data.path.STYLEGUIDE + 'app'));
     });

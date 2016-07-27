@@ -10,7 +10,8 @@ to a `<input type="radio" name="gender">` element
 <input class="input" name="birthday" type="text" placeholder="Geburtsdatum">
 ```
 ```example:html
-<input class="input input--gender" name="birthday" type="text" placeholder="Geburtsdatum">
+<aside class="input input--gender" style="height: 40px;">
+</aside>
 ```
 ```example:html
 <!-- display:none -->
