@@ -1,6 +1,6 @@
 <div class="modal">
     <main class="container">
-        <div class="icon icon--cross"></div>
+        <div data-input-close="input-asset" class="icon icon--cross"></div>
         <h4 e2e-id="title">Für welche Person möchten Sie die Präme berechnen?</h4>
         <form data-input-form="input-asset" class="form" #calcPremiums="ngForm">
             <fieldset class="fieldset">
@@ -48,8 +48,7 @@
             </span>
                 </div>
                 <button data-input-save="input-asset" class="btn btn--form">Prämie anzeigen</button>
-                <button data-input-back="input-asset" class="btn btn--inverted" type="button">Zurück</button>
-
+                <button data-input-close="input-asset" class="btn btn--inverted" type="button">Zurück</button>
             </fieldset>
         </form>
     </main>

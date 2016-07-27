@@ -32,6 +32,7 @@ export const mainInput = (function () {
 
     return {
         getContainerId: getContainerId,
+        detachView: detachView,
         configInput: configInput,
     };
 
@@ -52,5 +53,9 @@ export const mainInput = (function () {
         $('#' + getContainerId()).load('/app/views/inputAsset.html', function () {
             inputAsset.init();
         });
+    }
+
+    function detachView() {
+        $('#' + getContainerId()).children().detach();
     }
 })();

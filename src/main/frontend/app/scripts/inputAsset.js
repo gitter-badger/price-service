@@ -55,6 +55,11 @@ export const inputAsset = (function () {
             }
         );
 
+        container.find('[data-input-close]').on('click', function () {
+                mainInput.detachView();
+            }
+        );
+
         container.find('[data-input-zip]').on('keyup', function () {
                 let value = $(this).val().toString();
                 if (value.length > 1) {
