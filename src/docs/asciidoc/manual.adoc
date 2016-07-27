@@ -2,7 +2,7 @@
 Marcel Widmer <marzelwidmer@gmail.com>
 :doctype: book
 :icons: font
-:toc: left
+¯:toc: left
 :toclevels: 4
 :leveloffset: 1
 :sectlinks:
