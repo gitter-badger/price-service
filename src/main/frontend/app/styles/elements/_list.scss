@@ -1,3 +1,28 @@
+/*---
+title:   List
+section: Elements
+---
+
+List styles can be applied to ul, ol and li elements.
+
+```example:html
+<ul class="list">
+    <li>
+        8610
+    </li>
+</ul>
+```
+```example:html
+<ul class="list">
+    <li class="list__item">
+        8610
+    </li>
+    <li class="list__item">
+        Uster
+    </li>
+</ul>
+```
+*/
 .list {
   list-style: none;
   padding-left: 0;

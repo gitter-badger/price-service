@@ -1,3 +1,21 @@
+/*---
+title:   Dropdown
+section: Elements
+---
+
+Dropdown styles can be applied to any element. Typically you'll want to use
+to a `<div></div>` element
+
+```example:html
+<div style="height: 60px;background: darkgray;">
+  <div style="height: 20px;">
+  </div>
+  <div class="dropdown" style="height: 20px;">
+    <span>Content</span>
+  </div>
+</div>
+```
+*/
 .dropdown {
   width: 197px;
   background-color: $snow;
