@@ -359,9 +359,10 @@
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                            <backend>html</backend>
+                            <backend>html5</backend>
                             <doctype>book</doctype>
                             <sourceDocumentName>manual.adoc</sourceDocumentName>
+                            <sourceHighlighter>coderay</sourceHighlighter>
                             <attributes>
                                 <snippets>${snippetsDirectory}</snippets>
                             </attributes>
@@ -371,6 +372,8 @@
             </plugin>
         </plugins>
     </build>
+
+
 
     <!-- Profiles -->
     <profiles>
