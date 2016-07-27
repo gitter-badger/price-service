@@ -42,7 +42,6 @@ export const priceAsset = (function () {
                 priceService.setLinks(response);
                 priceService.getPrice()
                     .then(function (priceRes) {
-                        console.log(priceRes);
                         updatePrice(priceRes);
                     });
             });

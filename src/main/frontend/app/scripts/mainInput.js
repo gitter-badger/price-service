@@ -12,9 +12,22 @@ export const mainInput = (function () {
     $(function () {
         containerId = Math.random().toString(36).substring(7);
         inputContainer.attr('id', containerId);
-        inputContainer.load('/app/views/inputAsset.html', function () {
-            inputAsset.init();
-            updateInputConfig();
+        updateInputConfig();
+
+        //load view if no data-key-open is set
+        if (configInput && !configInput.openKey) {
+            loadView();
+        }
+        //open view on data-key-open event
+        else {
+            $(document).on(configInput.openKey, function () {
+                loadView();
+            });
+        }
+
+        //temp should be in parentview
+        $('#open').on('click', function () {
+            $(document).triggerHandler(configInput.openKey);
         });
     });
 
@@ -22,7 +35,6 @@ export const mainInput = (function () {
         getContainerId: getContainerId,
         config: configInput,
         registerConfigInputUpdate: registerConfigInputUpdate,
-        updateInputConfig: updateInputConfig
     };
 
     function registerConfigInputUpdate(observer) {
@@ -46,5 +58,12 @@ export const mainInput = (function () {
 
     function getContainerId() {
         return containerId;
+    }
+
+    function loadView() {
+        $('#' + getContainerId()).load('/app/views/inputAsset.html', function () {
+            inputAsset.init();
+            updateInputConfig();
+        });
     }
 })();
