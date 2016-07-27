@@ -75,7 +75,7 @@ public class CustomerAggregateController {
     @RequestMapping(
             value = "{id}/products",
             method = RequestMethod.POST,
-            produces = "application/json; charset=utf-8")
+            produces = "application/hal+json; charset=utf-8")
     public ResponseEntity addProductToCustomer(@RequestBody Product product, @PathVariable int id) throws Exception {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
@@ -93,7 +93,7 @@ public class CustomerAggregateController {
     @RequestMapping(
             value = "products",
             method = RequestMethod.GET,
-            produces = "application/json; charset=utf-8")
+            produces = "application/hal+json; charset=utf-8")
     public ResponseEntity getProducts() {
         ProductListResource productListResource = productsToResources(productService.getProducts());
         return new ResponseEntity<ProductListResource>(productListResource, HttpStatus.FOUND);
@@ -151,7 +151,7 @@ public class CustomerAggregateController {
     @RequestMapping(
             value = "{id}/products/{productId}",
             method = RequestMethod.GET,
-            produces = "application/json; charset=utf-8")
+            produces = "application/hal+json; charset=utf-8")
     public ResponseEntity getProductFromCustomer(@PathVariable int id, @PathVariable int productId) {
         Customer customer = customerService.getCustomer(id);
         if (customer != null) {
@@ -187,7 +187,7 @@ public class CustomerAggregateController {
     @RequestMapping(
             value = "{id}/products/{productId}",
             method = RequestMethod.PATCH,
-            produces = "application/json; charset=utf-8")
+            produces = "application/hal+json; charset=utf-8")
     public ResponseEntity updatePricesOnProductFromCustomer(@PathVariable int id, @PathVariable int productId) throws Exception {
         Customer customer = customerService.getCustomer(id);
         ProductResource productResource = null;

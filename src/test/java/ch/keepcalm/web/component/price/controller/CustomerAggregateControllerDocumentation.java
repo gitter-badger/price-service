@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentation;
 import org.springframework.restdocs.constraints.ConstraintDescriptions;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
@@ -46,6 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * Created by marcelwidmer on 21/07/16.
+ *
  */
 @ActiveProfiles(profiles = {"junit"})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -81,13 +81,16 @@ public class CustomerAggregateControllerDocumentation {
     public void index()  {
         try {
             this.mockMvc.perform(
-                    get("/api").accept(MediaType.APPLICATION_JSON))
+                    get("/api").accept("application/hal+json"))
                     .andExpect(status().isOk())
                     .andDo(document("index"));
+            /*.andDo(document("index", links(
+                    linkWithRel("customers").description("Link to the customer resource"))));*/
         } catch (Exception e) {
             fail();
         }
     }
+
 
 
     @Test
@@ -120,7 +123,7 @@ public class CustomerAggregateControllerDocumentation {
         // documentation call
         this.mockMvc.perform(
                 post("/api/customers")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType("application/hal+json")
                         .content(this.objectMapper.writeValueAsString(newCustomer))
         ).andExpect(status().isCreated())
                 .andDo(document);
@@ -158,7 +161,7 @@ public class CustomerAggregateControllerDocumentation {
         // documentation call
         this.mockMvc.perform(
                 get("/api/customers")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType("application/hal+json")
         ).andExpect(status().isOk())
                 .andDo(document);
     }
@@ -211,7 +214,7 @@ public class CustomerAggregateControllerDocumentation {
         // documentation call
         this.mockMvc.perform(
                 post("/api/customers/1/products")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType("application/hal+json")
                         .content(this.objectMapper.writeValueAsString(product))
         ).andExpect(status().isCreated())
                 .andDo(document);
@@ -254,7 +257,7 @@ public class CustomerAggregateControllerDocumentation {
         // create a product
        this.mockMvc.perform(
                 post("/api/customers/1/products")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType("application/hal+json")
                         .content(this.objectMapper.writeValueAsString(product)
                         )
         ).andExpect(status().isCreated());
@@ -263,8 +266,8 @@ public class CustomerAggregateControllerDocumentation {
         // documentation call
         this.mockMvc.perform(
                 patch("/api/customers/1/products/1")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .accept("application/hal+json")
+                        .contentType("application/hal+json"))
                 .andExpect(status().isOk())
                 .andDo(document);
     }

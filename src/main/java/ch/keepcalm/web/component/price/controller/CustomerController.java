@@ -44,7 +44,7 @@ public class CustomerController {
     @RequestMapping(
             value = "",
             method = RequestMethod.POST,
-            produces = "application/json; charset=utf-8")
+            produces = "application/hal+json; charset=utf-8")
     public ResponseEntity addCustomer(@RequestBody Customer customer) {
         customerService.saveCustomer(customer);
         CustomerResource customerResource = customerToResource(customerService.getCustomer(customer.getId()));
@@ -60,7 +60,7 @@ public class CustomerController {
     @RequestMapping(
             value = "",
             method = RequestMethod.GET,
-            produces = "application/json; charset=utf-8")
+            produces = "application/hal+json; charset=utf-8")
     public ResponseEntity getCustomers() {
         CustomerListResource customerListResource = customerToResource(customerService.getCustomers());
         return new ResponseEntity<CustomerListResource>(customerListResource, HttpStatus.OK);
@@ -74,7 +74,7 @@ public class CustomerController {
      */
     @RequestMapping(value = "{id}",
             method = RequestMethod.GET,
-            produces = "application/json; charset=utf-8")
+            produces = "application/hal+json; charset=utf-8")
     public ResponseEntity getCustomer(@PathVariable int id) {
         CustomerResource customerResource = customerToResource(customerService.getCustomer(id));
         return new ResponseEntity<CustomerResource>(customerResource, HttpStatus.OK);
