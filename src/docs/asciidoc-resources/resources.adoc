@@ -1,20 +1,20 @@
 
-[[resources-entry]]
-==  API Entry Point
-The price-service api entry point.
 
+[[resources-index]]
+==  Index
+The index provides the entry point into the service.
 
-=== Listing entry point.
-A `GET` request lists the api entry point.
+=== Accessing the index
+A `GET` request is used to access the index
 
 ==== Example request curl
-include::{snippets}/entry-point/curl-request.adoc[]
+include::{snippets}/index/curl-request.adoc[]
 
 ==== Example request HTTP
-include::{snippets}/entry-point/http-request.adoc[]
+include::{snippets}/index/http-request.adoc[]
 
 ==== Example response
-include::{snippets}/entry-point/http-response.adoc[]
+include::{snippets}/index/http-response.adoc[]
 
 
 

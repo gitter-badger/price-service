@@ -1,3 +1,26 @@
+[[URL]]
+== Application URL
+[[landingpage]]
+=== Landing Page
+    /
+
+http://localhost:8080/
+
+[[apiEntryPoint]]
+=== API Entry Point
+    /api/
+
+http://localhost:8080/api/
+
+
+[[monitoring]]
+=== Monitoring / Manage
+    /manage/
+
+http://localhost:8080/manage
+
+
+
 == UI Component
 UI component workflow.
 

@@ -42,27 +42,6 @@ include::architecture.adoc[]
 == Installation
 include::installation.adoc[]
 
-[[URL]]
-== Application URL
-[[landingpage]]
-=== Landing Page
-    /
-
-http://localhost:8080/
-
-[[apiEntryPoint]]
-=== API Entry Point
-    /api/
-
-http://localhost:8080/api/
-
-
-[[monitoring]]
-=== Monitoring / Manage
-    /manage/
-
-http://localhost:8080/manage
-
 
 
 [[webcomponent]]
@@ -75,7 +54,8 @@ include::webcomponent.adoc[]
 
 [[sourceCode]]
 = Source Code
- include::sourceCode.adoc[]
+include::sourceCode.adoc[]
+
 
 [[releaseNotes]]
 = Release Notes

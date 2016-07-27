@@ -83,7 +83,7 @@ public class CustomerAggregateControllerDocumentation {
             this.mockMvc.perform(
                     get("/api").accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
-                    .andDo(document("entry-point"));
+                    .andDo(document("index"));
         } catch (Exception e) {
             fail();
         }
